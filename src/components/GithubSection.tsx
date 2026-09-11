@@ -1,6 +1,7 @@
 import { motion } from 'motion/react';
 import { Github } from 'lucide-react';
 import { GITHUB_PROFILE_URL, GITHUB_USERNAME } from '../data/portfolioData';
+import { useGitHubRepos } from '../hooks/useGitHubRepos';
 
 const containerVariants = {
   hidden: { opacity: 0, y: 30 },
@@ -21,6 +22,9 @@ const itemVariants = {
 };
 
 export function GithubSection() {
+  const { projects } = useGitHubRepos();
+  const repoCount = projects.length;
+
   return (
     <section id="github" className="py-24 bg-[#090a0f] relative border-t border-slate-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -52,7 +56,7 @@ export function GithubSection() {
 
             <motion.div variants={itemVariants} className="grid grid-cols-2 sm:grid-cols-3 gap-4 py-4 max-w-md mx-auto">
               <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 text-center">
-                <span className="block text-xl font-bold text-cyan-400 font-mono">5</span>
+                <span className="block text-xl font-bold text-cyan-400 font-mono">{repoCount > 0 ? repoCount : "5"}</span>
                 <span className="text-xs text-slate-400">Public Repos</span>
               </div>
               <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 text-center">

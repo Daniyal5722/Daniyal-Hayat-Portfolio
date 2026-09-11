@@ -151,6 +151,8 @@ export function Projects() {
         return <CloudSun className="w-5 h-5 text-blue-400" />;
       case 'Layers':
         return <Layers className="w-5 h-5 text-emerald-400" />;
+      case 'Github':
+        return <Github className="w-5 h-5 text-cyan-400" />;
       default:
         return <Folder className="w-5 h-5 text-cyan-400" />;
     }

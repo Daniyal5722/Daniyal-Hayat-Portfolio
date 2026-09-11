@@ -19,7 +19,7 @@ export function useGitHubRepos() {
       const data = await response.json();
       
       // Merge live GitHub repo stats with our curated repository descriptions & features
-      const updatedProjects = PROJECTS.map((proj) => {
+      const curatedProjects = PROJECTS.map((proj) => {
         // match by repo name (case insensitive or exact)
         const liveRepo = data.find(
           (r: any) => r.name.toLowerCase() === proj.name.toLowerCase() ||
@@ -38,6 +38,38 @@ export function useGitHubRepos() {
           };
         }
         return proj;
+      });
+
+      const newProjects = data
+        .filter((r: any) => !r.fork)
+        .filter((r: any) => !PROJECTS.some(proj => 
+          r.name.toLowerCase() === proj.name.toLowerCase() || 
+          r.name.toLowerCase().replace(/[-_]/g, '') === proj.name.toLowerCase().replace(/[-_]/g, '')
+        ))
+        .map((repo: any) => ({
+          id: repo.name,
+          name: repo.name,
+          displayName: repo.name.replace(/[-_]/g, ' '),
+          description: repo.description || "No description provided.",
+          technologies: repo.language ? [repo.language] : [],
+          language: repo.language || "Unknown",
+          githubUrl: repo.html_url,
+          liveUrl: repo.homepage,
+          category: "GitHub Repository",
+          featured: false,
+          iconName: "Github",
+          features: [],
+          stars: repo.stargazers_count,
+          forks: repo.forks_count,
+          updatedAt: repo.updated_at
+        }));
+
+      const updatedProjects = [...curatedProjects, ...newProjects].sort((a, b) => {
+        if (a.featured && !b.featured) return -1;
+        if (!a.featured && b.featured) return 1;
+        const dateA = new Date(a.updatedAt || 0).getTime();
+        const dateB = new Date(b.updatedAt || 0).getTime();
+        return dateB - dateA;
       });
 
       setProjects(updatedProjects);
