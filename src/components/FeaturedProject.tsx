@@ -38,6 +38,12 @@ export function FeaturedProject() {
                 <span className="px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-mono">
                   {featured.language}
                 </span>
+                {featured.liveUrl && (
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                    <span>Live Online</span>
+                  </span>
+                )}
                 <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900/90 border border-slate-700/80 text-slate-300 text-xs font-mono" title="Estimated Reading Time">
                   <Clock className="w-3.5 h-3.5 text-cyan-400" />
                   <span>{getEstimatedReadingTime(featured)}</span>
@@ -64,11 +70,22 @@ export function FeaturedProject() {
               </div>
 
               <div className="flex flex-wrap items-center gap-4 pt-4">
+                {featured.liveUrl && (
+                  <a
+                    href={featured.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-sm transition-all shadow-lg shadow-cyan-500/20 hover:scale-[1.02] active:scale-[0.98]"
+                  >
+                    <ExternalLink className="w-4 h-4" />
+                    <span>Launch Live App</span>
+                  </a>
+                )}
                 <a
                   href={featured.githubUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-violet-600 hover:bg-violet-500 text-white font-medium text-sm transition-colors shadow-lg shadow-violet-600/20"
+                  className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-white font-medium text-sm transition-colors shadow-lg"
                 >
                   <Github className="w-4 h-4" />
                   <span>View Repository</span>

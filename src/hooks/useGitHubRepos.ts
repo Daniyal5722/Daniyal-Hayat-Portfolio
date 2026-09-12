@@ -34,6 +34,7 @@ export function useGitHubRepos() {
             forks: liveRepo.forks_count,
             updatedAt: liveRepo.updated_at,
             githubUrl: liveRepo.html_url,
+            liveUrl: liveRepo.homepage || proj.liveUrl,
             description: liveRepo.description || proj.description
           };
         }

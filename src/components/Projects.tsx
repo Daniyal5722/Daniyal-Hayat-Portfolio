@@ -1,8 +1,9 @@
 import { motion, useMotionValue, useSpring, useTransform } from 'motion/react';
 import React, { useRef, useState } from 'react';
-import { Github, Folder, Smartphone, Cpu, CloudSun, Layers, ArrowUpRight, Star, RefreshCw, Search, X, Clock } from 'lucide-react';
+import { Github, Folder, Smartphone, Cpu, CloudSun, Layers, ArrowUpRight, Star, RefreshCw, Search, X, Clock, ExternalLink, Globe } from 'lucide-react';
 import { useGitHubRepos } from '../hooks/useGitHubRepos';
 import { Project } from '../types';
+import { LIVE_DEPLOYMENTS } from '../data/portfolioData';
 import { getEstimatedReadingTime } from '../utils/readingTime';
 
 interface ProjectCardProps {
@@ -71,6 +72,18 @@ function ProjectCard({ project, index, getIcon }: ProjectCardProps) {
                 {getIcon(project.iconName)}
               </div>
               <div className="flex items-center gap-2 flex-wrap justify-end">
+                {project.liveUrl && (
+                  <a
+                    href={project.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono hover:bg-emerald-500/20 transition-all hover:scale-105"
+                    title={`Open live site: ${project.liveUrl}`}
+                  >
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    <span>Live App</span>
+                  </a>
+                )}
                 <span
                   className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-slate-950/80 border border-slate-800 text-slate-300 text-xs font-mono"
                   title="Estimated Reading Time"
@@ -114,20 +127,35 @@ function ProjectCard({ project, index, getIcon }: ProjectCardProps) {
               ))}
             </div>
 
-            {/* Footer Link Button */}
-            <div className="pt-4 border-t border-slate-800/80 flex items-center justify-between">
+            {/* Footer Link Buttons */}
+            <div className="pt-4 border-t border-slate-800/80 flex flex-wrap items-center justify-between gap-2">
               <span className="text-xs font-mono text-slate-400">
                 Language: <strong className="text-slate-200">{project.language}</strong>
               </span>
-              <a
-                href={project.githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-950 hover:bg-slate-800 border border-slate-800 text-xs font-mono text-cyan-400 hover:text-cyan-300 transition-colors"
-              >
-                <Github className="w-3.5 h-3.5" />
-                <span>Repository</span>
-              </a>
+              <div className="flex items-center gap-2">
+                {project.liveUrl && (
+                  <a
+                    href={project.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs font-mono transition-all shadow-sm shadow-cyan-500/20 hover:scale-105"
+                    title={`Open live app for ${project.displayName}`}
+                  >
+                    <ExternalLink className="w-3.5 h-3.5" />
+                    <span>Live App</span>
+                  </a>
+                )}
+                <a
+                  href={project.githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-950 hover:bg-slate-800 border border-slate-800 text-xs font-mono text-cyan-400 hover:text-cyan-300 transition-colors"
+                  title="View GitHub Repository"
+                >
+                  <Github className="w-3.5 h-3.5" />
+                  <span>Repo</span>
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -139,8 +167,17 @@ function ProjectCard({ project, index, getIcon }: ProjectCardProps) {
 export function Projects() {
   const { projects, isSyncing, lastSynced, refreshRepos } = useGitHubRepos();
   const [searchTerm, setSearchTerm] = useState('');
+  const [activeCategory, setActiveCategory] = useState<'all' | 'live' | 'mobile' | 'web'>('all');
+
+  const liveProjectsCount = projects.filter((p) => Boolean(p.liveUrl)).length;
 
   const filteredProjects = projects.filter((project) => {
+    // Category filter
+    if (activeCategory === 'live' && !project.liveUrl) return false;
+    if (activeCategory === 'mobile' && !project.category.toLowerCase().includes('mobile') && project.language !== 'Kotlin') return false;
+    if (activeCategory === 'web' && !project.category.toLowerCase().includes('web') && project.language === 'Kotlin') return false;
+
+    // Search filter
     const term = searchTerm.toLowerCase();
     const matchName = project.displayName.toLowerCase().includes(term) || project.name.toLowerCase().includes(term);
     const matchDesc = project.description.toLowerCase().includes(term);
@@ -171,10 +208,10 @@ export function Projects() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header with Live Sync Status */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
           <div>
             <div className="flex items-center gap-3 mb-3">
-              <span className="text-cyan-400 font-mono text-xs uppercase tracking-widest">PROJECT SHOWCASE</span>
+              <span className="text-cyan-400 font-mono text-xs uppercase tracking-widest">PORTFOLIO WORK</span>
               <button
                 onClick={refreshRepos}
                 disabled={isSyncing}
@@ -186,7 +223,7 @@ export function Projects() {
               </button>
             </div>
             <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
-              Actual GitHub Repositories
+              Live Applications & Repositories
             </h2>
           </div>
           <a
@@ -200,27 +237,134 @@ export function Projects() {
           </a>
         </div>
 
-        {/* Search Bar */}
-        <div className="mb-12 relative max-w-xl">
-          <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
-            <Search className="w-4 h-4" />
+        {/* Highlighted Live Deployments Bar */}
+        <div className="mb-12 p-6 rounded-2xl bg-gradient-to-r from-cyan-950/40 via-slate-900/80 to-blue-950/40 border border-cyan-500/20 shadow-xl backdrop-blur-xl">
+          <div className="flex items-center gap-2 mb-4">
+            <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
+            <h3 className="text-white font-semibold text-sm tracking-wide uppercase font-mono flex items-center gap-2">
+              <Globe className="w-4 h-4 text-cyan-400" />
+              <span>Verified Live Production Websites & Apps</span>
+            </h3>
           </div>
-          <input
-            type="text"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Search projects by name, technology (e.g. TypeScript, Kotlin), or language..."
-            className="w-full pl-11 pr-10 py-3.5 rounded-xl bg-slate-900/90 border border-slate-800 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 text-white text-sm outline-none transition-all placeholder:text-slate-500 backdrop-blur-md shadow-lg"
-          />
-          {searchTerm && (
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {LIVE_DEPLOYMENTS.map((deploy, idx) => (
+              <div
+                key={idx}
+                className="p-4 rounded-xl bg-slate-950/80 border border-slate-800/80 hover:border-cyan-500/40 transition-all flex flex-col justify-between group"
+              >
+                <div>
+                  <div className="flex items-center justify-between gap-2 mb-2">
+                    <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[10px] font-mono font-medium">
+                      {deploy.badge}
+                    </span>
+                    <span className="text-[11px] font-mono text-slate-400">
+                      {deploy.type}
+                    </span>
+                  </div>
+                  <h4 className="text-white font-bold text-sm mb-1 group-hover:text-cyan-300 transition-colors">
+                    {deploy.title}
+                  </h4>
+                  <p className="text-slate-400 text-xs mb-4 line-clamp-2">
+                    {deploy.description}
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-2 pt-2 border-t border-slate-800/60">
+                  <a
+                    href={deploy.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs font-mono transition-all shadow-sm shadow-cyan-500/10 hover:scale-[1.02]"
+                  >
+                    <ExternalLink className="w-3.5 h-3.5" />
+                    <span>Open Live Site</span>
+                  </a>
+                  <a
+                    href={deploy.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-cyan-400 transition-colors"
+                    title="View Source Code"
+                  >
+                    <Github className="w-3.5 h-3.5" />
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Filter Tabs & Search Bar */}
+        <div className="mb-10 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+          
+          {/* Quick Filter Buttons */}
+          <div className="flex flex-wrap items-center gap-2">
             <button
-              onClick={() => setSearchTerm('')}
-              className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-white"
-              aria-label="Clear search"
+              onClick={() => setActiveCategory('all')}
+              className={`px-4 py-2 rounded-xl text-xs font-mono transition-all ${
+                activeCategory === 'all'
+                  ? 'bg-cyan-500 text-slate-950 font-bold shadow-md shadow-cyan-500/20'
+                  : 'bg-slate-900/80 text-slate-400 hover:text-white border border-slate-800'
+              }`}
             >
-              <X className="w-4 h-4" />
+              All Repositories ({projects.length})
             </button>
-          )}
+            <button
+              onClick={() => setActiveCategory('live')}
+              className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-mono transition-all ${
+                activeCategory === 'live'
+                  ? 'bg-emerald-500 text-slate-950 font-bold shadow-md shadow-emerald-500/20'
+                  : 'bg-slate-900/80 text-emerald-400 hover:text-emerald-300 border border-emerald-500/30'
+              }`}
+            >
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span>Live Apps & Sites ({liveProjectsCount})</span>
+            </button>
+            <button
+              onClick={() => setActiveCategory('web')}
+              className={`px-4 py-2 rounded-xl text-xs font-mono transition-all ${
+                activeCategory === 'web'
+                  ? 'bg-cyan-500 text-slate-950 font-bold shadow-md shadow-cyan-500/20'
+                  : 'bg-slate-900/80 text-slate-400 hover:text-white border border-slate-800'
+              }`}
+            >
+              Web Platforms
+            </button>
+            <button
+              onClick={() => setActiveCategory('mobile')}
+              className={`px-4 py-2 rounded-xl text-xs font-mono transition-all ${
+                activeCategory === 'mobile'
+                  ? 'bg-cyan-500 text-slate-950 font-bold shadow-md shadow-cyan-500/20'
+                  : 'bg-slate-900/80 text-slate-400 hover:text-white border border-slate-800'
+              }`}
+            >
+              Mobile Apps
+            </button>
+          </div>
+
+          {/* Search Bar */}
+          <div className="relative w-full md:w-80">
+            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+              <Search className="w-4 h-4" />
+            </div>
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Filter by tech or keyword..."
+              className="w-full pl-10 pr-9 py-2.5 rounded-xl bg-slate-900/90 border border-slate-800 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 text-white text-xs outline-none transition-all placeholder:text-slate-500 backdrop-blur-md"
+            />
+            {searchTerm && (
+              <button
+                onClick={() => setSearchTerm('')}
+                className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-white"
+                aria-label="Clear search"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            )}
+          </div>
         </div>
 
         {/* Project Grid with 3D Tilt Cards */}
@@ -232,12 +376,15 @@ export function Projects() {
           </div>
         ) : (
           <div className="py-16 text-center rounded-2xl bg-slate-900/40 border border-slate-800">
-            <p className="text-slate-400 text-sm font-mono mb-3">No repositories found matching "{searchTerm}"</p>
+            <p className="text-slate-400 text-sm font-mono mb-3">No repositories found matching your selection.</p>
             <button
-              onClick={() => setSearchTerm('')}
+              onClick={() => {
+                setSearchTerm('');
+                setActiveCategory('all');
+              }}
               className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-mono text-cyan-300 transition-colors"
             >
-              Clear Search Filter
+              Reset Filters
             </button>
           </div>
         )}
