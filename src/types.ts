@@ -14,6 +14,7 @@ export interface Project {
   stars?: number;
   forks?: number;
   updatedAt?: string;
+  readingTime?: string;
 }
 
 export interface SkillCategory {

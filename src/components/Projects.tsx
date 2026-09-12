@@ -1,8 +1,9 @@
 import { motion, useMotionValue, useSpring, useTransform } from 'motion/react';
 import React, { useRef, useState } from 'react';
-import { Github, Folder, Smartphone, Cpu, CloudSun, Layers, ArrowUpRight, Star, RefreshCw, Search, X } from 'lucide-react';
+import { Github, Folder, Smartphone, Cpu, CloudSun, Layers, ArrowUpRight, Star, RefreshCw, Search, X, Clock } from 'lucide-react';
 import { useGitHubRepos } from '../hooks/useGitHubRepos';
 import { Project } from '../types';
+import { getEstimatedReadingTime } from '../utils/readingTime';
 
 interface ProjectCardProps {
   key?: string | number;
@@ -65,11 +66,18 @@ function ProjectCard({ project, index, getIcon }: ProjectCardProps) {
         <div style={{ transform: "translateZ(40px)", transformStyle: "preserve-3d" }} className="h-full flex flex-col justify-between">
           <div>
             {/* Top Row: Icon & Category & Stars */}
-            <div className="flex items-center justify-between mb-6">
-              <div className="w-10 h-10 rounded-xl bg-slate-950 border border-slate-800 flex items-center justify-center group-hover:scale-110 transition-transform">
+            <div className="flex items-center justify-between mb-6 gap-2">
+              <div className="w-10 h-10 rounded-xl bg-slate-950 border border-slate-800 flex items-center justify-center group-hover:scale-110 transition-transform shrink-0">
                 {getIcon(project.iconName)}
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap justify-end">
+                <span
+                  className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-slate-950/80 border border-slate-800 text-slate-300 text-xs font-mono"
+                  title="Estimated Reading Time"
+                >
+                  <Clock className="w-3 h-3 text-cyan-400" />
+                  <span>{getEstimatedReadingTime(project)}</span>
+                </span>
                 {project.stars !== undefined && project.stars > 0 && (
                   <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-mono">
                     <Star className="w-3 h-3 fill-amber-400 text-amber-400" />

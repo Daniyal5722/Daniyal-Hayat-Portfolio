@@ -8,6 +8,9 @@ import { Skills } from './components/Skills';
 import { GithubSection } from './components/GithubSection';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
+import { ScrollProgress } from './components/ScrollProgress';
+import { ScrollToTop } from './components/ScrollToTop';
+import { RevealOnScroll } from './components/RevealOnScroll';
 
 export default function App() {
   const [activeSection, setActiveSection] = useState('home');
@@ -61,17 +64,31 @@ export default function App() {
 
   return (
     <div className={`min-h-screen transition-colors duration-300 ${isDarkMode ? 'bg-[#090a0f] text-slate-100' : 'bg-slate-50 text-slate-900'} selection:bg-cyan-500/30 selection:text-cyan-200`}>
+      <ScrollProgress />
       <Navbar activeSection={activeSection} isDarkMode={isDarkMode} onToggleTheme={toggleTheme} />
       <main>
         <Hero />
-        <About />
-        <FeaturedProject />
-        <Projects />
-        <Skills />
-        <GithubSection />
-        <Contact />
+        <RevealOnScroll direction="up" distance={36} duration={800}>
+          <About />
+        </RevealOnScroll>
+        <RevealOnScroll direction="up" distance={36} duration={800}>
+          <FeaturedProject />
+        </RevealOnScroll>
+        <RevealOnScroll direction="up" distance={36} duration={800}>
+          <Projects />
+        </RevealOnScroll>
+        <RevealOnScroll direction="up" distance={36} duration={800}>
+          <Skills />
+        </RevealOnScroll>
+        <RevealOnScroll direction="up" distance={36} duration={800}>
+          <GithubSection />
+        </RevealOnScroll>
+        <RevealOnScroll direction="up" distance={36} duration={800}>
+          <Contact />
+        </RevealOnScroll>
       </main>
       <Footer />
+      <ScrollToTop />
     </div>
   );
 }

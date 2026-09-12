@@ -1,6 +1,7 @@
 import { motion } from 'motion/react';
-import { Cpu, Github, ExternalLink, Sparkles, Check } from 'lucide-react';
+import { Cpu, Github, ExternalLink, Sparkles, Check, Clock } from 'lucide-react';
 import { PROJECTS } from '../data/portfolioData';
+import { getEstimatedReadingTime } from '../utils/readingTime';
 
 export function FeaturedProject() {
   const featured = PROJECTS.find((p) => p.id === 'cortexiq-by-dnyl') || PROJECTS[2];
@@ -30,12 +31,16 @@ export function FeaturedProject() {
           <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             
             <div className="lg:col-span-7 space-y-6">
-              <div className="flex items-center gap-3">
+              <div className="flex flex-wrap items-center gap-3">
                 <span className="px-3 py-1 rounded-full bg-violet-500/10 border border-violet-500/30 text-violet-300 text-xs font-mono">
                   {featured.category}
                 </span>
                 <span className="px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-mono">
                   {featured.language}
+                </span>
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900/90 border border-slate-700/80 text-slate-300 text-xs font-mono" title="Estimated Reading Time">
+                  <Clock className="w-3.5 h-3.5 text-cyan-400" />
+                  <span>{getEstimatedReadingTime(featured)}</span>
                 </span>
               </div>
 
