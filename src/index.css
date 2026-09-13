@@ -13,6 +13,14 @@ html, body {
   width: 100%;
 }
 
+/* Ensure minimum 44x44px touch targets on mobile for touch devices */
+@media (pointer: coarse) {
+  button, a, input, select, textarea, [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
 /* Custom smooth scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
