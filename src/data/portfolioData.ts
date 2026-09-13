@@ -69,39 +69,40 @@ export const PROJECTS: Project[] = [
   {
     id: "cortexiq-by-dnyl",
     name: "cortexiq-by-dnyl",
-    displayName: "CortexIQ by DNYL",
-    description: "AI-driven computational intelligence suite engineered with reactive dashboard interfaces, dynamic prompt parsing, and modular tool integrations.",
-    technologies: ["TypeScript", "React", "AI Integration", "Tailwind CSS", "Vite", "Motion"],
+    displayName: "CortexIQ AI Suite",
+    description: "Production-ready AI computational intelligence suite featuring advanced LLM integration, reactive dashboard telemetry, and modular tool pipelines.",
+    technologies: ["TypeScript", "React", "Google Gemini AI", "Tailwind CSS", "Vite", "Motion"],
     language: "TypeScript",
     githubUrl: "https://github.com/Daniyal5722/cortexiq-by-dnyl",
+    liveUrl: "https://daniyal-hayat-portfolio.vercel.app/",
     category: "AI & Intelligence",
     featured: true,
     iconName: "Cpu",
     metrics: [
-      { label: "Architecture", value: "Reactive Engine" },
+      { label: "Deployment", value: "Live Production" },
       { label: "Type Safety", value: "100% TypeScript" },
-      { label: "Tooling", value: "Modular SDKs" }
+      { label: "Engine", value: "Gemini AI" }
     ],
     features: [
-      "Dynamic prompt parser with contextual token weighting",
-      "Futuristic dark-mode dashboard with interactive state cards",
-      "Strict TypeScript typings across computation layers",
-      "Low-latency reactive UI powered by Vite and Motion"
+      "Advanced AI computational intelligence pipeline with real-time prompt parsing",
+      "Futuristic dark-mode dashboard with interactive telemetry cards",
+      "Strict TypeScript typings and modular SDK integration",
+      "Optimized for high-performance reactive web experiences"
     ],
     caseStudy: {
-      overview: "CortexIQ is a next-generation AI intelligence interface engineered by Daniyal Hayat to bridge natural language prompts with structured tool pipelines and analytical feedback.",
-      problem: "Many AI playground interfaces suffer from chaotic state representations, poor error handling during generation, and lack of modular tool integration.",
-      idea: "Build a cohesive, developer-friendly intelligence suite that emphasizes structured input, real-time validation, and intuitive visual telemetry.",
-      design: "Employed a deep midnight aesthetic with subtle cyan-to-violet accent lines, monospace code inspection panels, and tactile micro-interactions.",
-      development: "Architected in React 18+ and TypeScript with strict boundary typings, leveraging Vite for rapid build times and Motion for smooth entering transitions.",
-      technology: "TypeScript, React, Google Gemini SDK, Tailwind CSS, Vite, Motion.",
-      challenges: "Managing asynchronous generation states and preventing UI stutter during intensive real-time token processing.",
-      solution: "Separated prompt parsing into dedicated utility workers and utilized reactive state stores with defensive error boundaries.",
-      screenshots: "Dashboard view, prompt configuration panel, JSON result parser, dark mode UI.",
-      liveDemo: "",
+      overview: "CortexIQ AI Suite is Daniyal Hayat's premier flagship intelligence platform, bridging natural language prompts with high-performance computational workflows.",
+      problem: "Traditional developer tools lack unified interfaces for managing complex AI prompts, token budgets, and structured analytical feedback.",
+      idea: "Architect a lightning-fast reactive dashboard that connects powerful AI models with pristine design aesthetics and robust TypeScript safety.",
+      design: "Crafted with a sleek obsidian-and-cyan theme, glassmorphism panels, and highly responsive data visualizations.",
+      development: "Built with React 19, TypeScript, Vite, and Tailwind CSS, integrating server-side API proxy routes for secure key handling.",
+      technology: "TypeScript, React, Google Gemini AI SDK, Tailwind CSS, Vite.",
+      challenges: "Maintaining sub-100ms UI responsiveness while rendering complex asynchronous AI streams and token metrics.",
+      solution: "Implemented efficient client-state separation, memoized rendering components, and robust error boundary checks.",
+      screenshots: "AI Dashboard, prompt analyzer, telemetry charts, dark mode UI.",
+      liveDemo: "https://daniyal-hayat-portfolio.vercel.app/",
       github: "https://github.com/Daniyal5722/cortexiq-by-dnyl",
-      lessonsLearned: "Handling non-deterministic AI outputs requires extremely defensive frontend logic and robust error fallbacks to maintain user trust.",
-      result: "Delivers an ultra-responsive, developer-grade intelligence environment with seamless interaction fidelity and clean extensibility."
+      lessonsLearned: "Top-tier AI applications demand absolute reliability in error handling and graceful loading states to ensure seamless user retention.",
+      result: "Delivers an exceptional, production-deployed intelligence suite that highlights Daniyal's full-stack and AI engineering mastery."
     }
   },
   {
@@ -112,12 +113,12 @@ export const PROJECTS: Project[] = [
     technologies: ["JavaScript", "Meteorological API", "DOM Manipulation", "CSS3", "Async Pipeline"],
     language: "JavaScript",
     githubUrl: "https://github.com/Daniyal5722/Hamara-Weather",
-    liveUrl: "https://hamara-weather.netlify.app/",
+    liveUrl: "https://hamara-weather.vercel.app/",
     category: "Utility App",
     featured: true,
     iconName: "CloudSun",
     metrics: [
-      { label: "Status", value: "Live on Netlify" },
+      { label: "Status", value: "Live on Vercel" },
       { label: "Data Source", value: "Real-time API" },
       { label: "Update Rate", value: "On-demand Sync" }
     ],
@@ -133,14 +134,14 @@ export const PROJECTS: Project[] = [
       idea: "Create a focused, ad-free utility that highlights current weather metrics at a single glance with intuitive search and fast feedback.",
       design: "Constructed with clean atmospheric gradients, modern iconography, and distinct typographic hierarchy distinguishing key metric numbers from secondary labels.",
       development: "Developed using vanilla JavaScript utilizing asynchronous Fetch API calls, structured JSON parsing, and defensive error fallbacks for unavailable cities.",
-      technology: "JavaScript (ES6+), OpenWeather API, HTML5, CSS3, Vercel/Netlify deployment.",
+      technology: "JavaScript (ES6+), OpenWeather API, HTML5, CSS3, Vercel deployment.",
       challenges: "Handling rate-limited external weather APIs and providing smooth degradation when location permissions or network connections are weak.",
       solution: "Implemented robust try-catch wrappers, graceful input validation, and user-friendly visual alerts on invalid location queries.",
       screenshots: "Main dashboard, location search, dynamic background based on weather, mobile layout.",
-      liveDemo: "https://hamara-weather.netlify.app/",
+      liveDemo: "https://hamara-weather.vercel.app/",
       github: "https://github.com/Daniyal5722/Hamara-Weather",
       lessonsLearned: "Third-party APIs require careful error state design; anticipating network failures is as important as rendering the success state.",
-      result: "Deployed live on Netlify with exceptional speed metrics and a clean, dependable everyday utility experience."
+      result: "Deployed live on Vercel with exceptional speed metrics and a clean, dependable everyday utility experience."
     }
   },
   {
@@ -190,34 +191,35 @@ export const PROJECTS: Project[] = [
     technologies: ["Kotlin", "Android", "Game Mechanics", "Mobile UI", "Algorithms"],
     language: "Kotlin",
     githubUrl: "https://github.com/Daniyal5722/mystic-match-by-dnyl",
+    liveUrl: "https://mystic-match-rho.vercel.app/",
     category: "Mobile Game",
-    featured: false,
+    featured: true,
     iconName: "Smartphone",
     metrics: [
-      { label: "Platform", value: "Native Android" },
-      { label: "Engine", value: "Custom Kotlin" },
-      { label: "Genre", value: "Match-3 Puzzle" }
+      { label: "Platform", value: "Live Web & Android" },
+      { label: "Engine", value: "Custom Algorithmic" },
+      { label: "Deployment", value: "Vercel Live" }
     ],
     features: [
       "Algorithmic match-3 grid detection with cascading mechanics",
       "Fantasy-themed visual styling with custom responsive tile states",
       "Fluid touch-drag interaction and tactile feedback",
-      "High-performance frame rendering optimized for Android lifecycle"
+      "High-performance frame rendering optimized for modern browsers and devices"
     ],
     caseStudy: {
-      overview: "Mystic Match is an interactive puzzle game demonstrating advanced state machines, algorithmic matrix manipulations, and fluid Android touch interactions.",
-      problem: "Game loops on mobile can easily introduce memory leaks and garbage collection stutters when tracking animated grid states.",
-      idea: "Build a bespoke, lightweight match-3 algorithmic engine in Kotlin that manages 2D coordinate matrices with optimal efficiency.",
+      overview: "Mystic Match is an interactive puzzle game demonstrating advanced state machines, algorithmic matrix manipulations, and fluid touch interactions.",
+      problem: "Game loops on mobile and web can easily introduce memory leaks and performance stutters when tracking animated grid states.",
+      idea: "Build a bespoke, lightweight match-3 algorithmic engine that manages 2D coordinate matrices with optimal efficiency.",
       design: "Created a fantasy neo-aesthetic with vibrant gem motifs, clean board borders, and immediate visual reactions upon valid combinations.",
-      development: "Authored in Kotlin, utilizing 2D matrix traversal algorithms for match detection (horizontal, vertical, combos) and recursive tile replenishment.",
-      technology: "Kotlin, Android Canvas, XML Layouts, Threading & Coroutines, 2D Algorithms.",
+      development: "Authored with robust state machines, utilizing 2D matrix traversal algorithms for match detection and cascading tile replenishment.",
+      technology: "Kotlin, Android Canvas / Web Canvas, Algorithms, Vercel deployment.",
       challenges: "Preventing infinite cascade loops while accurately computing multi-tile cascade multipliers in real-time.",
       solution: "Implemented discrete state transitions (IDLE, SWAPPING, CHECKING, CLEARING, DROPPING) to ensure deterministic gameplay.",
       screenshots: "Game board, cascading animations, level complete overlay, high-score screen.",
-      liveDemo: "",
+      liveDemo: "https://mystic-match-rho.vercel.app/",
       github: "https://github.com/Daniyal5722/mystic-match-by-dnyl",
       lessonsLearned: "Game development fundamentally refines a developer's understanding of memory management, render loops, and strict state machine design.",
-      result: "A captivating, glitch-free Android puzzle experience showcasing deep algorithmic and mobile design competence."
+      result: "A captivating, glitch-free puzzle experience showcasing deep algorithmic and design competence live on Vercel."
     }
   },
   {
@@ -257,6 +259,45 @@ export const PROJECTS: Project[] = [
       github: "https://github.com/Daniyal5722/Daniyal-Hayat-Portfolio",
       lessonsLearned: "A portfolio is never truly finished; it is a living document that must evolve gracefully alongside the developer's skill set.",
       result: "A world-class personal brand platform showcasing verified capabilities and real projects to employers, collaborators, and clients worldwide."
+    }
+  },
+  {
+    id: "ai-prompt-studio-hub",
+    name: "ai-prompt-studio-hub",
+    displayName: "AI Prompt Studio & Workspace",
+    description: "Full-stack intelligent prompt crafting workspace featuring real-time template generation, structured variables, and one-click export tools.",
+    technologies: ["React", "Node.js", "Express", "Gemini AI API", "Tailwind CSS"],
+    language: "TypeScript",
+    githubUrl: "https://github.com/Daniyal5722/cortexiq-by-dnyl",
+    liveUrl: "https://ais-dev-gvoirokmxhudyitnlrgk6m-935024525749.asia-east1.run.app",
+    category: "AI & Fullstack",
+    featured: true,
+    iconName: "Cpu",
+    metrics: [
+      { label: "Backend", value: "Express API" },
+      { label: "AI Integration", value: "Google Gemini SDK" },
+      { label: "Architecture", value: "Full-Stack" }
+    ],
+    features: [
+      "Secure server-side API proxy protecting sensitive AI keys",
+      "Interactive template variables with live token count estimation",
+      "One-click history export and preset management",
+      "Responsive split-screen layout for prompt engineering and output inspection"
+    ],
+    caseStudy: {
+      overview: "AI Prompt Studio is a robust full-stack developer workspace designed to streamline prompt iteration, testing, and generation workflows.",
+      problem: "Prompt engineering often requires constant context switching between raw API clients, documentation, and notepad apps.",
+      idea: "Consolidate the prompt authoring loop into a single streamlined workspace backed by a secure Node.js proxy and structured JSON outputs.",
+      design: "High-contrast dark developer aesthetic with code syntax highlighting, clean sidebars, and instant visual feedback indicators.",
+      development: "Engineered in React and Express, leveraging server-side Google Gemini SDK endpoints to keep credentials secure.",
+      technology: "TypeScript, React, Node.js, Express, Google Gemini API, Tailwind CSS.",
+      challenges: "Managing secure API key forwarding and streaming responses without blocking client-side interactions.",
+      solution: "Implemented robust asynchronous proxy routes with streaming support and clear client error notifications.",
+      screenshots: "Prompt editor, variable injector, live response preview, history drawer.",
+      liveDemo: "https://ais-dev-gvoirokmxhudyitnlrgk6m-935024525749.asia-east1.run.app",
+      github: "https://github.com/Daniyal5722/cortexiq-by-dnyl",
+      lessonsLearned: "Routing sensitive LLM calls through a dedicated backend API route is essential for security and rate-limit control.",
+      result: "Provides an ultra-smooth playground for rapid prompt iteration and AI-driven development."
     }
   }
 ];
@@ -460,19 +501,19 @@ export const SERVICES_DATA: ServiceItem[] = [
 
 export const LIVE_DEPLOYMENTS = [
   {
-    title: "Darul Ifta Irshad us Saileen",
-    type: "Production Web Platform",
-    url: "https://darulifta-bkfbzf6u.manus.space/",
-    githubUrl: "https://github.com/Daniyal5722/Offical-Darul-ifta-Irshad-us-saileen-",
-    badge: "Production Live",
-    description: "Official online Fatwa and scholarly consultation portal for community guidance."
+    title: "Mystic Match Puzzle Game",
+    type: "Live Algorithmic Game",
+    url: "https://mystic-match-rho.vercel.app/",
+    githubUrl: "https://github.com/Daniyal5722/mystic-match-by-dnyl",
+    badge: "Vercel Live",
+    description: "Mobile-first fantasy match-3 algorithmic puzzle game with fluid touch physics."
   },
   {
     title: "Hamara Weather",
     type: "Live Forecast App",
-    url: "https://hamara-weather.netlify.app/",
+    url: "https://hamara-weather.vercel.app/",
     githubUrl: "https://github.com/Daniyal5722/Hamara-Weather",
-    badge: "Netlify Live",
+    badge: "Vercel Live",
     description: "Real-time meteorological tracking dashboard with atmospheric metrics and forecasts."
   },
   {
