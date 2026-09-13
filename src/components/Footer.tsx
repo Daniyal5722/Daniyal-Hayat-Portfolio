@@ -5,11 +5,11 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="py-12 bg-[#06070a] border-t border-slate-900 text-slate-400 text-xs font-mono">
+    <footer className="py-12 dark:bg-[#06070a] bg-slate-900 border-t dark:border-slate-900 border-slate-800 text-slate-400 text-xs font-mono transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         
         {/* Live Sites Quick Bar in Footer */}
-        <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-slate-900/80">
+        <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b dark:border-slate-900/80 border-slate-800/80">
           <div className="flex items-center gap-2 text-slate-300">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
             <span className="text-slate-400">Live Deployments:</span>

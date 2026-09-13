@@ -37,7 +37,7 @@ export function Skills() {
   };
 
   return (
-    <section id="skills" className="py-24 bg-[#090a0f] relative border-t border-slate-900">
+    <section id="skills" className="py-24 dark:bg-[#090a0f] bg-slate-50 relative border-t dark:border-slate-900 border-slate-200 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
@@ -48,8 +48,8 @@ export function Skills() {
           transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
-          <span className="text-cyan-400 font-mono text-xs uppercase tracking-widest block mb-3">TECHNICAL PROFICIENCY</span>
-          <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
+          <span className="text-cyan-500 font-mono text-xs uppercase tracking-widest block mb-3">TECHNICAL PROFICIENCY</span>
+          <h2 className="text-3xl sm:text-4xl font-bold dark:text-white text-slate-900 tracking-tight">
             Core Engineering Stack
           </h2>
         </motion.div>
@@ -66,19 +66,19 @@ export function Skills() {
             <motion.div
               key={skill.name}
               variants={itemVariants}
-              className="group rounded-2xl bg-slate-900/60 border border-slate-800/80 hover:border-cyan-500/40 p-6 backdrop-blur-md shadow-lg transition-all duration-300 hover:-translate-y-1 flex items-center gap-4"
+              className="group rounded-2xl dark:bg-slate-900/60 bg-white dark:border-slate-800/80 border border-slate-200/90 hover:border-cyan-500/40 p-6 backdrop-blur-md shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex items-center gap-4"
             >
-              <div className="w-12 h-12 rounded-xl bg-slate-950 border border-slate-800 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+              <div className="w-12 h-12 rounded-xl dark:bg-slate-950 bg-slate-100 dark:border-slate-800 border-slate-200 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
                 {getSkillIcon(skill.icon)}
               </div>
               <div className="flex-1">
                 <div className="flex items-center justify-between mb-1">
-                  <h3 className="text-white font-semibold text-base">{skill.name}</h3>
-                  <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-slate-950 border border-slate-800 text-cyan-400">
+                  <h3 className="dark:text-white text-slate-900 font-semibold text-base">{skill.name}</h3>
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded-full dark:bg-slate-950 bg-slate-100 dark:border-slate-800 border-slate-200 text-cyan-600 dark:text-cyan-400 font-medium">
                     {skill.level}
                   </span>
                 </div>
-                <p className="text-slate-400 text-xs font-mono">
+                <p className="dark:text-slate-400 text-slate-500 text-xs font-mono">
                   Used in {skill.projectCount} {skill.projectCount === 1 ? 'project' : 'projects'}
                 </p>
               </div>

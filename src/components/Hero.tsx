@@ -1,10 +1,13 @@
 import { motion } from 'motion/react';
-import { Terminal, Cpu, ArrowRight, Github, Mail, Sparkles, Database, GitBranch } from 'lucide-react';
+import { Terminal, Cpu, ArrowRight, Github, Mail, Database, GitBranch } from 'lucide-react';
 import { GITHUB_PROFILE_URL, DEVELOPER_NAME } from '../data/portfolioData';
 import { useGitHubActivity } from '../hooks/useGitHubActivity';
+import { useGitHubRepos } from '../hooks/useGitHubRepos';
 
 export function Hero() {
   const { activity } = useGitHubActivity();
+  const { projects } = useGitHubRepos();
+  const repoCount = projects.length || 7;
 
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center pt-24 pb-16 overflow-hidden">
@@ -23,17 +26,17 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="group inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-slate-900/90 border border-slate-800 hover:border-cyan-500/50 text-slate-200 text-xs font-mono mb-8 shadow-md backdrop-blur-md transition-all hover:scale-105"
+            className="group inline-flex items-center gap-2.5 px-4 py-2 rounded-full dark:bg-slate-900/90 bg-white/90 dark:border-slate-800 border-slate-200 hover:border-cyan-500/50 dark:text-slate-200 text-slate-800 text-xs font-mono mb-8 shadow-md backdrop-blur-md transition-all hover:scale-105"
           >
             <span className="relative flex h-2.5 w-2.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
             </span>
-            <span className="text-cyan-400 font-semibold">Currently Building:</span>
-            <span className="text-slate-300 group-hover:text-cyan-300 transition-colors underline decoration-cyan-500/30">
+            <span className="text-cyan-500 font-semibold">Currently Building:</span>
+            <span className="dark:text-slate-300 text-slate-700 group-hover:text-cyan-500 transition-colors underline decoration-cyan-500/30">
               {activity.actionText}
             </span>
-            <GitBranch className="w-3.5 h-3.5 text-slate-500 group-hover:text-cyan-400 transition-colors ml-1" />
+            <GitBranch className="w-3.5 h-3.5 text-slate-400 group-hover:text-cyan-500 transition-colors ml-1" />
           </motion.a>
 
           {/* Main Title */}
@@ -43,8 +46,8 @@ export function Hero() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="space-y-2 mb-6"
           >
-            <span className="text-slate-400 text-sm sm:text-base font-mono block">Hi, I'm</span>
-            <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white">
+            <span className="dark:text-slate-400 text-slate-500 text-sm sm:text-base font-mono block">Hi, I'm</span>
+            <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight dark:text-white text-slate-900">
               {DEVELOPER_NAME}
             </h1>
           </motion.div>
@@ -54,7 +57,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-base sm:text-lg md:text-xl text-slate-300 max-w-2xl font-light leading-relaxed mb-10"
+            className="text-base sm:text-lg md:text-xl dark:text-slate-300 text-slate-600 max-w-2xl font-light leading-relaxed mb-10"
           >
             Architecting robust web & mobile applications, AI-driven tools, and immersive digital platforms with precision and performance.
           </motion.p>
@@ -78,17 +81,17 @@ export function Hero() {
               href={GITHUB_PROFILE_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-6 py-3 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 text-slate-200 font-medium text-sm transition-all shadow-sm"
+              className="flex items-center gap-2 px-6 py-3 rounded-xl dark:bg-slate-900/90 bg-white/90 hover:dark:bg-slate-800 hover:bg-slate-100 border dark:border-slate-800 border-slate-200 dark:text-slate-200 text-slate-800 font-medium text-sm transition-all shadow-sm"
             >
-              <Github className="w-4 h-4 text-cyan-400" />
+              <Github className="w-4 h-4 text-cyan-500" />
               <span>GitHub Profile</span>
             </a>
 
             <a
               href="#contact"
-              className="flex items-center gap-2 px-6 py-3 rounded-xl bg-slate-900/50 hover:bg-slate-800/80 border border-slate-800 text-slate-300 font-medium text-sm transition-all"
+              className="flex items-center gap-2 px-6 py-3 rounded-xl dark:bg-slate-900/50 bg-slate-100/90 hover:dark:bg-slate-800/80 hover:bg-slate-200 border dark:border-slate-800 border-slate-200 dark:text-slate-300 text-slate-700 font-medium text-sm transition-all"
             >
-              <Mail className="w-4 h-4 text-violet-400" />
+              <Mail className="w-4 h-4 text-violet-500" />
               <span>Contact Me</span>
             </a>
           </motion.div>
@@ -100,33 +103,33 @@ export function Hero() {
             transition={{ duration: 0.7, delay: 0.4 }}
             className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full max-w-3xl"
           >
-            <div className="flex items-center gap-3 p-4 rounded-xl bg-slate-900/60 border border-slate-800/80 backdrop-blur-sm text-left group hover:border-cyan-500/40 transition-colors">
-              <div className="w-10 h-10 rounded-lg bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 shrink-0">
+            <div className="flex items-center gap-3 p-4 rounded-xl dark:bg-slate-900/60 bg-white/80 dark:border-slate-800/80 border border-slate-200/90 backdrop-blur-sm text-left group hover:border-cyan-500/40 transition-colors shadow-sm">
+              <div className="w-10 h-10 rounded-lg bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-500 shrink-0">
                 <Terminal className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="text-white font-semibold text-sm">5 Real Repos</h3>
-                <p className="text-slate-400 text-xs">Production & Open Source</p>
+                <h3 className="dark:text-white text-slate-900 font-semibold text-sm">{repoCount} Active Repos</h3>
+                <p className="dark:text-slate-400 text-slate-500 text-xs">Production & Open Source</p>
               </div>
             </div>
 
-            <div className="flex items-center gap-3 p-4 rounded-xl bg-slate-900/60 border border-slate-800/80 backdrop-blur-sm text-left group hover:border-violet-500/40 transition-colors">
-              <div className="w-10 h-10 rounded-lg bg-violet-500/10 border border-violet-500/20 flex items-center justify-center text-violet-400 shrink-0">
+            <div className="flex items-center gap-3 p-4 rounded-xl dark:bg-slate-900/60 bg-white/80 dark:border-slate-800/80 border border-slate-200/90 backdrop-blur-sm text-left group hover:border-violet-500/40 transition-colors shadow-sm">
+              <div className="w-10 h-10 rounded-lg bg-violet-500/10 border border-violet-500/20 flex items-center justify-center text-violet-500 shrink-0">
                 <Cpu className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="text-white font-semibold text-sm">AI & Mobile</h3>
-                <p className="text-slate-400 text-xs">CortexIQ & Kotlin Apps</p>
+                <h3 className="dark:text-white text-slate-900 font-semibold text-sm">AI & Mobile</h3>
+                <p className="dark:text-slate-400 text-slate-500 text-xs">CortexIQ & Kotlin Apps</p>
               </div>
             </div>
 
-            <div className="flex items-center gap-3 p-4 rounded-xl bg-slate-900/60 border border-slate-800/80 backdrop-blur-sm text-left group hover:border-blue-500/40 transition-colors">
-              <div className="w-10 h-10 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 shrink-0">
+            <div className="flex items-center gap-3 p-4 rounded-xl dark:bg-slate-900/60 bg-white/80 dark:border-slate-800/80 border border-slate-200/90 backdrop-blur-sm text-left group hover:border-blue-500/40 transition-colors shadow-sm">
+              <div className="w-10 h-10 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-500 shrink-0">
                 <Database className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="text-white font-semibold text-sm">Darul Ifta</h3>
-                <p className="text-slate-400 text-xs">Web & App Ecosystem</p>
+                <h3 className="dark:text-white text-slate-900 font-semibold text-sm">Darul Ifta</h3>
+                <p className="dark:text-slate-400 text-slate-500 text-xs">Web & App Ecosystem</p>
               </div>
             </div>
           </motion.div>

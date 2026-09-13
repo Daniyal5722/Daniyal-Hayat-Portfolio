@@ -42,15 +42,24 @@ export default function App() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['home', 'about', 'projects', 'skills', 'github', 'contact'];
-      const scrollPosition = window.scrollY + 200;
+      if (window.scrollY < 120) {
+        setActiveSection('home');
+        return;
+      }
+      
+      const scrollHeight = document.documentElement.scrollHeight;
+      const scrollBottom = window.innerHeight + window.scrollY;
+      if (scrollBottom >= scrollHeight - 80) {
+        setActiveSection('contact');
+        return;
+      }
 
+      const sections = ['contact', 'github', 'skills', 'projects', 'about', 'home'];
       for (const sectionId of sections) {
         const element = document.getElementById(sectionId);
         if (element) {
-          const top = element.offsetTop;
-          const height = element.offsetHeight;
-          if (scrollPosition >= top && scrollPosition < top + height) {
+          const rect = element.getBoundingClientRect();
+          if (rect.top <= 280 && rect.bottom >= 120) {
             setActiveSection(sectionId);
             break;
           }
@@ -58,7 +67,8 @@ export default function App() {
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 

@@ -14,27 +14,36 @@ export function useGitHubRepos() {
     try {
       const response = await fetch('https://api.github.com/users/Daniyal5722/repos?per_page=100&sort=updated');
       if (!response.ok) {
-        throw new Error(`GitHub API rate limit or error: ${response.statusText}`);
+        throw new Error(`GitHub API returned status ${response.status}: ${response.statusText}`);
       }
       const data = await response.json();
+      if (!Array.isArray(data)) {
+        throw new Error('Expected array of repositories from GitHub API');
+      }
       
       // Merge live GitHub repo stats with our curated repository descriptions & features
       const curatedProjects = PROJECTS.map((proj) => {
         // match by repo name (case insensitive or exact)
         const liveRepo = data.find(
-          (r: any) => r.name.toLowerCase() === proj.name.toLowerCase() ||
-                      r.name.toLowerCase().replace(/[-_]/g, '') === proj.name.toLowerCase().replace(/[-_]/g, '')
+          (r: any) => r?.name && (
+            r.name.toLowerCase() === proj.name.toLowerCase() ||
+            r.name.toLowerCase().replace(/[-_]/g, '') === proj.name.toLowerCase().replace(/[-_]/g, '')
+          )
         );
 
         if (liveRepo) {
+          const liveHomepage = typeof liveRepo.homepage === 'string' && liveRepo.homepage.trim().length > 0 
+            ? liveRepo.homepage.trim() 
+            : undefined;
+
           return {
             ...proj,
             language: liveRepo.language || proj.language,
-            stars: liveRepo.stargazers_count,
-            forks: liveRepo.forks_count,
-            updatedAt: liveRepo.updated_at,
-            githubUrl: liveRepo.html_url,
-            liveUrl: liveRepo.homepage || proj.liveUrl,
+            stars: typeof liveRepo.stargazers_count === 'number' ? liveRepo.stargazers_count : proj.stars,
+            forks: typeof liveRepo.forks_count === 'number' ? liveRepo.forks_count : proj.forks,
+            updatedAt: liveRepo.updated_at || proj.updatedAt,
+            githubUrl: liveRepo.html_url || proj.githubUrl,
+            liveUrl: liveHomepage || proj.liveUrl,
             description: liveRepo.description || proj.description
           };
         }
@@ -42,7 +51,7 @@ export function useGitHubRepos() {
       });
 
       const newProjects = data
-        .filter((r: any) => !r.fork)
+        .filter((r: any) => r && !r.fork && r.name)
         .filter((r: any) => !PROJECTS.some(proj => 
           r.name.toLowerCase() === proj.name.toLowerCase() || 
           r.name.toLowerCase().replace(/[-_]/g, '') === proj.name.toLowerCase().replace(/[-_]/g, '')
@@ -55,13 +64,13 @@ export function useGitHubRepos() {
           technologies: repo.language ? [repo.language] : [],
           language: repo.language || "Unknown",
           githubUrl: repo.html_url,
-          liveUrl: repo.homepage,
+          liveUrl: typeof repo.homepage === 'string' && repo.homepage.trim().length > 0 ? repo.homepage.trim() : undefined,
           category: "GitHub Repository",
           featured: false,
           iconName: "Github",
           features: [],
-          stars: repo.stargazers_count,
-          forks: repo.forks_count,
+          stars: repo.stargazers_count || 0,
+          forks: repo.forks_count || 0,
           updatedAt: repo.updated_at
         }));
 
@@ -75,13 +84,17 @@ export function useGitHubRepos() {
 
       setProjects(updatedProjects);
       setLastSynced(new Date().toLocaleTimeString());
-      localStorage.setItem('daniyal_github_repos_cache', JSON.stringify({
-        projects: updatedProjects,
-        timestamp: new Date().toISOString()
-      }));
+      try {
+        localStorage.setItem('daniyal_github_repos_cache', JSON.stringify({
+          projects: updatedProjects,
+          timestamp: new Date().toISOString()
+        }));
+      } catch (storageErr) {
+        // Safe fallback for restricted/incognito storage
+      }
     } catch (err: any) {
       console.warn('Using cached/static project data due to GitHub API limit:', err);
-      setSyncError('Using local curated repository state (GitHub API limit or offline)');
+      setSyncError('Using curated repository state (GitHub API rate limit or offline)');
     } finally {
       setIsSyncing(false);
     }
