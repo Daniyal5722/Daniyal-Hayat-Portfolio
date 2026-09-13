@@ -66,8 +66,8 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" className="py-24 relative border-t dark:border-slate-800/80 border-slate-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="contact" className="py-32 relative border-t dark:border-slate-800/80 border-slate-200 bg-gradient-to-b from-transparent via-blue-500/[0.015] to-transparent">
+      <div className="max-w-[88rem] mx-auto px-4 sm:px-6 lg:px-12 transform scale-[1.01] transition-transform">
         
         {/* Section Heading */}
         <div className="space-y-4 max-w-3xl mb-14">

@@ -23,6 +23,7 @@ import { CommandPalette } from './components/CommandPalette';
 import { ProjectModal } from './components/ProjectModal';
 import { ResumeModal } from './components/ResumeModal';
 import { EasterEggModal } from './components/EasterEggModal';
+import { PortfolioChatbot } from './components/PortfolioChatbot';
 import { Project } from './types';
 
 export default function App() {
@@ -221,6 +222,9 @@ export default function App() {
           isOpen={isEasterEggOpen}
           onClose={() => setIsEasterEggOpen(false)}
         />
+
+        {/* Daniyal AI Portfolio Assistant Chatbot */}
+        <PortfolioChatbot />
       </div>
     </SmoothScroll>
   );

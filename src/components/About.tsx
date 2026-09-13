@@ -39,14 +39,14 @@ export function About() {
   ];
 
   return (
-    <section id="about" className="py-28 relative overflow-hidden">
+    <section id="about" className="py-32 relative overflow-hidden bg-gradient-to-b from-transparent via-purple-500/[0.015] to-transparent">
       
       {/* Editorial Watermark Backdrop */}
       <div className="absolute top-12 -right-16 pointer-events-none select-none opacity-[0.03] dark:opacity-[0.05] text-9xl font-extrabold font-mono tracking-tighter">
         DANIYAL
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="max-w-[88rem] mx-auto px-4 sm:px-6 lg:px-12 relative z-10 transform scale-[1.01] transition-transform">
         
         {/* Section Heading */}
         <div className="space-y-4 max-w-3xl mb-16">
