@@ -195,19 +195,19 @@ export function Hero({ onOpenResume }: HeroProps) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.75 }}
-              className="grid grid-cols-3 gap-4 pt-4 max-w-lg border-t border-slate-200 dark:border-slate-800/80 font-mono text-xs"
+              className="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-4 max-w-lg border-t border-slate-200 dark:border-slate-800/80 font-mono text-xs"
             >
               <div>
-                <span className="block text-xl font-bold text-slate-900 dark:text-white">7+</span>
+                <span className="block text-xl font-bold text-slate-900 dark:text-white">{projects.length > 0 ? projects.length : "-"}</span>
                 <span className="text-slate-500 dark:text-slate-400">Public Repos</span>
               </div>
               <div>
-                <span className="block text-xl font-bold text-slate-900 dark:text-white">100%</span>
-                <span className="text-slate-500 dark:text-slate-400">Verified Code</span>
+                <span className="block text-xl font-bold text-slate-900 dark:text-white">Active</span>
+                <span className="text-slate-500 dark:text-slate-400">GitHub Presence</span>
               </div>
-              <div>
-                <span className="block text-xl font-bold text-slate-900 dark:text-white">&lt;100ms</span>
-                <span className="text-slate-500 dark:text-slate-400">Target Latency</span>
+              <div className="hidden sm:block">
+                <span className="block text-xl font-bold text-slate-900 dark:text-white">100%</span>
+                <span className="text-slate-500 dark:text-slate-400">Commitment</span>
               </div>
             </motion.div>
 
