@@ -94,8 +94,13 @@ export const PROJECTS: Project[] = [
       idea: "Build a cohesive, developer-friendly intelligence suite that emphasizes structured input, real-time validation, and intuitive visual telemetry.",
       design: "Employed a deep midnight aesthetic with subtle cyan-to-violet accent lines, monospace code inspection panels, and tactile micro-interactions.",
       development: "Architected in React 18+ and TypeScript with strict boundary typings, leveraging Vite for rapid build times and Motion for smooth entering transitions.",
+      technology: "TypeScript, React, Google Gemini SDK, Tailwind CSS, Vite, Motion.",
       challenges: "Managing asynchronous generation states and preventing UI stutter during intensive real-time token processing.",
       solution: "Separated prompt parsing into dedicated utility workers and utilized reactive state stores with defensive error boundaries.",
+      screenshots: "Dashboard view, prompt configuration panel, JSON result parser, dark mode UI.",
+      liveDemo: "",
+      github: "https://github.com/Daniyal5722/cortexiq-by-dnyl",
+      lessonsLearned: "Handling non-deterministic AI outputs requires extremely defensive frontend logic and robust error fallbacks to maintain user trust.",
       result: "Delivers an ultra-responsive, developer-grade intelligence environment with seamless interaction fidelity and clean extensibility."
     }
   },
@@ -128,8 +133,13 @@ export const PROJECTS: Project[] = [
       idea: "Create a focused, ad-free utility that highlights current weather metrics at a single glance with intuitive search and fast feedback.",
       design: "Constructed with clean atmospheric gradients, modern iconography, and distinct typographic hierarchy distinguishing key metric numbers from secondary labels.",
       development: "Developed using vanilla JavaScript utilizing asynchronous Fetch API calls, structured JSON parsing, and defensive error fallbacks for unavailable cities.",
+      technology: "JavaScript (ES6+), OpenWeather API, HTML5, CSS3, Vercel/Netlify deployment.",
       challenges: "Handling rate-limited external weather APIs and providing smooth degradation when location permissions or network connections are weak.",
       solution: "Implemented robust try-catch wrappers, graceful input validation, and user-friendly visual alerts on invalid location queries.",
+      screenshots: "Main dashboard, location search, dynamic background based on weather, mobile layout.",
+      liveDemo: "https://hamara-weather.netlify.app/",
+      github: "https://github.com/Daniyal5722/Hamara-Weather",
+      lessonsLearned: "Third-party APIs require careful error state design; anticipating network failures is as important as rendering the success state.",
       result: "Deployed live on Netlify with exceptional speed metrics and a clean, dependable everyday utility experience."
     }
   },
@@ -162,8 +172,13 @@ export const PROJECTS: Project[] = [
       idea: "Architect a local caching mechanism that stores consulted fatwas locally, allowing seamless offline reading and fast indexing.",
       design: "Adhered to modern Android Material guidelines with optimized button sizes, intuitive tab bars, and clear typography suited for Arabic and Urdu scripts.",
       development: "Engineered in Kotlin using Android SDK components, optimized ListView/RecyclerView viewholders, and background data synchronization.",
+      technology: "Kotlin, Android Studio, SQLite/Room, XML Layouts, REST APIs.",
       challenges: "Ensuring offline cache coherency and fast database lookups without bogging down low-tier mobile hardware.",
       solution: "Implemented efficient local data structures, lazy view binding, and defensive error handling for network edge cases.",
+      screenshots: "Home screen, offline fatwa reader, search interface, bilingual typography settings.",
+      liveDemo: "https://darulifta-bkfbzf6u.manus.space/",
+      github: "https://github.com/Daniyal5722/Darul-Ifta-Irshad-us-Saileen-app2",
+      lessonsLearned: "Mobile development for emerging markets requires relentless optimization of both memory footprints and disk I/O.",
       result: "Delivered a rock-solid native companion app that brings essential guidance directly to mobile users anywhere, anytime."
     }
   },
@@ -195,8 +210,13 @@ export const PROJECTS: Project[] = [
       idea: "Build a bespoke, lightweight match-3 algorithmic engine in Kotlin that manages 2D coordinate matrices with optimal efficiency.",
       design: "Created a fantasy neo-aesthetic with vibrant gem motifs, clean board borders, and immediate visual reactions upon valid combinations.",
       development: "Authored in Kotlin, utilizing 2D matrix traversal algorithms for match detection (horizontal, vertical, combos) and recursive tile replenishment.",
+      technology: "Kotlin, Android Canvas, XML Layouts, Threading & Coroutines, 2D Algorithms.",
       challenges: "Preventing infinite cascade loops while accurately computing multi-tile cascade multipliers in real-time.",
       solution: "Implemented discrete state transitions (IDLE, SWAPPING, CHECKING, CLEARING, DROPPING) to ensure deterministic gameplay.",
+      screenshots: "Game board, cascading animations, level complete overlay, high-score screen.",
+      liveDemo: "",
+      github: "https://github.com/Daniyal5722/mystic-match-by-dnyl",
+      lessonsLearned: "Game development fundamentally refines a developer's understanding of memory management, render loops, and strict state machine design.",
       result: "A captivating, glitch-free Android puzzle experience showcasing deep algorithmic and mobile design competence."
     }
   },
@@ -229,8 +249,13 @@ export const PROJECTS: Project[] = [
       idea: "Craft an original, bespoke platform that pulls real verified GitHub data, presents detailed project case studies, and delivers an unforgettable interaction feel.",
       design: "Sleek dark/light theme options, balanced negative space, refined Plus Jakarta Sans and JetBrains Mono typography, and purposeful interactive feedback.",
       development: "Constructed with React 19, TypeScript, Tailwind CSS v4, and Motion, with strict attention to semantic HTML and zero-error compilation.",
+      technology: "React, TypeScript, Tailwind CSS, Motion, Vite, Netlify/Vercel.",
       challenges: "Balancing rich animations with snappy performance across low-end mobile devices and high-refresh desktop monitors.",
       solution: "Used hardware-accelerated CSS transforms, GPU-powered Motion animations, and defensive localStorage caching for external APIs.",
+      screenshots: "Hero section, interactive skills grid, project modal, dark/light theme toggle.",
+      liveDemo: "https://daniyal-hayat-portfolio.vercel.app/",
+      github: "https://github.com/Daniyal5722/Daniyal-Hayat-Portfolio",
+      lessonsLearned: "A portfolio is never truly finished; it is a living document that must evolve gracefully alongside the developer's skill set.",
       result: "A world-class personal brand platform showcasing verified capabilities and real projects to employers, collaborators, and clients worldwide."
     }
   }
@@ -238,11 +263,10 @@ export const PROJECTS: Project[] = [
 
 export const SKILL_GROUPS: SkillGroup[] = [
   {
-    category: "Frontend Engineering",
+    category: "Frontend",
     subtitle: "Modern, responsive web applications",
     icon: "Layers",
     skills: [
-      { name: "TypeScript", icon: "Code", level: "Core Stack", description: "Strict typing, generic interfaces, scalable frontend state architectures", badge: "Advanced" },
       { name: "React / Next.js", icon: "Layers", level: "Core Stack", description: "Modern hooks, modular component trees, SSR/SSG patterns, Motion", badge: "Expert" },
       { name: "Tailwind CSS", icon: "Palette", level: "Core Stack", description: "Utility-first modern styling, responsive prefixes, custom design systems", badge: "Expert" },
       { name: "HTML5 & Semantic Web", icon: "Globe", level: "Foundational", description: "Accessible markup, SEO structured schema, WCAG AA compliance", badge: "Advanced" },
@@ -250,44 +274,54 @@ export const SKILL_GROUPS: SkillGroup[] = [
     ]
   },
   {
-    category: "Mobile Development",
-    subtitle: "Native Android & mobile architectures",
-    icon: "Smartphone",
+    category: "Programming",
+    subtitle: "Core languages & logic",
+    icon: "Code",
     skills: [
+      { name: "TypeScript", icon: "Code", level: "Core Stack", description: "Strict typing, generic interfaces, scalable frontend state architectures", badge: "Advanced" },
+      { name: "JavaScript", icon: "Code", level: "Core Stack", description: "ES6+, async/await, closures, prototype chain, DOM manipulation", badge: "Expert" },
       { name: "Kotlin", icon: "Smartphone", level: "Core Stack", description: "Modern native Android application engineering, concise functional syntax", badge: "Production" },
-      { name: "Android SDK", icon: "Cpu", level: "Core Stack", description: "Activity lifecycles, Intent routing, background tasks, Material layouts", badge: "Advanced" },
-      { name: "Offline Caching", icon: "Server", level: "Architecture", description: "Local persistence strategies for seamless offline data retrieval", badge: "Intermediate" },
-      { name: "Mobile UI Ergonomics", icon: "Palette", level: "Design", description: "Touch-friendly targets, bottom sheet navigations, responsive scaling", badge: "Advanced" }
+      { name: "Node.js & Express", icon: "Server", level: "Runtime", description: "Lightweight API servers, proxy routes, environment security", badge: "Advanced" }
     ]
   },
   {
-    category: "Backend & APIs",
-    subtitle: "Server integration & data communication",
-    icon: "Server",
-    skills: [
-      { name: "Node.js & Express", icon: "Server", level: "Runtime", description: "Lightweight API servers, proxy routes, environment security", badge: "Advanced" },
-      { name: "RESTful API Integration", icon: "Globe", level: "Core Stack", description: "Async data fetching, defensive error handling, token management", badge: "Expert" },
-      { name: "JSON Data Pipelines", icon: "Code", level: "Architecture", description: "Schema normalization, data parsing, client-side caching", badge: "Advanced" }
-    ]
-  },
-  {
-    category: "AI & Modern Tooling",
-    subtitle: "Next-gen developer ecosystem",
-    icon: "Cpu",
-    skills: [
-      { name: "Google Gemini AI SDK", icon: "Cpu", level: "Integration", description: "Model prompting, structured outputs, AI-assisted interface pipelines", badge: "Specialist" },
-      { name: "Git & GitHub", icon: "Github", level: "Workflow", description: "Branching strategies, commit history hygiene, continuous deployment", badge: "Expert" },
-      { name: "Vite & Build Tooling", icon: "Terminal", level: "DevOps", description: "Fast HMR bundling, tree-shaking, production optimization", badge: "Advanced" }
-    ]
-  },
-  {
-    category: "UI/UX & Design Sense",
+    category: "UI/UX",
     subtitle: "Visual craft & user experience",
     icon: "Palette",
     skills: [
       { name: "Responsive Systems", icon: "Smartphone", level: "Discipline", description: "Fluid scaling from 320px mobile to 4K ultra-wide displays", badge: "Expert" },
       { name: "Micro-Interactions", icon: "Sparkles", level: "Craft", description: "Subtle hover transitions, magnetic buttons, feedback indicators", badge: "Advanced" },
-      { name: "Dark & Light Theming", icon: "Palette", level: "System", description: "Cohesive color contrast ratios, CSS variables, theme toggling", badge: "Expert" }
+      { name: "Dark & Light Theming", icon: "Palette", level: "System", description: "Cohesive color contrast ratios, CSS variables, theme toggling", badge: "Expert" },
+      { name: "Mobile UI Ergonomics", icon: "Smartphone", level: "Design", description: "Touch-friendly targets, bottom sheet navigations, responsive scaling", badge: "Advanced" }
+    ]
+  },
+  {
+    category: "AI",
+    subtitle: "Next-gen intelligence",
+    icon: "Cpu",
+    skills: [
+      { name: "Google Gemini AI SDK", icon: "Cpu", level: "Integration", description: "Model prompting, structured outputs, AI-assisted interface pipelines", badge: "Specialist" },
+      { name: "Prompt Engineering", icon: "Terminal", level: "Skill", description: "Contextual token weighting, structured JSON responses, defensive prompting", badge: "Advanced" }
+    ]
+  },
+  {
+    category: "Tools",
+    subtitle: "Developer ecosystem",
+    icon: "Terminal",
+    skills: [
+      { name: "Git & GitHub", icon: "Github", level: "Workflow", description: "Branching strategies, commit history hygiene, continuous deployment", badge: "Expert" },
+      { name: "Vite & Build Tooling", icon: "Terminal", level: "DevOps", description: "Fast HMR bundling, tree-shaking, production optimization", badge: "Advanced" },
+      { name: "RESTful API Integration", icon: "Globe", level: "Core Stack", description: "Async data fetching, defensive error handling, token management", badge: "Expert" }
+    ]
+  },
+  {
+    category: "Other",
+    subtitle: "Specialized domains",
+    icon: "Layers",
+    skills: [
+      { name: "Android SDK", icon: "Cpu", level: "Mobile", description: "Activity lifecycles, Intent routing, background tasks, Material layouts", badge: "Advanced" },
+      { name: "Offline Caching", icon: "Server", level: "Architecture", description: "Local persistence strategies for seamless offline data retrieval", badge: "Intermediate" },
+      { name: "JSON Data Pipelines", icon: "Code", level: "Architecture", description: "Schema normalization, data parsing, client-side caching", badge: "Advanced" }
     ]
   }
 ];

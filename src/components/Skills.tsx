@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   Code2, 
@@ -28,6 +28,111 @@ interface SkillNode {
   icon: string;
   badge: string;
   connections: string[];
+}
+
+function OrbitVisualizer({ 
+  skills, 
+  hoveredSkill, 
+  setHoveredSkill, 
+  getIcon, 
+  activeSkillObj 
+}: { 
+  skills: SkillNode[], 
+  hoveredSkill: string | null, 
+  setHoveredSkill: (id: string | null) => void,
+  getIcon: (name: string) => React.ReactNode,
+  activeSkillObj: SkillNode | undefined
+}) {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
+  if (!mounted) return null;
+
+  // Split into 3 orbits based on category
+  const orbit1 = skills.filter(s => s.category === 'Frontend' || s.category === 'Programming');
+  const orbit2 = skills.filter(s => s.category === 'UI/UX' || s.category === 'AI');
+  const orbit3 = skills.filter(s => s.category === 'Tools' || s.category === 'Other');
+
+  const radii = [140, 240, 340];
+
+  const getPosition = (index: number, total: number, radius: number) => {
+    const angle = (index / total) * 2 * Math.PI - Math.PI / 2;
+    return {
+      x: Math.cos(angle) * radius,
+      y: Math.sin(angle) * radius
+    };
+  };
+
+  return (
+    <div className="relative w-full h-[600px] sm:h-[800px] flex items-center justify-center overflow-hidden hidden md:flex">
+      {/* Center Node */}
+      <div className="absolute z-30 w-24 h-24 rounded-full bg-cyan-500/10 border-2 border-cyan-500/50 flex flex-col items-center justify-center shadow-[0_0_30px_rgba(6,182,212,0.3)] backdrop-blur-md">
+        <span className="text-sm font-bold text-cyan-400 font-mono">DANIYAL</span>
+        <span className="text-[10px] text-cyan-600 font-mono tracking-widest uppercase mt-1">Core</span>
+      </div>
+
+      {/* Orbits & Nodes */}
+      {[orbit1, orbit2, orbit3].map((orbitGroup, orbitIdx) => {
+        const radius = radii[orbitIdx];
+        
+        return (
+          <div key={`orbit-${orbitIdx}`} className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            {/* Orbit Ring */}
+            <motion.div 
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 1, delay: orbitIdx * 0.2 }}
+              className="absolute rounded-full border border-slate-300/30 dark:border-slate-700/30"
+              style={{ width: radius * 2, height: radius * 2 }}
+            />
+            
+            {/* Nodes */}
+            {orbitGroup.map((node, i) => {
+              const pos = getPosition(i, orbitGroup.length, radius);
+              const isHovered = hoveredSkill === node.id;
+              const isConnected = hoveredSkill 
+                  ? (activeSkillObj?.connections.includes(node.name) || activeSkillObj?.name === node.name)
+                  : false;
+
+              return (
+                <motion.div
+                  key={node.id}
+                  initial={{ opacity: 0, x: 0, y: 0 }}
+                  animate={{ opacity: 1, x: pos.x, y: pos.y }}
+                  transition={{ type: 'spring', damping: 20, stiffness: 100, delay: orbitIdx * 0.2 + i * 0.05 }}
+                  className="absolute pointer-events-auto"
+                  onMouseEnter={() => {
+                    setHoveredSkill(node.id);
+                    soundManager.playHover();
+                  }}
+                  onMouseLeave={() => setHoveredSkill(null)}
+                  style={{ left: '50%', top: '50%', margin: '-24px 0 0 -24px' }}
+                >
+                  <div className={`relative flex flex-col items-center group cursor-pointer`}>
+                    <div className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 backdrop-blur-md ${
+                      isHovered 
+                        ? 'bg-cyan-500 shadow-[0_0_20px_rgba(6,182,212,0.6)] border-2 border-white scale-125 z-50' 
+                        : isConnected
+                          ? 'bg-blue-500/80 border-2 border-blue-300 scale-110 z-40'
+                          : 'bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 hover:scale-110'
+                    }`}>
+                      <div className={isHovered || isConnected ? 'text-white' : 'text-slate-600 dark:text-slate-400'}>
+                        {getIcon(node.icon)}
+                      </div>
+                    </div>
+                    
+                    <div className={`absolute top-full mt-2 text-center transition-all duration-300 whitespace-nowrap px-2 py-1 rounded bg-slate-900/90 text-white text-[10px] font-mono pointer-events-none ${isHovered || isConnected ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}>
+                      {node.name}
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        );
+      })}
+    </div>
+  );
 }
 
 export function Skills() {
@@ -216,8 +321,18 @@ export function Skills() {
               )}
             </div>
 
-            {/* Interactive Nodes Ecosystem Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            {/* Interactive Nodes Ecosystem Grid / Orbit */}
+            <div className="hidden md:block">
+              <OrbitVisualizer 
+                skills={displayedSkills} 
+                hoveredSkill={hoveredSkill}
+                setHoveredSkill={setHoveredSkill}
+                getIcon={getIcon}
+                activeSkillObj={activeSkillObj}
+              />
+            </div>
+
+            <div className="grid md:hidden grid-cols-2 sm:grid-cols-3 gap-4">
               {displayedSkills.map((node) => {
                 const isHovered = hoveredSkill === node.id;
                 const isConnected = hoveredSkill 

@@ -8,6 +8,11 @@
   }
 }
 
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
 /* Custom smooth scrollbar */
 ::-webkit-scrollbar {
   width: 8px;

@@ -47,10 +47,15 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
     idea: `Develop ${project.displayName} with modern development frameworks and structured design patterns.`,
     design: "High-contrast typographic hierarchy, tactile feedback, and intuitive navigation.",
     development: `Built using ${project.technologies.join(', ')} with strict attention to modular component structures.`,
+    technology: project.technologies.join(', '),
     challenges: "Ensuring zero layout shifts and high-speed data handling across all viewports.",
     solution: "Leveraged optimized asset loading and defensive exception handling routines.",
+    screenshots: "",
+    liveDemo: project.liveUrl || "",
+    github: project.githubUrl || "",
+    lessonsLearned: "",
     result: "Deployed and verified live, delivering responsive functionality and clean user interactions."
-  };
+  } as any;
 
   return (
     <AnimatePresence>
@@ -183,16 +188,22 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
                   <Cpu className="w-3.5 h-3.5 text-cyan-500" />
                   <span>06. Technology Stack</span>
                 </div>
-                <div className="flex flex-wrap gap-2">
-                  {project.technologies.map((tech, idx) => (
-                    <span
-                      key={idx}
-                      className="px-3 py-1 rounded-md text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700/60"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
+                {caseStudy.technology ? (
+                  <p className="text-sm sm:text-base leading-relaxed text-slate-700 dark:text-slate-300">
+                    {caseStudy.technology}
+                  </p>
+                ) : (
+                  <div className="flex flex-wrap gap-2">
+                    {project.technologies.map((tech, idx) => (
+                      <span
+                        key={idx}
+                        className="px-3 py-1 rounded-md text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700/60"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                )}
               </div>
 
               {/* 07. Key Challenges & Solution */}
@@ -216,16 +227,56 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
                 </div>
               </div>
 
-              {/* 09. Results & Impact */}
-              <div className="pt-6 space-y-2">
-                <div className="flex items-center gap-2 text-xs font-mono text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">
-                  <Trophy className="w-3.5 h-3.5" />
-                  <span>09. Results & Outcome</span>
+              {/* 09. Screenshots */}
+              {caseStudy.screenshots && (
+                <div className="pt-6 space-y-2">
+                  <div className="flex items-center gap-2 text-xs font-mono text-sky-600 dark:text-sky-400 uppercase tracking-wider">
+                    <span>09. Visual Architecture</span>
+                  </div>
+                  <p className="text-sm sm:text-base leading-relaxed text-slate-700 dark:text-slate-300">
+                    {caseStudy.screenshots}
+                  </p>
                 </div>
-                <p className="text-sm sm:text-base leading-relaxed text-slate-700 dark:text-slate-300">
-                  {caseStudy.result}
-                </p>
-              </div>
+              )}
+
+              {/* 10. Live Demo & 11. GitHub (Handled in footer typically, but let's add text if exists) */}
+              {(caseStudy.liveDemo || caseStudy.github) && (
+                <div className="pt-6 space-y-2">
+                  <div className="flex items-center gap-2 text-xs font-mono text-slate-600 dark:text-slate-400 uppercase tracking-wider">
+                    <span>10 & 11. Live Demo & Repository</span>
+                  </div>
+                  <div className="text-sm sm:text-base leading-relaxed text-slate-700 dark:text-slate-300 space-y-1">
+                    {caseStudy.liveDemo && <p>Live: <a href={caseStudy.liveDemo} target="_blank" rel="noreferrer" className="text-cyan-500 hover:underline">{caseStudy.liveDemo}</a></p>}
+                    {caseStudy.github && <p>GitHub: <a href={caseStudy.github} target="_blank" rel="noreferrer" className="text-cyan-500 hover:underline">{caseStudy.github}</a></p>}
+                  </div>
+                </div>
+              )}
+
+              {/* 12. Lessons Learned */}
+              {caseStudy.lessonsLearned && (
+                <div className="pt-6 space-y-2">
+                  <div className="flex items-center gap-2 text-xs font-mono text-amber-600 dark:text-amber-400 uppercase tracking-wider">
+                    <Lightbulb className="w-3.5 h-3.5" />
+                    <span>12. Lessons Learned</span>
+                  </div>
+                  <p className="text-sm sm:text-base leading-relaxed text-slate-700 dark:text-slate-300">
+                    {caseStudy.lessonsLearned}
+                  </p>
+                </div>
+              )}
+
+              {/* Results & Impact */}
+              {caseStudy.result && (
+                <div className="pt-6 space-y-2">
+                  <div className="flex items-center gap-2 text-xs font-mono text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">
+                    <Trophy className="w-3.5 h-3.5" />
+                    <span>Outcome & Impact</span>
+                  </div>
+                  <p className="text-sm sm:text-base leading-relaxed text-slate-700 dark:text-slate-300">
+                    {caseStudy.result}
+                  </p>
+                </div>
+              )}
             </div>
 
             {/* Key Features Checklist */}
