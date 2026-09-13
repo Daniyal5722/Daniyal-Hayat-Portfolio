@@ -71,15 +71,19 @@ export function Contact() {
         
         {/* Section Heading */}
         <div className="space-y-4 max-w-3xl mb-14">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-600 dark:text-cyan-400 text-xs font-mono uppercase tracking-widest">
-            <MessageSquare className="w-3.5 h-3.5" />
-            <span>Direct Inquiries & Collaboration</span>
+          <div className="flex items-center gap-3">
+            <span className="px-2.5 py-1 rounded-md bg-cyan-500/10 border border-cyan-500/30 text-cyan-600 dark:text-cyan-400 font-mono text-xs font-bold uppercase tracking-widest">
+              CONTACT // 04
+            </span>
+            <span className="text-xs font-mono text-slate-400 uppercase tracking-widest">
+              Initiate Transmission
+            </span>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 dark:text-white">
-            Let's Discuss Your Next Build
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.05]">
+            LET'S BUILD SOMETHING.
           </h2>
           <p className="text-base sm:text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
-            Have an engineering challenge, product redesign, mobile app build, or AI integration in mind? Reach out directly.
+            Have a web platform, native Android mobile app, or AI integration in mind? Let's turn ideas into high-performance reality.
           </p>
         </div>
 

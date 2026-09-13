@@ -15,18 +15,23 @@ import { Footer } from './components/Footer';
 import { ScrollProgress } from './components/ScrollProgress';
 import { ScrollToTop } from './components/ScrollToTop';
 import { RevealOnScroll } from './components/RevealOnScroll';
-import { BackgroundGrid } from './components/BackgroundGrid';
+import { LayeredBackground } from './components/LayeredBackground';
 import { CustomCursor } from './components/CustomCursor';
+import { Preloader } from './components/Preloader';
+import { SmoothScroll } from './components/SmoothScroll';
+import { CommandPalette } from './components/CommandPalette';
 import { ProjectModal } from './components/ProjectModal';
 import { ResumeModal } from './components/ResumeModal';
 import { EasterEggModal } from './components/EasterEggModal';
 import { Project } from './types';
 
 export default function App() {
+  const [loadingComplete, setLoadingComplete] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const [selectedCaseStudy, setSelectedCaseStudy] = useState<Project | null>(null);
   const [isResumeOpen, setIsResumeOpen] = useState(false);
   const [isEasterEggOpen, setIsEasterEggOpen] = useState(false);
+  const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
 
   const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
     try {
@@ -54,12 +59,12 @@ export default function App() {
     setIsDarkMode(!isDarkMode);
   };
 
-  // Keyboard shortcut listener for developer terminal (Cmd+K / Ctrl+K)
+  // Keyboard shortcut listener: Cmd+K opens CommandPalette, 5 clicks on logo opens CLI
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
         e.preventDefault();
-        setIsEasterEggOpen((prev) => !prev);
+        setIsCommandPaletteOpen((prev) => !prev);
       }
     };
     window.addEventListener('keydown', handleKeyDown);
@@ -100,104 +105,123 @@ export default function App() {
   }, []);
 
   return (
-    <div className={`min-h-screen relative selection:bg-cyan-500/30 selection:text-cyan-200 transition-colors duration-300 ${
-      isDarkMode ? 'bg-[#090a0f] text-slate-100' : 'bg-[#fafbfe] text-slate-900'
-    }`}>
-      {/* Interactive Custom Cursor */}
-      <CustomCursor />
+    <SmoothScroll>
+      <div className={`min-h-screen relative selection:bg-cyan-500/30 selection:text-cyan-200 transition-colors duration-300 ${
+        isDarkMode ? 'bg-[#090a0f] text-slate-100' : 'bg-[#fafbfe] text-slate-900'
+      }`}>
+        
+        {/* Fast (<750ms) cinematic preloader */}
+        {!loadingComplete && (
+          <Preloader onComplete={() => setLoadingComplete(true)} />
+        )}
 
-      {/* Ambient background grid & spotlight */}
-      <BackgroundGrid />
+        {/* Interactive Custom Cursor with badge modes */}
+        <CustomCursor />
 
-      {/* Top Scroll Indicator */}
-      <ScrollProgress />
+        {/* 6-Layer Cinematic Background System */}
+        <LayeredBackground />
 
-      {/* Navbar with Easter Egg & Resume triggers */}
-      <Navbar 
-        activeSection={activeSection} 
-        isDarkMode={isDarkMode} 
-        onToggleTheme={toggleTheme}
-        onOpenResume={() => setIsResumeOpen(true)}
-        onOpenEasterEgg={() => setIsEasterEggOpen(true)}
-      />
+        {/* Top Scroll Indicator */}
+        <ScrollProgress />
 
-      <main className="relative z-10">
-        {/* Hero Section */}
-        <Hero onOpenResume={() => setIsResumeOpen(true)} />
+        {/* Navbar with Sound, Theme, CV, and Command Palette triggers */}
+        <Navbar 
+          activeSection={activeSection} 
+          isDarkMode={isDarkMode} 
+          onToggleTheme={toggleTheme}
+          onOpenResume={() => setIsResumeOpen(true)}
+          onOpenEasterEgg={() => setIsEasterEggOpen(true)}
+          onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
+        />
 
-        {/* Continuous Tech Stack Marquee */}
-        <TechStack />
+        <main className="relative z-10">
+          {/* Hero Section */}
+          <Hero onOpenResume={() => setIsResumeOpen(true)} />
 
-        {/* About Section */}
-        <RevealOnScroll direction="up" distance={30} duration={600}>
-          <About />
-        </RevealOnScroll>
+          {/* Continuous Dual Tech Stack Marquee */}
+          <TechStack />
 
-        {/* Featured Flagship Project */}
-        <RevealOnScroll direction="up" distance={30} duration={600}>
-          <FeaturedProject onOpenCaseStudy={(proj) => setSelectedCaseStudy(proj)} />
-        </RevealOnScroll>
+          {/* About Section */}
+          <RevealOnScroll direction="up" distance={30} duration={600}>
+            <About />
+          </RevealOnScroll>
 
-        {/* Projects Centerpiece Showcase */}
-        <RevealOnScroll direction="up" distance={30} duration={600}>
-          <Projects onOpenCaseStudy={(proj) => setSelectedCaseStudy(proj)} />
-        </RevealOnScroll>
+          {/* Featured Flagship Project */}
+          <RevealOnScroll direction="up" distance={30} duration={600}>
+            <FeaturedProject onOpenCaseStudy={(proj) => setSelectedCaseStudy(proj)} />
+          </RevealOnScroll>
 
-        {/* Skills & Architecture Grid */}
-        <RevealOnScroll direction="up" distance={30} duration={600}>
-          <Skills />
-        </RevealOnScroll>
+          {/* Projects Centerpiece Showcase */}
+          <RevealOnScroll direction="up" distance={30} duration={600}>
+            <Projects onOpenCaseStudy={(proj) => setSelectedCaseStudy(proj)} />
+          </RevealOnScroll>
 
-        {/* Experience Timeline */}
-        <RevealOnScroll direction="up" distance={30} duration={600}>
-          <Experience />
-        </RevealOnScroll>
+          {/* Skills & Interconnected Technology Matrix */}
+          <RevealOnScroll direction="up" distance={30} duration={600}>
+            <Skills />
+          </RevealOnScroll>
 
-        {/* Services & Technical Offerings */}
-        <RevealOnScroll direction="up" distance={30} duration={600}>
-          <Services />
-        </RevealOnScroll>
+          {/* Experience Timeline */}
+          <RevealOnScroll direction="up" distance={30} duration={600}>
+            <Experience />
+          </RevealOnScroll>
 
-        {/* Education & Foundations */}
-        <RevealOnScroll direction="up" distance={30} duration={600}>
-          <Education />
-        </RevealOnScroll>
+          {/* Services & Technical Offerings */}
+          <RevealOnScroll direction="up" distance={30} duration={600}>
+            <Services />
+          </RevealOnScroll>
 
-        {/* GitHub & Open Source Activity */}
-        <RevealOnScroll direction="up" distance={30} duration={600}>
-          <GithubSection />
-        </RevealOnScroll>
+          {/* Education & Foundations */}
+          <RevealOnScroll direction="up" distance={30} duration={600}>
+            <Education />
+          </RevealOnScroll>
 
-        {/* Contact Inquiry Section */}
-        <RevealOnScroll direction="up" distance={30} duration={600}>
-          <Contact />
-        </RevealOnScroll>
-      </main>
+          {/* GitHub & Open Source Activity */}
+          <RevealOnScroll direction="up" distance={30} duration={600}>
+            <GithubSection />
+          </RevealOnScroll>
 
-      {/* Footer */}
-      <Footer />
+          {/* Contact Transmission Section */}
+          <RevealOnScroll direction="up" distance={30} duration={600}>
+            <Contact />
+          </RevealOnScroll>
+        </main>
 
-      {/* Floating Scroll to Top button */}
-      <ScrollToTop />
+        {/* Footer */}
+        <Footer />
 
-      {/* Case Study Modal */}
-      <ProjectModal 
-        project={selectedCaseStudy}
-        isOpen={Boolean(selectedCaseStudy)}
-        onClose={() => setSelectedCaseStudy(null)}
-      />
+        {/* Floating Scroll to Top button */}
+        <ScrollToTop />
 
-      {/* Resume / CV Modal */}
-      <ResumeModal 
-        isOpen={isResumeOpen}
-        onClose={() => setIsResumeOpen(false)}
-      />
+        {/* Command Palette (Cmd+K) */}
+        <CommandPalette
+          isOpen={isCommandPaletteOpen}
+          onClose={() => setIsCommandPaletteOpen(false)}
+          onOpenResume={() => setIsResumeOpen(true)}
+          onOpenEasterEgg={() => setIsEasterEggOpen(true)}
+          onToggleTheme={toggleTheme}
+          isDarkMode={isDarkMode}
+        />
 
-      {/* Tasteful CLI Easter Egg Terminal */}
-      <EasterEggModal 
-        isOpen={isEasterEggOpen}
-        onClose={() => setIsEasterEggOpen(false)}
-      />
-    </div>
+        {/* Case Study Deep-Dive Modal */}
+        <ProjectModal 
+          project={selectedCaseStudy}
+          isOpen={Boolean(selectedCaseStudy)}
+          onClose={() => setSelectedCaseStudy(null)}
+        />
+
+        {/* Resume / CV Modal */}
+        <ResumeModal 
+          isOpen={isResumeOpen}
+          onClose={() => setIsResumeOpen(false)}
+        />
+
+        {/* Tasteful CLI Easter Egg Terminal */}
+        <EasterEggModal 
+          isOpen={isEasterEggOpen}
+          onClose={() => setIsEasterEggOpen(false)}
+        />
+      </div>
+    </SmoothScroll>
   );
 }
