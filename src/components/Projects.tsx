@@ -112,7 +112,7 @@ function ProjectShowcase({ project, index, onOpenCaseStudy }: { project: Project
           )}
         </div>
 
-        <div className="flex items-center gap-4 pt-2">
+        <div className="flex items-center flex-wrap gap-3 pt-2">
           <button
             onClick={() => onOpenCaseStudy(project)}
             className="group/btn inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-950 font-semibold text-sm transition-transform hover:scale-105"
@@ -121,13 +121,19 @@ function ProjectShowcase({ project, index, onOpenCaseStudy }: { project: Project
             <ArrowUpRight className="w-4 h-4 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
           </button>
           
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-wrap">
             {project.liveUrl && (
-              <a href={project.liveUrl} target="_blank" rel="noreferrer" className="p-2.5 rounded-full bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 hover:bg-cyan-500 hover:text-slate-950 transition-colors">
+              <a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-cyan-500 text-slate-950 font-bold text-xs uppercase tracking-wider hover:bg-cyan-400 transition-colors shadow-sm"
+              >
                 <Globe className="w-4 h-4" />
+                <span>Live Demo</span>
               </a>
             )}
-            <a href={project.githubUrl} target="_blank" rel="noreferrer" className="p-2.5 rounded-full border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+            <a href={project.githubUrl} target="_blank" rel="noreferrer" className="p-2.5 rounded-full border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" title="GitHub Repository">
               <Github className="w-4 h-4" />
             </a>
           </div>
