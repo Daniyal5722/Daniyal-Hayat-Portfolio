@@ -1,19 +1,43 @@
-import { motion, useMotionValue, useSpring, useTransform } from 'motion/react';
-import React, { useRef, useState } from 'react';
-import { Github, Folder, Smartphone, Cpu, CloudSun, Layers, ArrowUpRight, Star, RefreshCw, Search, X, Clock, ExternalLink, Globe } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from 'motion/react';
+import { 
+  Github, 
+  Folder, 
+  Smartphone, 
+  Cpu, 
+  CloudSun, 
+  Layers, 
+  ArrowUpRight, 
+  Star, 
+  RefreshCw, 
+  Search, 
+  X, 
+  Clock, 
+  ExternalLink, 
+  Globe, 
+  BookOpen,
+  Sparkles,
+  CheckCircle2,
+  Code
+} from 'lucide-react';
 import { useGitHubRepos } from '../hooks/useGitHubRepos';
 import { Project } from '../types';
 import { LIVE_DEPLOYMENTS } from '../data/portfolioData';
 import { getEstimatedReadingTime } from '../utils/readingTime';
+
+interface ProjectsProps {
+  onOpenCaseStudy: (project: Project) => void;
+}
 
 interface ProjectCardProps {
   key?: React.Key;
   project: Project;
   index: number;
   getIcon: (iconName: string) => React.ReactNode;
+  onOpenCaseStudy: (project: Project) => void;
 }
 
-function ProjectCard({ project, index, getIcon }: ProjectCardProps) {
+function ProjectCard({ project, index, getIcon, onOpenCaseStudy }: ProjectCardProps) {
   const ref = useRef<HTMLDivElement>(null);
 
   const x = useMotionValue(0);
@@ -22,8 +46,8 @@ function ProjectCard({ project, index, getIcon }: ProjectCardProps) {
   const mouseXSpring = useSpring(x, { stiffness: 400, damping: 25 });
   const mouseYSpring = useSpring(y, { stiffness: 400, damping: 25 });
 
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["15deg", "-15deg"]);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-15deg", "15deg"]);
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["10deg", "-10deg"]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-10deg", "10deg"]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = ref.current?.getBoundingClientRect();
@@ -61,55 +85,53 @@ function ProjectCard({ project, index, getIcon }: ProjectCardProps) {
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.5, delay: index * 0.05 }}
-        className="group relative rounded-2xl dark:bg-slate-900/90 bg-white dark:border-slate-800 border-slate-200/90 hover:border-cyan-500/60 p-6 flex flex-col justify-between backdrop-blur-xl shadow-lg dark:shadow-2xl transition-colors cursor-pointer h-full"
+        transition={{ duration: 0.4, delay: index * 0.05 }}
+        className="group relative rounded-3xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 hover:border-cyan-500/50 dark:hover:border-cyan-500/50 p-6 sm:p-7 flex flex-col justify-between backdrop-blur-xl shadow-md hover:shadow-xl transition-all duration-300 h-full"
       >
-        <div style={{ transform: "translateZ(40px)", transformStyle: "preserve-3d" }} className="h-full flex flex-col justify-between">
+        <div style={{ transform: "translateZ(30px)", transformStyle: "preserve-3d" }} className="h-full flex flex-col justify-between">
           <div>
             {/* Top Row: Icon & Category & Stars */}
-            <div className="flex items-center justify-between mb-6 gap-2">
-              <div className="w-10 h-10 rounded-xl dark:bg-slate-950 bg-slate-100 dark:border-slate-800 border-slate-200 flex items-center justify-center group-hover:scale-110 transition-transform shrink-0">
+            <div className="flex items-center justify-between mb-5 gap-2">
+              <div className="w-11 h-11 rounded-2xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center group-hover:scale-110 transition-transform shrink-0">
                 {getIcon(project.iconName)}
               </div>
-              <div className="flex items-center gap-2 flex-wrap justify-end">
+
+              <div className="flex items-center gap-1.5 flex-wrap justify-end">
                 {project.liveUrl && (
-                  <a
-                    href={project.liveUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 text-xs font-mono hover:bg-emerald-500/20 transition-all hover:scale-105"
-                    title={`Open live site: ${project.liveUrl}`}
-                  >
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-pulse" />
-                    <span>Live App</span>
-                  </a>
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 text-[11px] font-mono font-medium">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                    <span>Live</span>
+                  </span>
                 )}
-                <span
-                  className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full dark:bg-slate-950/80 bg-slate-100 dark:border-slate-800 border-slate-200 dark:text-slate-300 text-slate-700 text-xs font-mono"
-                  title="Estimated Reading Time"
-                >
+
+                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-[11px] font-mono">
                   <Clock className="w-3 h-3 text-cyan-500" />
                   <span>{getEstimatedReadingTime(project)}</span>
                 </span>
+
                 {project.stars !== undefined && project.stars > 0 && (
-                  <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-500 dark:text-amber-300 text-xs font-mono">
+                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-600 dark:text-amber-400 text-[11px] font-mono">
                     <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
                     <span>{project.stars}</span>
                   </span>
                 )}
-                <span className="px-3 py-1 rounded-full dark:bg-slate-950/80 bg-slate-100 dark:border-slate-800 border-slate-200 dark:text-slate-400 text-slate-600 text-xs font-mono">
+
+                <span className="px-2.5 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-[11px] font-mono">
                   {project.category}
                 </span>
               </div>
             </div>
 
             {/* Title */}
-            <h3 className="text-xl font-bold dark:text-white text-slate-900 mb-2 group-hover:text-cyan-500 transition-colors">
+            <h3 
+              onClick={() => onOpenCaseStudy(project)}
+              className="text-xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors cursor-pointer"
+            >
               {project.displayName}
             </h3>
 
             {/* Description */}
-            <p className="dark:text-slate-300 text-slate-600 text-sm leading-relaxed mb-6 line-clamp-3">
+            <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-5 line-clamp-3">
               {project.description}
             </p>
           </div>
@@ -120,25 +142,30 @@ function ProjectCard({ project, index, getIcon }: ProjectCardProps) {
               {project.technologies.map((tech, techIdx) => (
                 <span
                   key={techIdx}
-                  className="px-2.5 py-1 rounded-md dark:bg-slate-950/60 bg-slate-100 dark:border-slate-800 border-slate-200 text-[11px] font-mono dark:text-slate-300 text-slate-700"
+                  className="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-[11px] font-mono text-slate-700 dark:text-slate-300"
                 >
                   {tech}
                 </span>
               ))}
             </div>
 
-            {/* Footer Link Buttons */}
-            <div className="pt-4 dark:border-slate-800/80 border-slate-200 flex flex-wrap items-center justify-between gap-2">
-              <span className="text-xs font-mono dark:text-slate-400 text-slate-500">
-                Language: <strong className="dark:text-slate-200 text-slate-800">{project.language}</strong>
-              </span>
+            {/* Footer Buttons */}
+            <div className="pt-4 border-t border-slate-100 dark:border-slate-800/80 flex flex-wrap items-center justify-between gap-2">
+              <button
+                onClick={() => onOpenCaseStudy(project)}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-cyan-500/10 dark:hover:bg-cyan-500/15 border border-slate-200 dark:border-slate-700 text-xs font-semibold text-cyan-600 dark:text-cyan-400 transition-colors cursor-pointer"
+              >
+                <BookOpen className="w-3.5 h-3.5" />
+                <span>Case Study</span>
+              </button>
+
               <div className="flex items-center gap-2">
                 {project.liveUrl && (
                   <a
                     href={project.liveUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs font-mono transition-all shadow-sm shadow-cyan-500/20 hover:scale-105"
+                    className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs font-mono transition-all shadow-xs"
                     title={`Open live app for ${project.displayName}`}
                   >
                     <ExternalLink className="w-3.5 h-3.5" />
@@ -149,7 +176,7 @@ function ProjectCard({ project, index, getIcon }: ProjectCardProps) {
                   href={project.githubUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg dark:bg-slate-950 bg-slate-100 hover:dark:bg-slate-800 hover:bg-slate-200 dark:border-slate-800 border-slate-200 text-xs font-mono text-cyan-600 dark:text-cyan-400 hover:text-cyan-500 transition-colors"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-xs font-mono text-slate-700 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors"
                   title="View GitHub Repository"
                 >
                   <Github className="w-3.5 h-3.5" />
@@ -164,18 +191,25 @@ function ProjectCard({ project, index, getIcon }: ProjectCardProps) {
   );
 }
 
-export function Projects() {
+export function Projects({ onOpenCaseStudy }: ProjectsProps) {
   const { projects, isSyncing, lastSynced, refreshRepos } = useGitHubRepos();
   const [searchTerm, setSearchTerm] = useState('');
-  const [activeCategory, setActiveCategory] = useState<'all' | 'live' | 'mobile' | 'web'>('all');
+  const [activeCategory, setActiveCategory] = useState<string>('all');
 
-  const liveProjectsCount = projects.filter((p) => Boolean(p.liveUrl)).length;
+  const categories = [
+    { id: 'all', label: 'All Projects' },
+    { id: 'live', label: 'Live Deployments' },
+    { id: 'web', label: 'Web Platforms' },
+    { id: 'mobile', label: 'Mobile (Kotlin)' },
+    { id: 'ai', label: 'AI & Tools' }
+  ];
 
   const filteredProjects = projects.filter((project) => {
     // Category filter
     if (activeCategory === 'live' && !project.liveUrl) return false;
     if (activeCategory === 'mobile' && !project.category.toLowerCase().includes('mobile') && project.language !== 'Kotlin') return false;
-    if (activeCategory === 'web' && !project.category.toLowerCase().includes('web') && project.language === 'Kotlin') return false;
+    if (activeCategory === 'web' && (!project.category.toLowerCase().includes('web') || project.language === 'Kotlin')) return false;
+    if (activeCategory === 'ai' && !project.category.toLowerCase().includes('ai') && !project.technologies.some(t => t.toLowerCase().includes('ai') || t.toLowerCase().includes('gemini'))) return false;
 
     // Search filter
     const term = searchTerm.toLowerCase();
@@ -189,48 +223,57 @@ export function Projects() {
   const getIcon = (iconName: string) => {
     switch (iconName) {
       case 'Smartphone':
-        return <Smartphone className="w-5 h-5 text-cyan-400" />;
+        return <Smartphone className="w-5 h-5 text-cyan-500" />;
       case 'Cpu':
-        return <Cpu className="w-5 h-5 text-violet-400" />;
+        return <Cpu className="w-5 h-5 text-purple-500" />;
       case 'CloudSun':
-        return <CloudSun className="w-5 h-5 text-blue-400" />;
+        return <CloudSun className="w-5 h-5 text-blue-500" />;
       case 'Layers':
-        return <Layers className="w-5 h-5 text-emerald-400" />;
+        return <Layers className="w-5 h-5 text-emerald-500" />;
       case 'Github':
-        return <Github className="w-5 h-5 text-cyan-400" />;
+        return <Github className="w-5 h-5 text-cyan-500" />;
       default:
-        return <Folder className="w-5 h-5 text-cyan-400" />;
+        return <Folder className="w-5 h-5 text-cyan-500" />;
     }
   };
 
   return (
-    <section id="projects" className="py-24 dark:bg-[#090a0f] bg-slate-50 relative border-t dark:border-slate-900 border-slate-200 transition-colors duration-300">
+    <section id="projects" className="py-24 relative border-t dark:border-slate-800/80 border-slate-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header with Live Sync Status */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
-          <div>
-            <div className="flex items-center gap-3 mb-3">
-              <span className="text-cyan-500 font-mono text-xs uppercase tracking-widest">PORTFOLIO WORK</span>
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+          <div className="space-y-3 max-w-2xl">
+            <div className="flex items-center gap-3">
+              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-600 dark:text-cyan-400 text-xs font-mono uppercase tracking-widest">
+                <Folder className="w-3.5 h-3.5" />
+                <span>Selected Portfolio Work</span>
+              </span>
+
               <button
                 onClick={refreshRepos}
                 disabled={isSyncing}
-                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full dark:bg-slate-900 bg-white dark:border-slate-800 border-slate-200 text-[11px] font-mono dark:text-slate-300 text-slate-700 hover:text-cyan-500 transition-colors shadow-sm"
+                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-[11px] font-mono text-slate-700 dark:text-slate-300 hover:text-cyan-500 transition-colors shadow-xs"
                 title="Sync with GitHub API"
               >
                 <RefreshCw className={`w-3 h-3 ${isSyncing ? 'animate-spin text-cyan-500' : ''}`} />
-                <span>{isSyncing ? 'Syncing...' : lastSynced ? `Synced ${lastSynced}` : 'Live GitHub Sync'}</span>
+                <span>{isSyncing ? 'Syncing...' : lastSynced ? `Synced ${lastSynced}` : 'Sync with GitHub'}</span>
               </button>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-bold dark:text-white text-slate-900 tracking-tight">
-              Live Applications & Repositories
+            
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 dark:text-white">
+              Production Work & Case Studies
             </h2>
+            <p className="text-base text-slate-600 dark:text-slate-400">
+              Each project is accompanied by architectural breakdowns, real GitHub source links, and live production endpoints.
+            </p>
           </div>
+
           <a
             href="https://github.com/Daniyal5722?tab=repositories"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-xs font-mono dark:text-slate-300 text-slate-600 hover:text-cyan-500 transition-colors group"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs font-mono text-slate-700 dark:text-slate-300 hover:text-cyan-500 transition-colors group shadow-xs shrink-0 self-start md:self-auto"
           >
             <span>View all on GitHub</span>
             <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -238,12 +281,12 @@ export function Projects() {
         </div>
 
         {/* Highlighted Live Deployments Bar */}
-        <div className="mb-12 p-6 rounded-2xl bg-gradient-to-r dark:from-cyan-950/40 dark:via-slate-900/80 dark:to-blue-950/40 from-cyan-50 via-white to-blue-50 dark:border-cyan-500/20 border-cyan-500/30 border shadow-xl backdrop-blur-xl">
-          <div className="flex items-center gap-2 mb-4">
+        <div className="mb-14 p-6 sm:p-8 rounded-3xl bg-gradient-to-r dark:from-cyan-950/30 dark:via-slate-900/60 dark:to-blue-950/30 from-cyan-50 via-white to-blue-50 border border-cyan-500/20 shadow-xl backdrop-blur-xl">
+          <div className="flex items-center gap-2.5 mb-5">
             <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-            <h3 className="dark:text-white text-slate-900 font-semibold text-sm tracking-wide uppercase font-mono flex items-center gap-2">
+            <h3 className="text-slate-900 dark:text-white font-bold text-sm tracking-wide uppercase font-mono flex items-center gap-2">
               <Globe className="w-4 h-4 text-cyan-500" />
-              <span>Verified Live Production Websites & Apps</span>
+              <span>Direct Live Deployments</span>
             </h3>
           </div>
           
@@ -251,40 +294,40 @@ export function Projects() {
             {LIVE_DEPLOYMENTS.map((deploy, idx) => (
               <div
                 key={idx}
-                className="p-4 rounded-xl dark:bg-slate-950/80 bg-white dark:border-slate-800/80 border border-slate-200 hover:border-cyan-500/40 transition-all flex flex-col justify-between group shadow-sm"
+                className="p-5 rounded-2xl bg-white dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 hover:border-cyan-500/40 transition-all flex flex-col justify-between group shadow-sm"
               >
                 <div>
                   <div className="flex items-center justify-between gap-2 mb-2">
                     <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 text-[10px] font-mono font-medium">
                       {deploy.badge}
                     </span>
-                    <span className="text-[11px] font-mono dark:text-slate-400 text-slate-500">
+                    <span className="text-[11px] font-mono text-slate-500">
                       {deploy.type}
                     </span>
                   </div>
-                  <h4 className="dark:text-white text-slate-900 font-bold text-sm mb-1 group-hover:text-cyan-500 transition-colors">
+                  <h4 className="text-slate-900 dark:text-white font-bold text-sm mb-1 group-hover:text-cyan-500 transition-colors">
                     {deploy.title}
                   </h4>
-                  <p className="dark:text-slate-400 text-slate-600 text-xs mb-4 line-clamp-2">
+                  <p className="text-slate-600 dark:text-slate-400 text-xs mb-4 line-clamp-2">
                     {deploy.description}
                   </p>
                 </div>
 
-                <div className="flex items-center gap-2 pt-2 dark:border-slate-800/60 border-slate-200 border-t">
+                <div className="flex items-center gap-2 pt-3 border-t border-slate-100 dark:border-slate-800">
                   <a
                     href={deploy.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs font-mono transition-all shadow-sm shadow-cyan-500/10 hover:scale-[1.02]"
+                    className="flex-1 inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs font-mono transition-all shadow-xs hover:scale-[1.02]"
                   >
                     <ExternalLink className="w-3.5 h-3.5" />
-                    <span>Open Live Site</span>
+                    <span>Launch Site</span>
                   </a>
                   <a
                     href={deploy.githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2 rounded-lg dark:bg-slate-900 bg-slate-100 hover:dark:bg-slate-800 hover:bg-slate-200 dark:border-slate-800 border-slate-200 dark:text-slate-300 text-slate-700 hover:text-cyan-500 transition-colors"
+                    className="p-2 rounded-lg bg-slate-100 dark:bg-slate-900 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:text-cyan-500 transition-colors"
                     title="View Source Code"
                   >
                     <Github className="w-3.5 h-3.5" />
@@ -297,69 +340,37 @@ export function Projects() {
 
         {/* Filter Tabs & Search Bar */}
         <div className="mb-10 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
-          
-          {/* Quick Filter Buttons */}
-          <div className="flex flex-wrap items-center gap-2">
-            <button
-              onClick={() => setActiveCategory('all')}
-              className={`px-4 py-2 rounded-xl text-xs font-mono transition-all ${
-                activeCategory === 'all'
-                  ? 'bg-cyan-500 text-slate-950 font-bold shadow-md shadow-cyan-500/20'
-                  : 'dark:bg-slate-900/80 bg-white dark:text-slate-400 text-slate-700 hover:text-slate-900 hover:dark:text-white dark:border-slate-800 border-slate-200 border'
-              }`}
-            >
-              All Repositories ({projects.length})
-            </button>
-            <button
-              onClick={() => setActiveCategory('live')}
-              className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-mono transition-all ${
-                activeCategory === 'live'
-                  ? 'bg-emerald-500 text-slate-950 font-bold shadow-md shadow-emerald-500/20'
-                  : 'dark:bg-slate-900/80 bg-white text-emerald-600 dark:text-emerald-400 hover:text-emerald-500 border border-emerald-500/30'
-              }`}
-            >
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span>Live Apps & Sites ({liveProjectsCount})</span>
-            </button>
-            <button
-              onClick={() => setActiveCategory('web')}
-              className={`px-4 py-2 rounded-xl text-xs font-mono transition-all ${
-                activeCategory === 'web'
-                  ? 'bg-cyan-500 text-slate-950 font-bold shadow-md shadow-cyan-500/20'
-                  : 'dark:bg-slate-900/80 bg-white dark:text-slate-400 text-slate-700 hover:text-slate-900 hover:dark:text-white dark:border-slate-800 border-slate-200 border'
-              }`}
-            >
-              Web Platforms
-            </button>
-            <button
-              onClick={() => setActiveCategory('mobile')}
-              className={`px-4 py-2 rounded-xl text-xs font-mono transition-all ${
-                activeCategory === 'mobile'
-                  ? 'bg-cyan-500 text-slate-950 font-bold shadow-md shadow-cyan-500/20'
-                  : 'dark:bg-slate-900/80 bg-white dark:text-slate-400 text-slate-700 hover:text-slate-900 hover:dark:text-white dark:border-slate-800 border-slate-200 border'
-              }`}
-            >
-              Mobile Apps
-            </button>
+          {/* Category Filter Pills */}
+          <div className="flex flex-wrap items-center gap-1.5">
+            {categories.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveCategory(tab.id)}
+                className={`px-3.5 py-1.5 rounded-full text-xs font-mono transition-all cursor-pointer ${
+                  activeCategory === tab.id
+                    ? 'bg-cyan-500 text-slate-950 font-bold shadow-xs'
+                    : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
           </div>
 
-          {/* Search Bar */}
-          <div className="relative w-full md:w-80">
-            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-              <Search className="w-4 h-4" />
-            </div>
+          {/* Search Input */}
+          <div className="relative w-full md:w-72">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
             <input
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Filter by tech or keyword..."
-              className="w-full pl-10 pr-9 py-2.5 rounded-xl dark:bg-slate-900/90 bg-white dark:border-slate-800 border-slate-200 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 dark:text-white text-slate-900 text-xs outline-none transition-all placeholder:text-slate-400 backdrop-blur-md shadow-sm"
+              placeholder="Search projects or tech..."
+              className="w-full pl-9 pr-8 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 text-xs font-mono focus:outline-none focus:border-cyan-500"
             />
             {searchTerm && (
               <button
                 onClick={() => setSearchTerm('')}
-                className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:dark:text-white hover:text-slate-900"
-                aria-label="Clear search"
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
               >
                 <X className="w-3.5 h-3.5" />
               </button>
@@ -367,22 +378,32 @@ export function Projects() {
           </div>
         </div>
 
-        {/* Project Grid with 3D Tilt Cards */}
-        {filteredProjects.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredProjects.map((project, idx) => (
-              <ProjectCard key={project.id} project={project} index={idx} getIcon={getIcon} />
+        {/* Projects Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <AnimatePresence>
+            {filteredProjects.map((project, index) => (
+              <ProjectCard
+                key={project.id}
+                project={project}
+                index={index}
+                getIcon={getIcon}
+                onOpenCaseStudy={onOpenCaseStudy}
+              />
             ))}
-          </div>
-        ) : (
-          <div className="py-16 text-center rounded-2xl dark:bg-slate-900/40 bg-white border dark:border-slate-800 border-slate-200 shadow-sm">
-            <p className="dark:text-slate-400 text-slate-600 text-sm font-mono mb-3">No repositories found matching your selection.</p>
+          </AnimatePresence>
+        </div>
+
+        {filteredProjects.length === 0 && (
+          <div className="text-center py-16 p-8 rounded-2xl bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800">
+            <p className="text-slate-500 dark:text-slate-400 text-sm">
+              No projects found matching "<span className="text-cyan-500">{searchTerm}</span>" in category "{activeCategory}".
+            </p>
             <button
               onClick={() => {
                 setSearchTerm('');
                 setActiveCategory('all');
               }}
-              className="px-4 py-2 rounded-xl dark:bg-slate-800 bg-slate-100 hover:dark:bg-slate-700 hover:bg-slate-200 text-xs font-mono text-cyan-600 dark:text-cyan-300 transition-colors border dark:border-slate-700 border-slate-300"
+              className="mt-4 px-4 py-2 rounded-lg bg-cyan-500 text-slate-950 font-bold text-xs font-mono"
             >
               Reset Filters
             </button>

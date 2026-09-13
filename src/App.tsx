@@ -1,23 +1,37 @@
 import { useState, useEffect } from 'react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
+import { TechStack } from './components/TechStack';
 import { About } from './components/About';
 import { FeaturedProject } from './components/FeaturedProject';
 import { Projects } from './components/Projects';
+import { Experience } from './components/Experience';
+import { Education } from './components/Education';
 import { Skills } from './components/Skills';
+import { Services } from './components/Services';
 import { GithubSection } from './components/GithubSection';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { ScrollProgress } from './components/ScrollProgress';
 import { ScrollToTop } from './components/ScrollToTop';
 import { RevealOnScroll } from './components/RevealOnScroll';
+import { BackgroundGrid } from './components/BackgroundGrid';
+import { CustomCursor } from './components/CustomCursor';
+import { ProjectModal } from './components/ProjectModal';
+import { ResumeModal } from './components/ResumeModal';
+import { EasterEggModal } from './components/EasterEggModal';
+import { Project } from './types';
 
 export default function App() {
   const [activeSection, setActiveSection] = useState('home');
+  const [selectedCaseStudy, setSelectedCaseStudy] = useState<Project | null>(null);
+  const [isResumeOpen, setIsResumeOpen] = useState(false);
+  const [isEasterEggOpen, setIsEasterEggOpen] = useState(false);
+
   const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
     try {
       const saved = localStorage.getItem('daniyal_portfolio_theme');
-      return saved ? saved === 'dark' : true; // Dark by default
+      return saved ? saved === 'dark' : true;
     } catch (e) {
       return true;
     }
@@ -40,6 +54,19 @@ export default function App() {
     setIsDarkMode(!isDarkMode);
   };
 
+  // Keyboard shortcut listener for developer terminal (Cmd+K / Ctrl+K)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setIsEasterEggOpen((prev) => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  // Active section scroll spy
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY < 120) {
@@ -54,7 +81,7 @@ export default function App() {
         return;
       }
 
-      const sections = ['contact', 'github', 'skills', 'projects', 'about', 'home'];
+      const sections = ['contact', 'github', 'services', 'education', 'experience', 'skills', 'projects', 'about', 'home'];
       for (const sectionId of sections) {
         const element = document.getElementById(sectionId);
         if (element) {
@@ -73,32 +100,104 @@ export default function App() {
   }, []);
 
   return (
-    <div className={`min-h-screen transition-colors duration-300 ${isDarkMode ? 'bg-[#090a0f] text-slate-100' : 'bg-slate-50 text-slate-900'} selection:bg-cyan-500/30 selection:text-cyan-200`}>
+    <div className={`min-h-screen relative selection:bg-cyan-500/30 selection:text-cyan-200 transition-colors duration-300 ${
+      isDarkMode ? 'bg-[#090a0f] text-slate-100' : 'bg-[#fafbfe] text-slate-900'
+    }`}>
+      {/* Interactive Custom Cursor */}
+      <CustomCursor />
+
+      {/* Ambient background grid & spotlight */}
+      <BackgroundGrid />
+
+      {/* Top Scroll Indicator */}
       <ScrollProgress />
-      <Navbar activeSection={activeSection} isDarkMode={isDarkMode} onToggleTheme={toggleTheme} />
-      <main>
-        <Hero />
-        <RevealOnScroll direction="up" distance={36} duration={800}>
+
+      {/* Navbar with Easter Egg & Resume triggers */}
+      <Navbar 
+        activeSection={activeSection} 
+        isDarkMode={isDarkMode} 
+        onToggleTheme={toggleTheme}
+        onOpenResume={() => setIsResumeOpen(true)}
+        onOpenEasterEgg={() => setIsEasterEggOpen(true)}
+      />
+
+      <main className="relative z-10">
+        {/* Hero Section */}
+        <Hero onOpenResume={() => setIsResumeOpen(true)} />
+
+        {/* Continuous Tech Stack Marquee */}
+        <TechStack />
+
+        {/* About Section */}
+        <RevealOnScroll direction="up" distance={30} duration={600}>
           <About />
         </RevealOnScroll>
-        <RevealOnScroll direction="up" distance={36} duration={800}>
-          <FeaturedProject />
+
+        {/* Featured Flagship Project */}
+        <RevealOnScroll direction="up" distance={30} duration={600}>
+          <FeaturedProject onOpenCaseStudy={(proj) => setSelectedCaseStudy(proj)} />
         </RevealOnScroll>
-        <RevealOnScroll direction="up" distance={36} duration={800}>
-          <Projects />
+
+        {/* Projects Centerpiece Showcase */}
+        <RevealOnScroll direction="up" distance={30} duration={600}>
+          <Projects onOpenCaseStudy={(proj) => setSelectedCaseStudy(proj)} />
         </RevealOnScroll>
-        <RevealOnScroll direction="up" distance={36} duration={800}>
+
+        {/* Skills & Architecture Grid */}
+        <RevealOnScroll direction="up" distance={30} duration={600}>
           <Skills />
         </RevealOnScroll>
-        <RevealOnScroll direction="up" distance={36} duration={800}>
+
+        {/* Experience Timeline */}
+        <RevealOnScroll direction="up" distance={30} duration={600}>
+          <Experience />
+        </RevealOnScroll>
+
+        {/* Services & Technical Offerings */}
+        <RevealOnScroll direction="up" distance={30} duration={600}>
+          <Services />
+        </RevealOnScroll>
+
+        {/* Education & Foundations */}
+        <RevealOnScroll direction="up" distance={30} duration={600}>
+          <Education />
+        </RevealOnScroll>
+
+        {/* GitHub & Open Source Activity */}
+        <RevealOnScroll direction="up" distance={30} duration={600}>
           <GithubSection />
         </RevealOnScroll>
-        <RevealOnScroll direction="up" distance={36} duration={800}>
+
+        {/* Contact Inquiry Section */}
+        <RevealOnScroll direction="up" distance={30} duration={600}>
           <Contact />
         </RevealOnScroll>
       </main>
+
+      {/* Footer */}
       <Footer />
+
+      {/* Floating Scroll to Top button */}
       <ScrollToTop />
+
+      {/* Case Study Modal */}
+      <ProjectModal 
+        project={selectedCaseStudy}
+        isOpen={Boolean(selectedCaseStudy)}
+        onClose={() => setSelectedCaseStudy(null)}
+      />
+
+      {/* Resume / CV Modal */}
+      <ResumeModal 
+        isOpen={isResumeOpen}
+        onClose={() => setIsResumeOpen(false)}
+      />
+
+      {/* Tasteful CLI Easter Egg Terminal */}
+      <EasterEggModal 
+        isOpen={isEasterEggOpen}
+        onClose={() => setIsEasterEggOpen(false)}
+      />
     </div>
   );
 }

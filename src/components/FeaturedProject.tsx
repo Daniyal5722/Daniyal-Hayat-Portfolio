@@ -1,20 +1,31 @@
 import { motion } from 'motion/react';
-import { Cpu, Github, ExternalLink, Sparkles, Check, Clock } from 'lucide-react';
+import { Cpu, Github, ExternalLink, Sparkles, Check, Clock, BookOpen, ArrowRight } from 'lucide-react';
 import { PROJECTS } from '../data/portfolioData';
 import { getEstimatedReadingTime } from '../utils/readingTime';
+import { Project } from '../types';
 
-export function FeaturedProject() {
-  const featured = PROJECTS.find((p) => p.id === 'cortexiq-by-dnyl') || PROJECTS[2];
+interface FeaturedProjectProps {
+  onOpenCaseStudy: (project: Project) => void;
+}
+
+export function FeaturedProject({ onOpenCaseStudy }: FeaturedProjectProps) {
+  const featured = PROJECTS.find((p) => p.id === 'cortexiq-by-dnyl') || PROJECTS[0];
 
   return (
-    <section className="py-16 dark:bg-[#090a0f] bg-slate-50 relative overflow-hidden transition-colors duration-300">
+    <section className="py-20 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <div className="text-center mb-10">
-          <span className="text-violet-500 font-mono text-xs uppercase tracking-widest block mb-2">FEATURED ARCHITECTURE</span>
-          <h2 className="text-2xl sm:text-3xl font-bold dark:text-white text-slate-900 tracking-tight">
-            Spotlight: CortexIQ by DNYL
+        <div className="space-y-3 max-w-3xl mb-12">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-500/10 border border-violet-500/20 text-violet-600 dark:text-violet-400 text-xs font-mono uppercase tracking-widest">
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>Architecture Spotlight</span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white tracking-tight">
+            Flagship Build: {featured.displayName}
           </h2>
+          <p className="text-base text-slate-600 dark:text-slate-400">
+            A deep-dive showcase into the computational intelligence suite, highlighting reactive state, type safety, and real-time processing.
+          </p>
         </div>
 
         <motion.div
@@ -22,17 +33,17 @@ export function FeaturedProject() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="relative rounded-3xl bg-gradient-to-br dark:from-slate-900/90 dark:via-slate-900/60 dark:to-slate-950 from-white via-slate-50 to-slate-100 dark:border-slate-800 border border-slate-200/90 p-8 sm:p-12 shadow-2xl backdrop-blur-xl overflow-hidden group"
+          className="relative rounded-3xl bg-gradient-to-br dark:from-slate-900/90 dark:via-slate-900/60 dark:to-slate-950 from-white via-slate-50 to-slate-100 dark:border-slate-800 border border-slate-200 p-8 sm:p-12 shadow-xl backdrop-blur-xl overflow-hidden group"
         >
-          {/* Subtle background glow */}
+          {/* Ambient decorative glow */}
           <div className="absolute top-0 right-0 w-96 h-96 bg-violet-600/10 blur-[100px] rounded-full pointer-events-none group-hover:bg-violet-600/20 transition-all duration-700" />
           <div className="absolute bottom-0 left-0 w-96 h-96 bg-cyan-500/10 blur-[100px] rounded-full pointer-events-none" />
 
           <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             
             <div className="lg:col-span-7 space-y-6">
-              <div className="flex flex-wrap items-center gap-3">
-                <span className="px-3 py-1 rounded-full bg-violet-500/10 border border-violet-500/30 text-violet-500 dark:text-violet-300 text-xs font-mono font-medium">
+              <div className="flex flex-wrap items-center gap-2.5">
+                <span className="px-3 py-1 rounded-full bg-violet-500/10 border border-violet-500/30 text-violet-600 dark:text-violet-300 text-xs font-mono font-medium">
                   {featured.category}
                 </span>
                 <span className="px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-600 dark:text-cyan-300 text-xs font-mono font-medium">
@@ -41,86 +52,116 @@ export function FeaturedProject() {
                 {featured.liveUrl && (
                   <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 text-xs font-mono font-medium">
                     <span className="w-2 h-2 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-pulse" />
-                    <span>Live Online</span>
+                    <span>Live Deployment</span>
                   </span>
                 )}
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full dark:bg-slate-900/90 bg-white border dark:border-slate-700/80 border-slate-200 dark:text-slate-300 text-slate-700 text-xs font-mono shadow-sm" title="Estimated Reading Time">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full dark:bg-slate-900/90 bg-white border dark:border-slate-700/80 border-slate-200 dark:text-slate-300 text-slate-700 text-xs font-mono shadow-xs" title="Estimated Reading Time">
                   <Clock className="w-3.5 h-3.5 text-cyan-500" />
                   <span>{getEstimatedReadingTime(featured)}</span>
                 </span>
               </div>
 
-              <h3 className="text-3xl sm:text-4xl font-extrabold dark:text-white text-slate-900 tracking-tight">
+              <h3 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
                 {featured.displayName}
               </h3>
 
-              <p className="dark:text-slate-300 text-slate-600 text-base sm:text-lg leading-relaxed">
+              <p className="text-slate-600 dark:text-slate-300 text-base sm:text-lg leading-relaxed">
                 {featured.description}
               </p>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-                {featured.features.map((feat, idx) => (
-                  <div key={idx} className="flex items-center gap-2 text-sm dark:text-slate-300 text-slate-700">
-                    <div className="w-5 h-5 rounded-full bg-violet-500/20 flex items-center justify-center text-violet-500 dark:text-violet-400 shrink-0">
-                      <Check className="w-3 h-3" />
+              <div className="space-y-3">
+                <h4 className="text-xs font-mono text-cyan-600 dark:text-cyan-400 uppercase tracking-widest font-semibold">
+                  Architectural Pillars:
+                </h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {featured.features.map((feat, idx) => (
+                    <div key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700 dark:text-slate-300">
+                      <Check className="w-4 h-4 text-violet-500 shrink-0 mt-0.5" />
+                      <span>{feat}</span>
                     </div>
-                    <span>{feat}</span>
-                  </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Technologies */}
+              <div className="flex flex-wrap gap-2 pt-2">
+                {featured.technologies.map((tech, idx) => (
+                  <span
+                    key={idx}
+                    className="px-3 py-1 rounded-lg dark:bg-slate-950/80 bg-slate-200/80 dark:border-slate-800 border-slate-300 text-xs font-mono dark:text-slate-300 text-slate-700 font-medium"
+                  >
+                    {tech}
+                  </span>
                 ))}
               </div>
 
-              <div className="flex flex-wrap items-center gap-4 pt-4">
+              {/* Action Buttons */}
+              <div className="flex flex-wrap items-center gap-3 pt-4">
+                <button
+                  onClick={() => onOpenCaseStudy(featured)}
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-violet-600 hover:bg-violet-500 text-white font-semibold text-xs sm:text-sm transition-all shadow-md shadow-violet-600/20 cursor-pointer"
+                >
+                  <BookOpen className="w-4 h-4" />
+                  <span>Explore Case Study</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+
                 {featured.liveUrl && (
                   <a
                     href={featured.liveUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-sm transition-all shadow-lg shadow-cyan-500/20 hover:scale-[1.02] active:scale-[0.98]"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs sm:text-sm transition-all shadow-md shadow-cyan-500/20"
                   >
                     <ExternalLink className="w-4 h-4" />
                     <span>Launch Live App</span>
                   </a>
                 )}
+
                 <a
                   href={featured.githubUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-5 py-2.5 rounded-xl dark:bg-slate-900 bg-white hover:dark:bg-slate-800 hover:bg-slate-100 border dark:border-slate-700 border-slate-300 dark:text-white text-slate-800 font-medium text-sm transition-colors shadow-sm"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl dark:bg-slate-950 bg-white hover:dark:bg-slate-800 hover:bg-slate-100 dark:border-slate-800 border-slate-200 text-slate-700 dark:text-slate-300 text-xs sm:text-sm font-medium transition-all shadow-xs"
                 >
-                  <Github className="w-4 h-4" />
-                  <span>View Repository</span>
+                  <Github className="w-4 h-4 text-slate-500" />
+                  <span>Inspect Source</span>
                 </a>
               </div>
             </div>
 
-            {/* Right side visual code card */}
-            <div className="lg:col-span-5 bg-slate-950/90 dark:bg-slate-950/80 border border-slate-800 rounded-2xl p-6 font-mono text-xs text-slate-300 shadow-xl space-y-3">
-              <div className="flex items-center justify-between pb-3 border-b border-slate-800 text-slate-400">
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-red-500/80" />
-                  <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
-                  <div className="w-3 h-3 rounded-full bg-green-500/80" />
+            {/* Right Interactive Mockup Preview */}
+            <div className="lg:col-span-5">
+              <div className="relative rounded-2xl dark:bg-slate-950 bg-slate-900 border dark:border-slate-800 border-slate-700 p-5 shadow-2xl space-y-4 font-mono text-xs text-slate-300">
+                {/* Simulated window header */}
+                <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-2.5 h-2.5 rounded-full bg-rose-500" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
+                  </div>
+                  <span className="text-[11px] text-slate-500">cortexiq.runtime.ts</span>
                 </div>
-                <span>cortexiq-engine.ts</span>
-              </div>
-              <div className="text-slate-400 space-y-1.5 overflow-x-auto">
-                <p><span className="text-violet-400">import</span> &#123; GoogleGenAI &#125; <span className="text-violet-400">from</span> <span className="text-cyan-300">'@google/genai'</span>;</p>
-                <p className="text-slate-500">// CortexIQ Intelligence Suite by Daniyal Hayat</p>
-                <p><span className="text-violet-400">export class</span> <span className="text-yellow-300">CortexEngine</span> &#123;</p>
-                <p className="pl-4"><span className="text-blue-400">constructor</span>() &#123;</p>
-                <p className="pl-8"><span className="text-violet-400">this</span>.version = <span className="text-cyan-300">'2.4.0'</span>;</p>
-                <p className="pl-8"><span className="text-violet-400">this</span>.author = <span className="text-cyan-300">'Daniyal5722'</span>;</p>
-                <p className="pl-4">&#125;</p>
-                <p className="pl-4"><span className="text-blue-400">parsePrompt</span>(query: <span className="text-yellow-300">string</span>) &#123;</p>
-                <p className="pl-8"><span className="text-violet-400">return</span> <span className="text-cyan-300">`Processing: $&#123;query&#125;`</span>;</p>
-                <p className="pl-4">&#125;</p>
-                <p>&#125;</p>
+
+                <div className="space-y-2 text-slate-400">
+                  <p className="text-cyan-400 font-semibold">// Initializing CortexIQ AI Prompt Telemetry</p>
+                  <p><span className="text-purple-400">const</span> intelligence = <span className="text-yellow-400">new</span> CortexIQ({'{\n  mode: "reactive",\n  framework: "TypeScript",\n  rateLimitSafety: true\n}'});</p>
+                  <p className="text-emerald-400">✓ Token weighting calculated in 4.2ms</p>
+                  <p className="text-blue-400">✓ Model pipeline active with 0 layout shift</p>
+                </div>
+
+                <div className="p-3 rounded-lg bg-slate-900/90 border border-slate-800 flex items-center justify-between">
+                  <div className="flex items-center gap-2 text-slate-200">
+                    <Cpu className="w-4 h-4 text-violet-400" />
+                    <span>Status: High Priority Active</span>
+                  </div>
+                  <span className="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 text-[10px]">VERIFIED</span>
+                </div>
               </div>
             </div>
 
           </div>
         </motion.div>
-
       </div>
     </section>
   );

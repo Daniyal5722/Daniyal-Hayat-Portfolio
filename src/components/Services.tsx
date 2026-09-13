@@ -1,0 +1,95 @@
+import { SERVICES_DATA } from '../data/portfolioData';
+import { Layers, Smartphone, Cpu, Palette, CheckCircle2, ArrowRight } from 'lucide-react';
+import { motion } from 'motion/react';
+
+export function Services() {
+  const getIcon = (icon: string) => {
+    switch (icon) {
+      case 'Smartphone':
+        return <Smartphone className="w-6 h-6 text-emerald-500" />;
+      case 'Cpu':
+        return <Cpu className="w-6 h-6 text-purple-500" />;
+      case 'Palette':
+        return <Palette className="w-6 h-6 text-rose-500" />;
+      default:
+        return <Layers className="w-6 h-6 text-cyan-500" />;
+    }
+  };
+
+  return (
+    <section id="services" className="py-24 relative">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Section Heading */}
+        <div className="space-y-4 max-w-3xl mb-16">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-600 dark:text-cyan-400 text-xs font-mono uppercase tracking-widest">
+            <span>Specialized Capabilities</span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 dark:text-white">
+            What I Can Build & Deliver
+          </h2>
+          <p className="text-base sm:text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
+            Focused engineering services backed by hands-on production code, from modern web applications to native Android mobile apps and AI pipelines.
+          </p>
+        </div>
+
+        {/* Services Grid */}
+        <div className="grid md:grid-cols-2 gap-8">
+          {SERVICES_DATA.map((service, index) => (
+            <motion.div
+              key={service.id}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 0.4, delay: index * 0.1 }}
+              className="p-8 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 hover:border-cyan-500/40 dark:hover:border-cyan-500/40 transition-all duration-300 shadow-sm hover:shadow-cyan-500/5 group flex flex-col justify-between"
+            >
+              <div className="space-y-5">
+                <div className="w-12 h-12 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  {getIcon(service.icon)}
+                </div>
+
+                <div className="space-y-1">
+                  <h3 className="text-xl font-bold text-slate-900 dark:text-white group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">
+                    {service.title}
+                  </h3>
+                  <p className="text-xs font-mono text-cyan-600 dark:text-cyan-400">
+                    {service.tagline}
+                  </p>
+                </div>
+
+                <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                  {service.description}
+                </p>
+
+                {/* Deliverables Checklist */}
+                <div className="pt-4 space-y-2 border-t border-slate-100 dark:border-slate-800/80">
+                  <span className="text-xs font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400 block mb-2">
+                    Key Deliverables:
+                  </span>
+                  {service.deliverables.map((item, dIdx) => (
+                    <div key={dIdx} className="flex items-start gap-2 text-xs text-slate-700 dark:text-slate-300">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-cyan-500 shrink-0 mt-0.5" />
+                      <span>{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="pt-6 mt-6 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
+                <a
+                  href="#contact"
+                  className="inline-flex items-center gap-2 text-xs font-semibold text-cyan-600 dark:text-cyan-400 hover:text-cyan-500 transition-colors group-hover:translate-x-1"
+                >
+                  <span>Discuss a Project</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </a>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+      </div>
+    </section>
+  );
+}
