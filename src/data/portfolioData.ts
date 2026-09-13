@@ -56,8 +56,13 @@ export const PROJECTS: Project[] = [
       idea: "Design a fast, lightweight, responsive web platform featuring structured inquiry categories, direct submission interfaces, and organized guidance resources.",
       design: "Prioritized clean editorial typography, high readability, soft neutral palettes, and accessible contrast to ensure clear legibility for users of all demographics.",
       development: "Crafted using semantic HTML5, modern Tailwind CSS for modular utility styling, and vanilla JavaScript routines for lightweight client performance and instant page responsiveness.",
+      technology: "Semantic HTML5, Tailwind CSS v4, JavaScript ES6+, RESTful API integration, responsive layouts.",
       challenges: "Ensuring instant load times on variable-speed cellular connections while accommodating large textual archives and bilingual character sets.",
       solution: "Implemented efficient asset minification, clean CSS architectures, and streamlined DOM manipulation to eliminate redundant overhead.",
+      screenshots: "Responsive inquiry portal, categorized fatwa index, searchable question archives, mobile reading mode.",
+      liveDemo: "https://darulifta-bkfbzf6u.manus.space/",
+      github: "https://github.com/Daniyal5722/Offical-Darul-ifta-Irshad-us-saileen-",
+      lessonsLearned: "Designing for real community accessibility taught the critical importance of keeping initial bundle footprints minimal and testing across varied network latency environments.",
       result: "Successfully launched live in production, serving queries with zero layout shift and providing community members with an authoritative digital resource."
     }
   },
