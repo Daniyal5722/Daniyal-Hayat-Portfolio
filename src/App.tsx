@@ -23,8 +23,10 @@ import { CommandPalette } from './components/CommandPalette';
 import { ProjectModal } from './components/ProjectModal';
 import { ResumeModal } from './components/ResumeModal';
 import { EasterEggModal } from './components/EasterEggModal';
-import { PortfolioChatbot } from './components/PortfolioChatbot';
 import { Project } from './types';
+
+// Lazy load the PortfolioChatbot component to prevent slowing down initial page loads
+const PortfolioChatbot = React.lazy(() => import('./components/PortfolioChatbot').then(module => ({ default: module.PortfolioChatbot })));
 
 export default function App() {
   const [loadingComplete, setLoadingComplete] = useState(false);
@@ -223,8 +225,10 @@ export default function App() {
           onClose={() => setIsEasterEggOpen(false)}
         />
 
-        {/* Daniyal AI Portfolio Assistant Chatbot */}
-        <PortfolioChatbot />
+        {/* Daniyal AI Portfolio Assistant Chatbot with Suspense fallback */}
+        <React.Suspense fallback={null}>
+          <PortfolioChatbot />
+        </React.Suspense>
       </div>
     </SmoothScroll>
   );

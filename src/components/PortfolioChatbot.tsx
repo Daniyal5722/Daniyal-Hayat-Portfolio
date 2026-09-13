@@ -12,6 +12,42 @@ const SUGGESTED_QUESTIONS: SuggestedQuestion[] = [
   { label: "📫 Contact", query: "How can I contact Daniyal?" },
 ];
 
+// Memoized Chat Message Item to completely eliminate unnecessary render passes
+const ChatMessageItem = React.memo(({ msg }: { msg: ChatMessage }) => {
+  const isUser = msg.role === 'user';
+  return (
+    <div
+      className={`flex items-start gap-3 ${
+        isUser ? 'flex-row-reverse' : 'flex-row'
+      }`}
+    >
+      <div
+        className={`flex items-center justify-center w-7 h-7 rounded-full shrink-0 ${
+          isUser
+            ? 'bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-950'
+            : 'bg-cyan-500/10 border border-cyan-500/20 text-cyan-600 dark:text-cyan-400'
+        }`}
+      >
+        {isUser ? <User className="w-3.5 h-3.5" /> : <Bot className="w-3.5 h-3.5" />}
+      </div>
+
+      <div
+        className={`max-w-[80%] px-3.5 py-2.5 rounded-2xl text-sm leading-relaxed shadow-xs ${
+          isUser
+            ? 'bg-cyan-500 text-slate-950 rounded-tr-none font-medium'
+            : 'bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 border border-slate-200/80 dark:border-slate-800 rounded-tl-none'
+        }`}
+      >
+        <div className="whitespace-pre-wrap break-words">
+          {msg.content}
+        </div>
+      </div>
+    </div>
+  );
+});
+
+ChatMessageItem.displayName = 'ChatMessageItem';
+
 export function PortfolioChatbot() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([
@@ -176,34 +212,7 @@ export function PortfolioChatbot() {
             {/* Messages Container */}
             <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-50/50 dark:bg-slate-950/40">
               {messages.map((msg) => (
-                <div
-                  key={msg.id}
-                  className={`flex items-start gap-3 ${
-                    msg.role === 'user' ? 'flex-row-reverse' : 'flex-row'
-                  }`}
-                >
-                  <div
-                    className={`flex items-center justify-center w-7 h-7 rounded-full shrink-0 ${
-                      msg.role === 'user'
-                        ? 'bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-950'
-                        : 'bg-cyan-500/10 border border-cyan-500/20 text-cyan-600 dark:text-cyan-400'
-                    }`}
-                  >
-                    {msg.role === 'user' ? <User className="w-3.5 h-3.5" /> : <Bot className="w-3.5 h-3.5" />}
-                  </div>
-
-                  <div
-                    className={`max-w-[80%] px-3.5 py-2.5 rounded-2xl text-sm leading-relaxed shadow-xs ${
-                      msg.role === 'user'
-                        ? 'bg-cyan-500 text-slate-950 rounded-tr-none font-medium'
-                        : 'bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 border border-slate-200/80 dark:border-slate-800 rounded-tl-none'
-                    }`}
-                  >
-                    <div className="whitespace-pre-wrap break-words">
-                      {msg.content}
-                    </div>
-                  </div>
-                </div>
+                <ChatMessageItem key={msg.id} msg={msg} />
               ))}
 
               {isLoading && (
