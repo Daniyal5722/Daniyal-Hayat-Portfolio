@@ -4,9 +4,29 @@ import { registerSW } from 'virtual:pwa-register';
 import App from './App.tsx';
 import './index.css';
 
+// Suppress benign Vite HMR websocket connection messages in container preview environment
+if (typeof window !== 'undefined') {
+  const originalError = console.error;
+  console.error = (...args: unknown[]) => {
+    if (typeof args[0] === 'string' && (args[0].includes('[vite] failed to connect to websocket') || args[0].includes('[vite] connecting...'))) {
+      return;
+    }
+    originalError.apply(console, args);
+  };
+}
+
 // Auto-register service worker for progressive offline capabilities
-if ('serviceWorker' in navigator) {
-  registerSW({ immediate: true });
+if ('serviceWorker' in navigator && typeof window !== 'undefined') {
+  try {
+    registerSW({
+      immediate: true,
+      onRegisterError(error: unknown) {
+        console.debug('Service worker registration status:', error);
+      }
+    });
+  } catch {
+    // Ignore in sandboxed previews
+  }
 }
 
 createRoot(document.getElementById('root')!).render(
