@@ -12,7 +12,7 @@ export function FeaturedProject({ onOpenCaseStudy }: FeaturedProjectProps) {
   const featured = PROJECTS.find((p) => p.id === 'cortexiq-by-dnyl') || PROJECTS[0];
 
   return (
-    <section className="py-20 relative overflow-hidden">
+    <section id="featured-project" className="py-20 relative overflow-hidden bg-[#f8fafd] dark:bg-[#0a0c14] border-t dark:border-slate-800/80 border-slate-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className="space-y-3 max-w-3xl mb-12">
@@ -33,7 +33,7 @@ export function FeaturedProject({ onOpenCaseStudy }: FeaturedProjectProps) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="relative rounded-3xl bg-gradient-to-br dark:from-slate-900/90 dark:via-slate-900/60 dark:to-slate-950 from-white via-slate-50 to-slate-100 dark:border-slate-800 border border-slate-200 p-8 sm:p-12 shadow-xl backdrop-blur-xl overflow-hidden group"
+          className="relative rounded-3xl bg-white dark:bg-[#111422] dark:border-slate-800 border border-slate-200 p-8 sm:p-12 shadow-2xl overflow-hidden group"
         >
           {/* Ambient decorative glow */}
           <div className="absolute top-0 right-0 w-96 h-96 bg-violet-600/10 blur-[100px] rounded-full pointer-events-none group-hover:bg-violet-600/20 transition-all duration-700" />

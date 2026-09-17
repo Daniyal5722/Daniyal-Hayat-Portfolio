@@ -46,67 +46,84 @@ function ProjectShowcase({ project, index, onOpenCaseStudy }: { project: Project
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className={`flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-8 lg:gap-16 items-center`}
+      className={`p-6 sm:p-8 lg:p-10 rounded-3xl bg-white dark:bg-[#111422] border border-slate-200 dark:border-slate-800 shadow-xl dark:shadow-2xl flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-8 lg:gap-12 items-center relative overflow-hidden transition-all duration-300 hover:border-cyan-500/40`}
     >
       {/* Visual / Image Side */}
       <div 
-        className="w-full lg:w-3/5 group relative rounded-3xl overflow-hidden bg-slate-100 dark:bg-slate-900 aspect-video border border-slate-200 dark:border-slate-800 shadow-xl cursor-pointer"
+        className="w-full lg:w-1/2 group relative rounded-2xl overflow-hidden bg-gradient-to-br from-slate-100 to-slate-200 dark:from-[#0b0e1a] dark:to-[#161c2f] aspect-video border border-slate-200 dark:border-slate-800 shadow-md cursor-pointer"
         onClick={() => onOpenCaseStudy(project)}
       >
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
+        {/* Ambient glow inside visual card */}
+        <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/10 via-transparent to-violet-500/10 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent opacity-60 group-hover:opacity-90 transition-opacity duration-500 z-10" />
         
-        {/* Placeholder for project screenshot/graphic */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-slate-800 dark:text-slate-200 transform group-hover:scale-105 transition-transform duration-700 ease-out">
-          <div className="text-4xl sm:text-6xl font-bold font-mono opacity-20 tracking-tighter">
+        {/* Decorative graphic & tech watermark */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-slate-800 dark:text-slate-200 transform group-hover:scale-105 transition-transform duration-700 ease-out z-0">
+          <div className="text-3xl sm:text-5xl font-black font-mono opacity-25 tracking-tighter text-slate-700 dark:text-slate-300">
             {project.displayName.split(' ')[0]}
           </div>
-          <div className="mt-4 flex gap-2 opacity-50">
-            <Code className="w-8 h-8" />
-            <Layers className="w-8 h-8" />
+          <div className="mt-3 flex items-center gap-3 text-cyan-600 dark:text-cyan-400 opacity-60">
+            <Code className="w-6 h-6" />
+            <Layers className="w-6 h-6" />
+            <Sparkles className="w-6 h-6" />
           </div>
         </div>
 
-        <div className="absolute bottom-6 left-6 right-6 z-20 flex justify-between items-end translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-100">
-          <div>
-            <div className="text-white font-bold text-lg mb-1">{project.displayName}</div>
-            <div className="flex gap-2">
+        {/* Top Floating Badge */}
+        <div className="absolute top-4 left-4 z-20 flex items-center gap-2">
+          <span className="px-2.5 py-1 rounded-full text-[11px] font-mono font-medium bg-white/90 dark:bg-slate-900/90 text-slate-800 dark:text-slate-200 border border-slate-200/80 dark:border-slate-700 shadow-sm backdrop-blur-sm">
+            {project.language}
+          </span>
+          {project.liveUrl && (
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-mono font-medium bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 shadow-sm backdrop-blur-sm">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              <span>Live</span>
+            </span>
+          )}
+        </div>
+
+        {/* Bottom Details Overlay */}
+        <div className="absolute bottom-4 left-4 right-4 z-20 flex justify-between items-end">
+          <div className="max-w-[75%]">
+            <div className="text-white font-bold text-base sm:text-lg mb-1 drop-shadow-sm truncate">{project.displayName}</div>
+            <div className="flex flex-wrap gap-1.5">
               {project.technologies.slice(0, 3).map((tech, i) => (
-                <span key={i} className="px-2 py-0.5 rounded text-[10px] font-mono bg-white/20 text-white backdrop-blur-md">
+                <span key={i} className="px-2 py-0.5 rounded text-[10px] font-mono bg-slate-900/80 text-cyan-300 border border-cyan-500/30">
                   {tech}
                 </span>
               ))}
             </div>
           </div>
-          <div className="w-10 h-10 rounded-full bg-cyan-500 flex items-center justify-center text-slate-950">
+          <div className="w-10 h-10 rounded-full bg-cyan-500 flex items-center justify-center text-slate-950 shadow-md group-hover:scale-110 transition-transform">
             <ArrowUpRight className="w-5 h-5 group-hover:rotate-45 transition-transform duration-300" />
           </div>
         </div>
       </div>
 
       {/* Content Side */}
-      <div className="w-full lg:w-2/5 space-y-6">
-        <div className="space-y-4">
+      <div className="w-full lg:w-1/2 space-y-5">
+        <div className="space-y-3">
           <div className="flex items-center gap-3 text-xs font-mono">
-            <span className="text-slate-400">PROJECT {(index + 1).toString().padStart(2, '0')}</span>
+            <span className="text-slate-400 dark:text-slate-500 font-bold">PROJECT {(index + 1).toString().padStart(2, '0')}</span>
             <div className="h-px w-8 bg-slate-300 dark:bg-slate-700" />
             <span className="text-cyan-600 dark:text-cyan-400 font-semibold">{project.category}</span>
           </div>
-          <h3 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+          <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
             {project.displayName}
           </h3>
-          <p className="text-base text-slate-600 dark:text-slate-400 leading-relaxed">
+          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
             {project.description}
           </p>
         </div>
 
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-1.5">
           {project.technologies.slice(0, 5).map((tech, i) => (
-            <span key={i} className="px-3 py-1 rounded-md text-xs font-medium bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300">
+            <span key={i} className="px-2.5 py-1 rounded-lg text-xs font-mono font-medium bg-slate-100 dark:bg-[#161b2e] border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300">
               {tech}
             </span>
           ))}
           {project.technologies.length > 5 && (
-            <span className="px-3 py-1 rounded-md text-xs font-medium bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-500">
+            <span className="px-2.5 py-1 rounded-lg text-xs font-mono font-medium bg-slate-50 dark:bg-[#181d33] border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400">
               +{project.technologies.length - 5}
             </span>
           )}
@@ -115,7 +132,7 @@ function ProjectShowcase({ project, index, onOpenCaseStudy }: { project: Project
         <div className="flex items-center flex-wrap gap-3 pt-2">
           <button
             onClick={() => onOpenCaseStudy(project)}
-            className="group/btn inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-950 font-semibold text-sm transition-transform hover:scale-105"
+            className="group/btn inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-950 font-semibold text-xs sm:text-sm transition-all hover:scale-105 shadow-md cursor-pointer"
           >
             <span>View Case Study</span>
             <ArrowUpRight className="w-4 h-4 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
@@ -127,13 +144,19 @@ function ProjectShowcase({ project, index, onOpenCaseStudy }: { project: Project
                 href={project.liveUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-cyan-500 text-slate-950 font-bold text-xs uppercase tracking-wider hover:bg-cyan-400 transition-colors shadow-sm"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-cyan-500 text-slate-950 font-bold text-xs uppercase tracking-wider hover:bg-cyan-400 transition-all shadow-md hover:scale-105"
               >
                 <Globe className="w-4 h-4" />
                 <span>Live Demo</span>
               </a>
             )}
-            <a href={project.githubUrl} target="_blank" rel="noreferrer" className="p-2.5 rounded-full border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" title="GitHub Repository">
+            <a 
+              href={project.githubUrl} 
+              target="_blank" 
+              rel="noreferrer" 
+              className="p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-[#161b2e] text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-cyan-500 transition-colors shadow-xs" 
+              title="GitHub Repository"
+            >
               <Github className="w-4 h-4" />
             </a>
           </div>
@@ -190,7 +213,7 @@ export function Projects({ onOpenCaseStudy }: ProjectsProps) {
   };
 
   return (
-    <section id="projects" className="py-32 relative border-t dark:border-slate-800/80 border-slate-200 bg-gradient-to-b from-transparent via-cyan-500/[0.015] to-transparent">
+    <section id="projects" className="py-28 relative border-t border-b dark:border-slate-800/80 border-slate-200 bg-[#f8fafd] dark:bg-[#0a0c14]">
       <div className="max-w-[88rem] mx-auto px-4 sm:px-6 lg:px-12 transform scale-[1.01] transition-transform">
         
         {/* Header with Live Sync Status */}
@@ -205,7 +228,7 @@ export function Projects({ onOpenCaseStudy }: ProjectsProps) {
               <button
                 onClick={refreshRepos}
                 disabled={isSyncing}
-                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-[11px] font-mono text-slate-700 dark:text-slate-300 hover:text-cyan-500 transition-colors shadow-xs"
+                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white dark:bg-[#111422] border border-slate-200 dark:border-slate-800 text-[11px] font-mono text-slate-700 dark:text-slate-300 hover:text-cyan-500 transition-colors shadow-xs cursor-pointer"
                 title="Sync with GitHub API"
               >
                 <RefreshCw className={`w-3 h-3 ${isSyncing ? 'animate-spin text-cyan-500' : ''}`} />
@@ -225,7 +248,7 @@ export function Projects({ onOpenCaseStudy }: ProjectsProps) {
             href="https://github.com/Daniyal5722?tab=repositories"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs font-mono text-slate-700 dark:text-slate-300 hover:text-cyan-500 transition-colors group shadow-xs shrink-0 self-start md:self-auto"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white dark:bg-[#111422] border border-slate-200 dark:border-slate-800 text-xs font-mono text-slate-700 dark:text-slate-300 hover:text-cyan-500 transition-colors group shadow-xs shrink-0 self-start md:self-auto"
           >
             <span>View all on GitHub</span>
             <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -233,7 +256,7 @@ export function Projects({ onOpenCaseStudy }: ProjectsProps) {
         </div>
 
         {/* Highlighted Live Deployments Bar */}
-        <div className="mb-14 p-6 sm:p-8 rounded-3xl bg-gradient-to-r dark:from-cyan-950/30 dark:via-slate-900/60 dark:to-blue-950/30 from-cyan-50 via-white to-blue-50 border border-cyan-500/20 shadow-xl backdrop-blur-xl">
+        <div className="mb-14 p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#111422] border border-cyan-500/30 shadow-xl">
           <div className="flex items-center gap-2.5 mb-5">
             <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
             <h3 className="text-slate-900 dark:text-white font-bold text-sm tracking-wide uppercase font-mono flex items-center gap-2">
@@ -246,7 +269,7 @@ export function Projects({ onOpenCaseStudy }: ProjectsProps) {
             {LIVE_DEPLOYMENTS.map((deploy, idx) => (
               <div
                 key={idx}
-                className="p-5 rounded-2xl bg-white dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 hover:border-cyan-500/40 transition-all flex flex-col justify-between group shadow-sm"
+                className="p-5 rounded-2xl bg-slate-50 dark:bg-[#161a2e] border border-slate-200 dark:border-slate-800 hover:border-cyan-500/40 transition-all flex flex-col justify-between group shadow-xs"
               >
                 <div>
                   <div className="flex items-center justify-between gap-2 mb-2">
@@ -265,7 +288,7 @@ export function Projects({ onOpenCaseStudy }: ProjectsProps) {
                   </p>
                 </div>
 
-                <div className="flex items-center gap-2 pt-3 border-t border-slate-100 dark:border-slate-800">
+                <div className="flex items-center gap-2 pt-3 border-t border-slate-200/80 dark:border-slate-800">
                   <a
                     href={deploy.url}
                     target="_blank"
@@ -279,7 +302,7 @@ export function Projects({ onOpenCaseStudy }: ProjectsProps) {
                     href={deploy.githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2 rounded-lg bg-slate-100 dark:bg-slate-900 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:text-cyan-500 transition-colors"
+                    className="p-2 rounded-lg bg-white dark:bg-[#0e111d] hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:text-cyan-500 transition-colors"
                     title="View Source Code"
                   >
                     <Github className="w-3.5 h-3.5" />
@@ -301,7 +324,7 @@ export function Projects({ onOpenCaseStudy }: ProjectsProps) {
                 className={`px-3.5 py-1.5 rounded-full text-xs font-mono transition-all cursor-pointer ${
                   activeCategory === tab.id
                     ? 'bg-cyan-500 text-slate-950 font-bold shadow-xs'
-                    : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
+                    : 'bg-white dark:bg-[#111422] text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
                 }`}
               >
                 {tab.label}
@@ -317,7 +340,7 @@ export function Projects({ onOpenCaseStudy }: ProjectsProps) {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Search projects or tech..."
-              className="w-full pl-9 pr-8 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 text-xs font-mono focus:outline-none focus:border-cyan-500"
+              className="w-full pl-9 pr-8 py-2 rounded-xl bg-white dark:bg-[#111422] border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 text-xs font-mono focus:outline-none focus:border-cyan-500 shadow-xs"
             />
             {searchTerm && (
               <button
@@ -331,7 +354,7 @@ export function Projects({ onOpenCaseStudy }: ProjectsProps) {
         </div>
 
         {/* Projects Showcase */}
-        <div className="flex flex-col gap-24 lg:gap-32 pb-16">
+        <div className="flex flex-col gap-10 sm:gap-14 pb-16">
           <AnimatePresence>
             {filteredProjects.map((project, index) => (
               <ProjectShowcase
@@ -345,7 +368,7 @@ export function Projects({ onOpenCaseStudy }: ProjectsProps) {
         </div>
 
         {filteredProjects.length === 0 && (
-          <div className="text-center py-16 p-8 rounded-2xl bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800">
+          <div className="text-center py-16 p-8 rounded-2xl bg-white dark:bg-[#111422] border border-slate-200 dark:border-slate-800 shadow-lg">
             <p className="text-slate-500 dark:text-slate-400 text-sm">
               No projects found matching "<span className="text-cyan-500">{searchTerm}</span>" in category "{activeCategory}".
             </p>
@@ -354,7 +377,7 @@ export function Projects({ onOpenCaseStudy }: ProjectsProps) {
                 setSearchTerm('');
                 setActiveCategory('all');
               }}
-              className="mt-4 px-4 py-2 rounded-lg bg-cyan-500 text-slate-950 font-bold text-xs font-mono"
+              className="mt-4 px-4 py-2 rounded-lg bg-cyan-500 text-slate-950 font-bold text-xs font-mono cursor-pointer"
             >
               Reset Filters
             </button>
