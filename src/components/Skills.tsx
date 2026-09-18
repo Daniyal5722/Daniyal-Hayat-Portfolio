@@ -18,8 +18,6 @@ import {
 } from 'lucide-react';
 import { SKILL_GROUPS } from '../data/portfolioData';
 import { soundManager } from '../utils/sound';
-import { TextReveal } from './animations/TextReveal';
-import { TypewriterText } from './animations/TypewriterText';
 
 interface SkillNode {
   id: string;
@@ -218,7 +216,7 @@ export function Skills() {
               <span>Interactive Ecosystem</span>
             </div>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 dark:text-white">
-              <TextReveal text="Skills & Technology Matrix" />
+              Skills & Technology Matrix
             </h2>
             <p className="text-base sm:text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
               Explore my technical architecture as an interconnected ecosystem. Hover any node to trace relationships and view implementation depth.
@@ -300,20 +298,7 @@ export function Skills() {
                       </span>
                     </>
                   ) : (
-                    <TypewriterText
-                      phrases={[
-                        "Hover or click any node to trace relationships",
-                        "Explore frontend, mobile, and AI architectures",
-                        "Toggle Grid View for compact categorized inspection"
-                      ]}
-                      typingSpeed={55}
-                      deletingSpeed={30}
-                      pauseDuration={2800}
-                      cursorChar="▋"
-                      cursorClassName="text-cyan-500 text-sm animate-pulse ml-1"
-                      className="text-slate-900 dark:text-white"
-                      minHeightClassName="min-h-[1.5em]"
-                    />
+                    <span>Hover or click any node to trace relationships</span>
                   )}
                 </h4>
                 <p className="text-xs text-slate-600 dark:text-slate-400 max-w-2xl">

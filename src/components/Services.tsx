@@ -1,7 +1,6 @@
 import { SERVICES_DATA } from '../data/portfolioData';
 import { Layers, Smartphone, Cpu, Palette, CheckCircle2, ArrowRight } from 'lucide-react';
 import { motion } from 'motion/react';
-import { TextReveal } from './animations/TextReveal';
 
 export function Services() {
   const getIcon = (icon: string) => {
@@ -27,7 +26,7 @@ export function Services() {
             <span>Specialized Capabilities</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 dark:text-white">
-            <TextReveal text="What I Can Build & Deliver" />
+            What I Can Build & Deliver
           </h2>
           <p className="text-base sm:text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
             Focused engineering services backed by hands-on production code, from modern web applications to native Android mobile apps and AI pipelines.

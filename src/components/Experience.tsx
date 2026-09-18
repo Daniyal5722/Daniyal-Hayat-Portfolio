@@ -1,7 +1,6 @@
 import { EXPERIENCE_TIMELINE } from '../data/portfolioData';
 import { Briefcase, Calendar, CheckCircle, Sparkles, Terminal, Code2 } from 'lucide-react';
 import { motion } from 'motion/react';
-import { TextReveal } from './animations/TextReveal';
 
 export function Experience() {
   return (
@@ -15,7 +14,7 @@ export function Experience() {
             <span>Development Timeline</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 dark:text-white">
-            <TextReveal text="Engineering Journey & Milestones" />
+            Engineering Journey & Milestones
           </h2>
           <p className="text-base sm:text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
             A chronological look at how I progressed from foundational web algorithms to architecting production web platforms, native Android mobile applications, and AI integrations.

@@ -7,18 +7,11 @@ import './index.css';
 // Suppress benign Vite HMR websocket connection messages in container preview environment
 if (typeof window !== 'undefined') {
   const originalError = console.error;
-  const originalWarn = console.warn;
   console.error = (...args: unknown[]) => {
-    if (typeof args[0] === 'string' && args[0].includes('[vite]')) {
+    if (typeof args[0] === 'string' && (args[0].includes('[vite] failed to connect to websocket') || args[0].includes('[vite] connecting...'))) {
       return;
     }
     originalError.apply(console, args);
-  };
-  console.warn = (...args: unknown[]) => {
-    if (typeof args[0] === 'string' && args[0].includes('[vite]')) {
-      return;
-    }
-    originalWarn.apply(console, args);
   };
 }
 

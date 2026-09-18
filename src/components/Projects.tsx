@@ -24,7 +24,6 @@ import { useGitHubRepos } from '../hooks/useGitHubRepos';
 import { Project } from '../types';
 import { LIVE_DEPLOYMENTS } from '../data/portfolioData';
 import { getEstimatedReadingTime } from '../utils/readingTime';
-import { TextReveal } from './animations/TextReveal';
 
 interface ProjectsProps {
   onOpenCaseStudy: (project: Project) => void;
@@ -238,7 +237,7 @@ export function Projects({ onOpenCaseStudy }: ProjectsProps) {
             </div>
             
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 dark:text-white">
-              <TextReveal text="Production Work & Case Studies" />
+              Production Work & Case Studies
             </h2>
             <p className="text-base text-slate-600 dark:text-slate-400">
               Each project is accompanied by architectural breakdowns, real GitHub source links, and live production endpoints.

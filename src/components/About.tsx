@@ -15,8 +15,6 @@ import {
   Cpu
 } from 'lucide-react';
 import { MagneticButton } from './MagneticButton';
-import { TextReveal } from './animations/TextReveal';
-import { TypewriterText } from './animations/TypewriterText';
 
 export function About() {
   const { projects } = useGitHubRepos();
@@ -61,7 +59,7 @@ export function About() {
             </span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 dark:text-white leading-[1.12]">
-            <TextReveal text="Driven by clean architecture, relentless performance, and editorial feel." />
+            Driven by clean architecture, relentless performance, and editorial feel.
           </h2>
         </div>
 
@@ -83,28 +81,13 @@ export function About() {
                 <div className="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-500">
                   <Terminal className="w-6 h-6" />
                 </div>
-                <div className="flex-1 min-w-0">
+                <div>
                   <h3 className="font-bold text-lg text-slate-900 dark:text-white leading-tight">
                     {DEVELOPER_NAME}
                   </h3>
-                  <div className="flex flex-wrap items-center gap-1.5 text-xs font-mono text-cyan-600 dark:text-cyan-400">
-                    <span>@{GITHUB_USERNAME}</span>
-                    <span className="text-slate-400 dark:text-slate-600">•</span>
-                    <TypewriterText
-                      phrases={[
-                        "web engineer",
-                        "android dev",
-                        "product builder"
-                      ]}
-                      typingSpeed={60}
-                      deletingSpeed={35}
-                      pauseDuration={2400}
-                      cursorChar="▋"
-                      className="text-slate-500 dark:text-slate-400 text-[11px]"
-                      cursorClassName="text-cyan-500 text-[11px] animate-pulse ml-0.5"
-                      minHeightClassName="min-h-[1.4em]"
-                    />
-                  </div>
+                  <span className="text-xs font-mono text-cyan-600 dark:text-cyan-400">
+                    @{GITHUB_USERNAME}
+                  </span>
                 </div>
               </div>
 

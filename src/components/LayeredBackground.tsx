@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { motion, useMotionValue, useSpring } from 'motion/react';
-import { ParticleField } from './ParticleField';
+import { PlexusWaveBackground } from './PlexusWaveBackground';
 
 export function LayeredBackground() {
   const [isTouch, setIsTouch] = useState(false);
@@ -59,8 +59,8 @@ export function LayeredBackground() {
         className="absolute -inset-10 opacity-35 dark:opacity-25 bg-[linear-gradient(to_right,#0ea5e918_1px,transparent_1px),linear-gradient(to_bottom,#0ea5e918_1px,transparent_1px)] bg-[size:3.5rem_3.5rem] [mask-image:radial-gradient(ellipse_75%_65%_at_50%_40%,#000_60%,transparent_100%)]"
       />
 
-      {/* Layer 3: Interactive Lightweight Canvas Particle Field */}
-      <ParticleField />
+      {/* Layer 3: 3D Depth-Simulated Plexus Wave Background */}
+      <PlexusWaveBackground />
 
       {/* Layer 4: Soft Mouse-Reactive Ambient Torch Light */}
       {!isTouch && (
