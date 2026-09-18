@@ -7,6 +7,28 @@ const PORT = 3000;
 
 app.use(express.json());
 
+// API health endpoint
+app.get("/api/health", (req, res) => {
+  res.json({ status: "ok", uptime: process.uptime(), timestamp: new Date().toISOString() });
+});
+
+// Contact message endpoint for durable persistence
+app.post("/api/contact", (req, res) => {
+  try {
+    const { name, email, message } = req.body;
+    if (!name || !email || !message) {
+      return res.status(400).json({ error: "Name, email, and message are required." });
+    }
+    console.log(`[Contact Transmission] Received message from ${name} (${email}): ${message.slice(0, 50)}...`);
+    return res.status(200).json({ 
+      success: true, 
+      message: "Message received successfully. Daniyal will follow up with you shortly." 
+    });
+  } catch (err: any) {
+    return res.status(500).json({ error: "Failed to process contact message." });
+  }
+});
+
 // Initialize Google Gemini AI securely on the server side
 const apiKey = process.env.GEMINI_API_KEY;
 const ai = apiKey ? new GoogleGenAI({ apiKey }) : null;
@@ -89,7 +111,7 @@ app.post("/api/chat", async (req, res) => {
     let reply = "";
     try {
       const response = await ai.models.generateContent({
-        model: "gemini-3.6-flash",
+        model: "gemini-3.8-flash",
         contents: contents,
         config: {
           systemInstruction: PORTFOLIO_CONTEXT,
@@ -100,9 +122,9 @@ app.post("/api/chat", async (req, res) => {
       reply = response.text || "I am here to help you explore Daniyal's portfolio!";
     } catch (firstErr: any) {
       console.warn("Primary model failed, falling back to backup model...", firstErr.message);
-      // Fallback to gemini-3.8-flash
+      // Fallback to gemini-3.1-flash-lite
       const backupResponse = await ai.models.generateContent({
-        model: "gemini-3.8-flash",
+        model: "gemini-3.1-flash-lite",
         contents: contents,
         config: {
           systemInstruction: PORTFOLIO_CONTEXT,

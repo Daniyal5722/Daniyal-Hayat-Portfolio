@@ -33,6 +33,7 @@ interface ResumeModalProps {
 
 export function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
   const [copied, setCopied] = useState(false);
+  const [copiedText, setCopiedText] = useState(false);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -54,6 +55,30 @@ export function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
     navigator.clipboard.writeText(DEVELOPER_EMAIL);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+  };
+
+  const copyFullTextResume = () => {
+    const text = `${DEVELOPER_NAME}
+Software Engineer & Product Builder
+Email: ${DEVELOPER_EMAIL}
+GitHub: ${GITHUB_PROFILE_URL}
+Portfolio: ${LIVE_PORTFOLIO_URL}
+
+SUMMARY
+Specializing in modern full-stack web applications (React, TypeScript, Next.js), native Android mobile engineering with Kotlin, and AI integrations with Google Gemini.
+
+TECHNICAL PROFICIENCIES
+${SKILL_GROUPS.map(g => `${g.category}: ${g.skills.map(s => s.name).join(', ')}`).join('\n')}
+
+SELECTED PROJECTS
+${PROJECTS.slice(0, 6).map(p => `• ${p.displayName} (${p.category})\n  ${p.description}\n  Tech: ${p.technologies.join(', ')}\n  GitHub: ${p.githubUrl}${p.liveUrl ? `\n  Live: ${p.liveUrl}` : ''}`).join('\n\n')}
+
+EDUCATION & FOUNDATIONS
+${EDUCATION_DATA.map(e => `• ${e.program} - ${e.institution} (${e.timeline})\n  ${e.description}`).join('\n')}
+`;
+    navigator.clipboard.writeText(text);
+    setCopiedText(true);
+    setTimeout(() => setCopiedText(false), 2500);
   };
 
   const handlePrint = () => {
@@ -90,10 +115,19 @@ export function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
               </span>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 sm:gap-3">
+              <button
+                onClick={copyFullTextResume}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-300 dark:border-slate-700 hover:border-slate-400 dark:hover:border-slate-600 text-xs font-medium text-slate-700 dark:text-slate-200 transition-colors cursor-pointer"
+                title="Copy ATS Plain Text Version"
+              >
+                {copiedText ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
+                <span className="hidden sm:inline">{copiedText ? 'Copied ATS Text!' : 'Copy Text'}</span>
+              </button>
+
               <button
                 onClick={handlePrint}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-300 dark:border-slate-700 hover:border-slate-400 dark:hover:border-slate-600 text-xs font-medium text-slate-700 dark:text-slate-200 transition-colors"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-300 dark:border-slate-700 hover:border-slate-400 dark:hover:border-slate-600 text-xs font-medium text-slate-700 dark:text-slate-200 transition-colors cursor-pointer"
                 title="Print or Save as PDF"
               >
                 <Printer className="w-3.5 h-3.5" />
@@ -102,7 +136,7 @@ export function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
 
               <button
                 onClick={onClose}
-                className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
                 aria-label="Close resume"
               >
                 <X className="w-5 h-5" />
