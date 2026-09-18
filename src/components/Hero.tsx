@@ -17,6 +17,7 @@ import { useGitHubActivity } from '../hooks/useGitHubActivity';
 import { useGitHubRepos } from '../hooks/useGitHubRepos';
 import { Hero3DObject } from './Hero3DObject';
 import { MagneticButton } from './MagneticButton';
+import { TypewriterText } from './animations/TypewriterText';
 
 interface HeroProps {
   onOpenResume?: () => void;
@@ -126,9 +127,26 @@ export function Hero({ onOpenResume }: HeroProps) {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5, delay: 0.5 }}
-                className="text-base sm:text-xl font-mono text-cyan-600 dark:text-cyan-400 font-medium pt-2"
+                className="text-lg sm:text-2xl md:text-3xl font-mono text-cyan-600 dark:text-cyan-400 font-medium pt-3 min-h-[44px] sm:min-h-[48px] flex items-baseline"
               >
-                Software Engineer • Web Architect • Mobile Builder
+                <TypewriterText
+                  prefix="Specialization //"
+                  prefixClassName="text-slate-400 dark:text-slate-500 text-xs sm:text-sm font-mono uppercase tracking-wider select-none mr-2 font-normal"
+                  phrases={[
+                    "Software Engineer",
+                    "Full-Stack Web Architect",
+                    "Android (Kotlin) Developer",
+                    "React & TypeScript Specialist",
+                    "AI Solutions Builder"
+                  ]}
+                  typingSpeed={68}
+                  deletingSpeed={36}
+                  pauseDuration={2400}
+                  deleteDelay={500}
+                  cursorChar="▋"
+                  cursorClassName="text-cyan-500 font-bold animate-pulse ml-1 text-sm sm:text-lg select-none"
+                  minHeightClassName="min-h-[1.5em]"
+                />
               </motion.div>
             </div>
 

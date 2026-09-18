@@ -3,6 +3,16 @@ import { Cpu, Github, ExternalLink, Sparkles, Check, Clock, BookOpen, ArrowRight
 import { PROJECTS } from '../data/portfolioData';
 import { getEstimatedReadingTime } from '../utils/readingTime';
 import { Project } from '../types';
+import { TerminalTyper, TerminalLine } from './animations/TerminalTyper';
+
+const CORTEX_TERMINAL_LINES: TerminalLine[] = [
+  { prefix: '>', text: 'cortexiq telemetry --mode=reactive', type: 'command' },
+  { prefix: '[sys]', text: 'Bootstrapping real-time inference telemetry...', type: 'system' },
+  { prefix: '✓', text: 'Token weighting verified in 4.2ms', type: 'success' },
+  { prefix: '✓', text: 'Model pipeline active with zero layout shift', type: 'success' },
+  { prefix: '✓', text: 'Rate limit safety checks passed (100% OK)', type: 'info' },
+  { prefix: '→', text: 'Status: Production stream listening on port 3000', type: 'dim' },
+];
 
 interface FeaturedProjectProps {
   onOpenCaseStudy: (project: Project) => void;
@@ -143,11 +153,8 @@ export function FeaturedProject({ onOpenCaseStudy }: FeaturedProjectProps) {
                   <span className="text-[11px] text-slate-500">cortexiq.runtime.ts</span>
                 </div>
 
-                <div className="space-y-2 text-slate-400">
-                  <p className="text-cyan-400 font-semibold">// Initializing CortexIQ AI Prompt Telemetry</p>
-                  <p><span className="text-purple-400">const</span> intelligence = <span className="text-yellow-400">new</span> CortexIQ({'{\n  mode: "reactive",\n  framework: "TypeScript",\n  rateLimitSafety: true\n}'});</p>
-                  <p className="text-emerald-400">✓ Token weighting calculated in 4.2ms</p>
-                  <p className="text-blue-400">✓ Model pipeline active with 0 layout shift</p>
+                <div className="min-h-[140px] flex flex-col justify-start">
+                  <TerminalTyper lines={CORTEX_TERMINAL_LINES} />
                 </div>
 
                 <div className="p-3 rounded-lg bg-slate-900/90 border border-slate-800 flex items-center justify-between">

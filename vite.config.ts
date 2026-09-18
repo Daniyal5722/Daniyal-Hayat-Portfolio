@@ -11,7 +11,7 @@ export default defineConfig(() => {
       tailwindcss(),
       VitePWA({
         registerType: 'autoUpdate',
-        includeAssets: ['favicon.ico', 'apple-touch-icon.png'],
+        includeAssets: ['apple-touch-icon.png'],
         manifest: {
           id: '/',
           name: 'Daniyal Hayat Portfolio',

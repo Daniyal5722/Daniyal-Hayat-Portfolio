@@ -14,6 +14,8 @@ import {
 } from 'lucide-react';
 import { DEVELOPER_EMAIL, GITHUB_PROFILE_URL, GITHUB_USERNAME } from '../data/portfolioData';
 import { ContactFormState } from '../types';
+import { TextReveal } from './animations/TextReveal';
+import { TypewriterText } from './animations/TypewriterText';
 
 export function Contact() {
   const [formData, setFormData] = useState<ContactFormState>({
@@ -97,11 +99,27 @@ export function Contact() {
             </span>
           </div>
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.05]">
-            LET'S BUILD SOMETHING.
+            <TextReveal text="LET'S BUILD SOMETHING." />
           </h2>
-          <p className="text-base sm:text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
-            Have a web platform, native Android mobile app, or AI integration in mind? Let's turn ideas into high-performance reality.
-          </p>
+          <div className="pt-1">
+            <TypewriterText
+              prefix="Availability //"
+              prefixClassName="text-cyan-600 dark:text-cyan-400 font-mono text-xs uppercase tracking-wider font-semibold mr-1"
+              phrases={[
+                "Available for full-time software engineering roles & contracts",
+                "Ready to architect robust TypeScript web platforms",
+                "Building high-performance native Android applications",
+                "Turning complex ideas into scalable production systems"
+              ]}
+              typingSpeed={60}
+              deletingSpeed={32}
+              pauseDuration={2800}
+              cursorChar="▋"
+              cursorClassName="text-cyan-500 font-bold animate-pulse ml-0.5 text-sm"
+              className="font-mono text-sm sm:text-base text-slate-700 dark:text-slate-300"
+              minHeightClassName="min-h-[1.6em]"
+            />
+          </div>
         </div>
 
         <div className="grid lg:grid-cols-12 gap-10 items-start">
