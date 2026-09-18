@@ -1,24 +1,9 @@
 <!doctype html>
 <html lang="en" class="dark scroll-smooth">
   <head>
-    <script>
-      // Suppress benign [vite] websocket connection warnings/errors in the AI Studio sandboxed container environment
-      (function() {
-        const origError = console.error;
-        const origWarn = console.warn;
-        console.error = function(...args) {
-          if (args.length > 0 && typeof args[0] === 'string' && args[0].toLowerCase().includes('[vite]')) return;
-          origError.apply(console, args);
-        };
-        console.warn = function(...args) {
-          if (args.length > 0 && typeof args[0] === 'string' && args[0].toLowerCase().includes('[vite]')) return;
-          origWarn.apply(console, args);
-        };
-      })();
-    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Daniyal Hayat Portfolio</title>
+    <title>Daniyal Hayat | Developer &amp; Builder</title>
     
     <meta name="description" content="Personal developer portfolio website for Daniyal Hayat showcasing actual public GitHub repositories including Darul Ifta, CortexIQ, and Hamara Weather." />
     <meta name="keywords" content="Daniyal Hayat, Software Engineer, Full Stack Developer, Kotlin Android Developer, React, TypeScript, Tailwind CSS, Google Gemini AI, Web Development, Portfolio" />
@@ -35,14 +20,14 @@
     <!-- OpenGraph Social Sharing -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://daniyal-hayat-portfolio.vercel.app/" />
-    <meta property="og:title" content="Daniyal Hayat Portfolio" />
+    <meta property="og:title" content="Daniyal Hayat | Developer &amp; Builder" />
     <meta property="og:description" content="Personal developer portfolio website for Daniyal Hayat showcasing actual public GitHub repositories including Darul Ifta, CortexIQ, and Hamara Weather." />
     <meta property="og:site_name" content="Daniyal Hayat Portfolio" />
     <meta property="og:locale" content="en_US" />
 
     <!-- Twitter / X Cards -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Daniyal Hayat Portfolio" />
+    <meta name="twitter:title" content="Daniyal Hayat | Developer &amp; Builder" />
     <meta name="twitter:description" content="Personal developer portfolio website for Daniyal Hayat showcasing actual public GitHub repositories including Darul Ifta, CortexIQ, and Hamara Weather." />
 
     <!-- Fonts -->
