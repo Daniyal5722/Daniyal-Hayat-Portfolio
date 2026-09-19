@@ -12,10 +12,9 @@ import {
   Terminal,
   ExternalLink
 } from 'lucide-react';
-import { GITHUB_PROFILE_URL, DEVELOPER_NAME, DEVELOPER_EMAIL } from '../data/portfolioData';
+import { GITHUB_PROFILE_URL } from '../data/portfolioData';
 import { useGitHubActivity } from '../hooks/useGitHubActivity';
 import { useGitHubRepos } from '../hooks/useGitHubRepos';
-import { Hero3DObject } from './Hero3DObject';
 import { MagneticButton } from './MagneticButton';
 
 interface HeroProps {
@@ -74,13 +73,13 @@ export function Hero({ onOpenResume }: HeroProps) {
 
         </div>
 
-        {/* Hero Grid with 3D Object */}
+        {/* Hero Grid with Profile Photo */}
         <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           
           {/* Left Column: Typography & CTAs */}
-          <div className="lg:col-span-8 space-y-6">
+          <div className="lg:col-span-7 space-y-6">
             
-            {/* Tagline / Monogram */}
+            {/* Tagline / Monogram & Name Heading */}
             <motion.div
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
@@ -91,9 +90,14 @@ export function Hero({ onOpenResume }: HeroProps) {
                 PORTFOLIO // 2026
               </span>
               <div className="h-[1px] w-12 bg-cyan-500/30" />
-              <span className="font-mono text-xs text-slate-500 dark:text-slate-400 tracking-widest uppercase">
-                {DEVELOPER_NAME}
-              </span>
+              <h2 id="hero-name-heading" className="tracking-wider uppercase text-xs sm:text-sm font-sans flex items-center gap-1.5">
+                <span className="font-bold text-slate-900 dark:text-white">
+                  DANIYAL
+                </span>
+                <span className="font-normal text-slate-500 dark:text-slate-400">
+                  HAYAT
+                </span>
+              </h2>
             </motion.div>
 
             {/* Cinematic Main Heading */}
@@ -213,14 +217,38 @@ export function Hero({ onOpenResume }: HeroProps) {
 
           </div>
 
-          {/* Right Column: Interactive 3D Polyhedron Canvas */}
+          {/* Right Column: Professional Profile Photo */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.85 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.7, delay: 0.35 }}
-            className="lg:col-span-4 flex items-center justify-center relative"
+            initial={{ opacity: 0, scale: 0.96, y: 15 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 0.65, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-5 flex items-center justify-center relative mt-10 lg:mt-0"
           >
-            <Hero3DObject />
+            <div className="relative w-full max-w-[270px] sm:max-w-[320px] md:max-w-[350px] lg:max-w-[390px] xl:max-w-[420px] aspect-[4/5] group">
+              {/* Subtle ambient glow behind the image */}
+              <div 
+                className="absolute -inset-2 bg-gradient-to-tr from-cyan-500/20 via-blue-500/15 to-violet-500/20 dark:from-cyan-500/15 dark:via-blue-500/10 dark:to-indigo-500/15 rounded-3xl lg:rounded-[2.25rem] blur-2xl group-hover:blur-3xl group-hover:opacity-100 opacity-70 transition-all duration-700 pointer-events-none" 
+              />
+              
+              {/* Premium Image Frame */}
+              <div 
+                className="relative w-full h-full rounded-2xl sm:rounded-3xl lg:rounded-[2rem] overflow-hidden border border-slate-200/80 dark:border-cyan-500/30 shadow-2xl shadow-slate-900/10 dark:shadow-cyan-950/40 transition-all duration-500 ease-out md:group-hover:scale-[1.02] md:group-hover:-translate-y-1 bg-slate-100 dark:bg-slate-900 ring-1 ring-black/5 dark:ring-white/10"
+              >
+                <img 
+                  src="/profile.jpeg" 
+                  alt="Daniyal Hayat, Web Developer" 
+                  className="w-full h-full object-cover object-top transition-transform duration-700 ease-out md:group-hover:scale-[1.02]"
+                  loading="lazy"
+                  decoding="async"
+                />
+                
+                {/* Subtle bottom gradient to gracefully blend suit edge */}
+                <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-slate-950/40 to-transparent pointer-events-none" />
+
+                {/* Subtle inner border for executive polish */}
+                <div className="absolute inset-0 rounded-2xl sm:rounded-3xl lg:rounded-[2rem] ring-1 ring-inset ring-white/20 dark:ring-white/10 pointer-events-none" />
+              </div>
+            </div>
           </motion.div>
 
         </div>

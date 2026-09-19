@@ -86,17 +86,17 @@ export function Navbar({
           <button
             onClick={handleLogoClick}
             data-cursor="pointer"
-            className="group flex items-center gap-2.5 text-slate-900 dark:text-white font-mono tracking-wider font-bold text-sm focus:outline-none rounded px-1 text-left cursor-pointer"
+            className="group flex items-center gap-2.5 text-slate-900 dark:text-white focus:outline-none rounded px-1 text-left cursor-pointer"
             title="Click logo 5 times to reveal developer terminal"
           >
             <div className="w-8 h-8 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 group-hover:border-cyan-400 group-hover:scale-105 transition-all shadow-xs">
               <Terminal className="w-4 h-4" />
             </div>
             <div className="flex flex-col">
-              <span className="leading-none text-[10px] text-slate-500 dark:text-slate-400 font-mono tracking-widest">
+              <span className="leading-none text-xs sm:text-sm font-extrabold text-slate-900 dark:text-white font-sans tracking-wider">
                 DANIYAL
               </span>
-              <span className="leading-none text-xs sm:text-sm font-extrabold text-slate-900 dark:text-white tracking-widest mt-0.5">
+              <span className="leading-none text-xs sm:text-sm font-normal text-slate-500 dark:text-slate-400 font-sans tracking-wider mt-0.5">
                 HAYAT
               </span>
             </div>
