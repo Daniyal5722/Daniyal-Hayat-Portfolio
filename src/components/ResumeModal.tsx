@@ -117,6 +117,7 @@ ${EDUCATION_DATA.map(e => `• ${e.program} - ${e.institution} (${e.timeline})\n
 
             <div className="flex items-center gap-2 sm:gap-3">
               <button
+                type="button"
                 onClick={copyFullTextResume}
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-300 dark:border-slate-700 hover:border-slate-400 dark:hover:border-slate-600 text-xs font-medium text-slate-700 dark:text-slate-200 transition-colors cursor-pointer"
                 title="Copy ATS Plain Text Version"
@@ -126,15 +127,18 @@ ${EDUCATION_DATA.map(e => `• ${e.program} - ${e.institution} (${e.timeline})\n
               </button>
 
               <button
+                type="button"
+                id="resume-header-download-pdf-btn"
                 onClick={handlePrint}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-300 dark:border-slate-700 hover:border-slate-400 dark:hover:border-slate-600 text-xs font-medium text-slate-700 dark:text-slate-200 transition-colors cursor-pointer"
-                title="Print or Save as PDF"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 text-cyan-600 dark:text-cyan-400 text-xs font-medium transition-colors cursor-pointer"
+                title="Save CV as PDF via printer dialog"
               >
-                <Printer className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">Print / Save PDF</span>
+                <Download className="w-3.5 h-3.5" />
+                <span>Download as PDF</span>
               </button>
 
               <button
+                type="button"
                 onClick={onClose}
                 className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
                 aria-label="Close resume"
@@ -145,7 +149,10 @@ ${EDUCATION_DATA.map(e => `• ${e.program} - ${e.institution} (${e.timeline})\n
           </div>
 
           {/* Printable Document Body */}
-          <div className="flex-1 overflow-y-auto p-6 sm:p-10 space-y-8 text-slate-800 dark:text-slate-200 font-sans print:p-0 print:text-black">
+          <div 
+            id="printable-resume-content"
+            className="flex-1 overflow-y-auto p-6 sm:p-10 space-y-8 text-slate-800 dark:text-slate-200 font-sans print:p-0 print:text-black"
+          >
             
             {/* Header / Contact Info */}
             <div className="border-b border-slate-200 dark:border-slate-800 pb-6 space-y-3">
@@ -154,7 +161,7 @@ ${EDUCATION_DATA.map(e => `• ${e.program} - ${e.institution} (${e.timeline})\n
                   {DEVELOPER_NAME}
                 </h1>
                 <span className="text-sm font-mono text-cyan-600 dark:text-cyan-400 font-semibold print:text-slate-800">
-                  Software Engineer & Product Builder
+                  Full-Stack Web Developer &amp; Systems Engineer
                 </span>
               </div>
               <p className="text-sm text-slate-600 dark:text-slate-400 max-w-2xl leading-relaxed">
@@ -276,11 +283,13 @@ ${EDUCATION_DATA.map(e => `• ${e.program} - ${e.institution} (${e.timeline})\n
             </span>
             <div className="flex items-center gap-2">
               <button
+                type="button"
+                id="resume-footer-download-pdf-btn"
                 onClick={handlePrint}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-semibold text-xs sm:text-sm transition-colors shadow-xs"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-semibold text-xs sm:text-sm transition-colors shadow-xs cursor-pointer"
               >
                 <Download className="w-4 h-4" />
-                <span>Download / Print CV</span>
+                <span>Download as PDF</span>
               </button>
             </div>
           </div>

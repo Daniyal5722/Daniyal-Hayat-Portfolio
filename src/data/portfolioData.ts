@@ -1,8 +1,8 @@
 import { Project, SkillGroup, ExperienceItem, EducationItem, ServiceItem } from '../types';
 
 export const DEVELOPER_NAME = "Daniyal Hayat";
-export const DEVELOPER_ROLE = "Software Engineer & Product Builder";
-export const DEVELOPER_TAGLINE = "Building Digital Experiences That Feel Different.";
+export const DEVELOPER_ROLE = "Full-Stack Web Developer";
+export const DEVELOPER_TAGLINE = "Building High-Impact Web Platforms & Resilient Digital Systems.";
 export const DEVELOPER_LOCATION = "Available Globally & Remote";
 export const DEVELOPER_EMAIL = "mdaniyalhayyat@gmail.com";
 export const GITHUB_USERNAME = "Daniyal5722";

@@ -25,9 +25,6 @@ export function Hero({ onOpenResume }: HeroProps) {
   const { activity } = useGitHubActivity();
   const { projects } = useGitHubRepos();
 
-  const titleWords = ["BUILD.", "CREATE.", "EXPLORE."];
-  const headlineWords = "Architecting resilient digital systems with precision, creative motion, and craftsmanship.".split(" ");
-
   return (
     <section id="home" className="relative min-h-[95vh] flex flex-col justify-center pt-28 pb-16 overflow-hidden">
       
@@ -89,50 +86,42 @@ export function Hero({ onOpenResume }: HeroProps) {
               <span className="px-2.5 py-1 rounded-md bg-cyan-500/10 border border-cyan-500/30 text-cyan-600 dark:text-cyan-400 font-mono text-xs font-bold uppercase tracking-widest">
                 PORTFOLIO // 2026
               </span>
-              <div className="h-[1px] w-12 bg-cyan-500/30" />
-              <h2 id="hero-name-heading" className="tracking-wider uppercase text-xs sm:text-sm font-sans flex items-center gap-1.5">
+              <div className="h-[1px] w-8 sm:w-12 bg-cyan-500/30" />
+              <div className="tracking-wider uppercase text-xs sm:text-sm font-sans flex items-center gap-1.5">
                 <span className="font-bold text-slate-900 dark:text-white">
                   DANIYAL
                 </span>
                 <span className="font-normal text-slate-500 dark:text-slate-400">
                   HAYAT
                 </span>
-              </h2>
+              </div>
             </motion.div>
 
-            {/* Cinematic Main Heading */}
-            <div className="space-y-1">
+            {/* Cinematic Main Heading & Core Role */}
+            <div className="space-y-3">
               <motion.h1 
-                className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.05]"
+                id="hero-main-heading"
+                className="text-4xl sm:text-6xl md:text-7xl lg:text-7xl xl:text-8xl font-black tracking-tight text-slate-900 dark:text-white leading-[1.05]"
               >
-                {titleWords.map((word, idx) => (
-                  <motion.span
-                    key={idx}
-                    initial={{ opacity: 0, y: 25, filter: 'blur(8px)' }}
-                    animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                    transition={{ 
-                      duration: 0.5, 
-                      delay: 0.15 + idx * 0.12, 
-                      ease: [0.22, 1, 0.36, 1] 
-                    }}
-                    className={`inline-block mr-3 sm:mr-5 ${
-                      idx === 1 
-                        ? 'text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 via-blue-500 to-violet-500 dark:from-cyan-400 dark:via-blue-400 dark:to-violet-400' 
-                        : ''
-                    }`}
-                  >
-                    {word}
-                  </motion.span>
-                ))}
+                <span className="block font-bold">
+                  DANIYAL <span className="font-normal text-slate-400 dark:text-slate-500">HAYAT</span>
+                </span>
+                <span className="block text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mt-1 text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 via-blue-500 to-violet-500 dark:from-cyan-400 dark:via-blue-400 dark:to-violet-400">
+                  Full-Stack Web Developer
+                </span>
               </motion.h1>
 
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ duration: 0.5, delay: 0.5 }}
-                className="text-base sm:text-xl font-mono text-cyan-600 dark:text-cyan-400 font-medium pt-2"
+                transition={{ duration: 0.5, delay: 0.45 }}
+                className="text-sm sm:text-base md:text-lg font-mono text-cyan-700 dark:text-cyan-400 font-medium flex flex-wrap items-center gap-2 pt-1"
               >
-                Software Engineer • Web Architect • Mobile Builder
+                <span>Full-Stack Web Architect</span>
+                <span>•</span>
+                <span>Native Android (Kotlin)</span>
+                <span>•</span>
+                <span>AI Systems</span>
               </motion.div>
             </div>
 

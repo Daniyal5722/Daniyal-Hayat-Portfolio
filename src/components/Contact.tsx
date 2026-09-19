@@ -122,11 +122,25 @@ export function Contact() {
                   <button
                     type="button"
                     onClick={handleCopyEmail}
-                    className="p-1.5 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer shrink-0"
-                    title="Copy email address"
-                    aria-label="Copy email address"
+                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-all duration-200 cursor-pointer shrink-0 border select-none ${
+                      copied
+                        ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-600 dark:text-emerald-400'
+                        : 'bg-slate-200/70 hover:bg-cyan-500/10 border-slate-300/80 dark:bg-slate-800 dark:hover:bg-cyan-500/10 dark:border-slate-700 hover:border-cyan-500/30 text-slate-700 hover:text-cyan-600 dark:text-slate-300 dark:hover:text-cyan-400'
+                    }`}
+                    title={copied ? "Email copied!" : "Copy email address to clipboard"}
+                    aria-label={copied ? "Email copied to clipboard" : "Copy email address to clipboard"}
                   >
-                    {copied ? <Check className="w-4 h-4 text-emerald-500" /> : <Copy className="w-4 h-4" />}
+                    {copied ? (
+                      <>
+                        <Check className="w-3.5 h-3.5 text-emerald-500" />
+                        <span>Copied!</span>
+                      </>
+                    ) : (
+                      <>
+                        <Copy className="w-3.5 h-3.5" />
+                        <span>Copy</span>
+                      </>
+                    )}
                   </button>
                 </div>
               </div>
