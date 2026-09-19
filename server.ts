@@ -31,7 +31,14 @@ app.post("/api/contact", (req, res) => {
 
 // Initialize Google Gemini AI securely on the server side
 const apiKey = process.env.GEMINI_API_KEY;
-const ai = apiKey ? new GoogleGenAI({ apiKey }) : null;
+const ai = apiKey ? new GoogleGenAI({ 
+  apiKey,
+  httpOptions: {
+    headers: {
+      'User-Agent': 'aistudio-build',
+    }
+  }
+}) : null;
 
 // Portfolio knowledge base context
 const PORTFOLIO_CONTEXT = `

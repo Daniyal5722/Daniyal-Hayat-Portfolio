@@ -11,14 +11,27 @@
 html, body {
   overflow-x: hidden;
   width: 100%;
+  max-width: 100%;
 }
 
-/* Ensure minimum 44x44px touch targets on mobile for touch devices */
-@media (pointer: coarse) {
-  button, a, input, select, textarea, [role="button"] {
-    min-height: 44px;
-    min-width: 44px;
-  }
+#root {
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Safe area support for iOS notches & home bars */
+.safe-bottom {
+  padding-bottom: max(1rem, env(safe-area-inset-bottom, 1rem));
+}
+
+.bottom-safe {
+  bottom: max(1rem, env(safe-area-inset-bottom, 1rem));
+}
+
+/* Ensure buttons, controls, and inputs have accessible touch sizes */
+button, input, select, textarea, [role="button"] {
+  touch-action: manipulation;
 }
 
 /* Custom smooth scrollbar */
@@ -50,6 +63,18 @@ html, body {
 
 .animate-marquee:hover {
   animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee {
+    animation: none !important;
+    transform: none !important;
+  }
+  .animate-pulse-glow,
+  .animate-ping,
+  .animate-pulse {
+    animation: none !important;
+  }
 }
 
 @keyframes pulse-glow {

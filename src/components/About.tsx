@@ -39,17 +39,17 @@ export function About() {
   ];
 
   return (
-    <section id="about" className="py-32 relative overflow-hidden bg-gradient-to-b from-transparent via-purple-500/[0.015] to-transparent">
+    <section id="about" className="py-14 sm:py-20 md:py-28 lg:py-32 relative overflow-hidden bg-gradient-to-b from-transparent via-purple-500/[0.015] to-transparent">
       
       {/* Editorial Watermark Backdrop */}
-      <div className="absolute top-12 -right-16 pointer-events-none select-none opacity-[0.03] dark:opacity-[0.05] text-9xl font-extrabold font-mono tracking-tighter">
+      <div className="absolute top-12 -right-16 pointer-events-none select-none opacity-[0.03] dark:opacity-[0.05] text-7xl sm:text-9xl font-extrabold font-mono tracking-tighter">
         DANIYAL
       </div>
 
-      <div className="max-w-[88rem] mx-auto px-4 sm:px-6 lg:px-12 relative z-10 transform scale-[1.01] transition-transform">
+      <div className="max-w-[88rem] mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
         
         {/* Section Heading */}
-        <div className="space-y-4 max-w-3xl mb-16">
+        <div className="space-y-4 max-w-3xl mb-10 sm:mb-16">
           <div className="flex items-center gap-3">
             <span className="px-2.5 py-1 rounded-md bg-cyan-500/10 border border-cyan-500/30 text-cyan-600 dark:text-cyan-400 font-mono text-xs font-bold uppercase tracking-widest">
               ABOUT // 01
@@ -58,13 +58,13 @@ export function About() {
               Who is Daniyal?
             </span>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 dark:text-white leading-[1.12]">
+          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 dark:text-white leading-[1.15]">
             Driven by clean architecture, relentless performance, and editorial feel.
           </h2>
         </div>
 
         {/* Split Editorial Grid */}
-        <div className="grid lg:grid-cols-12 gap-12 items-start">
+        <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           
           {/* Left Column: Visual Identity & Verified Credentials */}
           <motion.div
@@ -74,7 +74,7 @@ export function About() {
             transition={{ duration: 0.55 }}
             className="lg:col-span-5 space-y-6"
           >
-            <div className="p-8 rounded-3xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 shadow-xl relative overflow-hidden group">
+            <div className="p-5 sm:p-8 rounded-2xl sm:rounded-3xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 shadow-xl relative overflow-hidden group">
               <div className="absolute top-0 right-0 w-36 h-36 bg-cyan-500/10 rounded-full blur-2xl group-hover:bg-cyan-500/20 transition-all duration-500" />
               
               <div className="flex items-center gap-3.5 mb-6">
@@ -95,22 +95,22 @@ export function About() {
                 "Great software is where mathematical precision meets intuitive craftsmanship. If it doesn't feel instant, effortless, and accessible, the work isn't done."
               </blockquote>
 
-              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+              <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 leading-relaxed">
                 I build digital products that prioritize real user utility, zero bloat, and rock-solid code maintainability. Whether developing responsive web platforms or native Android applications, I treat every pixel and API request with deliberate intent.
               </p>
 
               {/* Verified Metrics Counter */}
-              <div className="grid grid-cols-2 gap-4 pt-6 mt-6 border-t border-slate-100 dark:border-slate-800">
-                <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800/80 text-center">
+              <div className="grid grid-cols-2 gap-3 sm:gap-4 pt-6 mt-6 border-t border-slate-100 dark:border-slate-800">
+                <div className="p-3 sm:p-3.5 rounded-xl sm:rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800/80 text-center">
                   <span className="block text-2xl sm:text-3xl font-bold text-cyan-600 dark:text-cyan-400 font-mono">
                     {repoCount}
                   </span>
                   <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                    Public Repositories
+                    Public Repos
                   </span>
                 </div>
 
-                <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800/80 text-center">
+                <div className="p-3 sm:p-3.5 rounded-xl sm:rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800/80 text-center">
                   <span className="block text-2xl sm:text-3xl font-bold text-emerald-600 dark:text-emerald-400 font-mono">
                     {LIVE_DEPLOYMENTS.length}
                   </span>
@@ -123,14 +123,14 @@ export function About() {
             </div>
 
             {/* Inspect Commits Callout */}
-            <div className="p-4 rounded-2xl bg-cyan-500/5 dark:bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-between">
-              <span className="text-xs font-medium text-slate-700 dark:text-slate-300">
+            <div className="p-4 rounded-2xl bg-cyan-500/5 dark:bg-cyan-500/10 border border-cyan-500/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <span className="text-xs sm:text-sm font-medium text-slate-700 dark:text-slate-300">
                 Want to review verified GitHub commits?
               </span>
               <MagneticButton
                 href="#github"
                 dataCursor="pointer"
-                className="inline-flex items-center gap-1.5 text-xs font-semibold text-cyan-600 dark:text-cyan-400 hover:text-cyan-500 transition-colors"
+                className="inline-flex items-center justify-center min-h-[44px] px-3 gap-1.5 text-xs font-semibold text-cyan-600 dark:text-cyan-400 hover:text-cyan-500 transition-colors self-start sm:self-auto"
               >
                 <span>Inspect Activity</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -144,7 +144,7 @@ export function About() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.55, delay: 0.1 }}
-            className="lg:col-span-7 space-y-8 text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed"
+            className="lg:col-span-7 space-y-6 sm:space-y-8 text-slate-600 dark:text-slate-300 text-base leading-relaxed"
           >
             <div className="space-y-4">
               <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
@@ -167,20 +167,20 @@ export function About() {
                 Development Journey & Evolution
               </h4>
 
-              <div className="space-y-4">
+              <div className="space-y-3 sm:space-y-4">
                 {timelineMilestones.map((m, idx) => (
                   <div 
                     key={idx} 
-                    className="p-4 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3 group hover:border-cyan-500/40 transition-colors"
+                    className="p-4 rounded-xl sm:rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3 group hover:border-cyan-500/40 transition-colors"
                   >
                     <div className="space-y-1">
                       <div className="flex items-center gap-2">
-                        <span className="w-2 h-2 rounded-full bg-cyan-500" />
-                        <h5 className="font-bold text-slate-900 dark:text-white text-sm">
+                        <span className="w-2 h-2 rounded-full bg-cyan-500 shrink-0" />
+                        <h5 className="font-bold text-slate-900 dark:text-white text-sm sm:text-base">
                           {m.title}
                         </h5>
                       </div>
-                      <p className="text-xs text-slate-500 dark:text-slate-400 max-w-xl">
+                      <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 max-w-xl">
                         {m.desc}
                       </p>
                     </div>
@@ -193,23 +193,23 @@ export function About() {
             </div>
 
             {/* What Makes My Work Different - Pillars */}
-            <div className="grid sm:grid-cols-2 gap-4 text-xs pt-2">
-              <div className="p-4 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 space-y-1.5">
+            <div className="grid sm:grid-cols-2 gap-3 sm:gap-4 text-xs sm:text-sm pt-2">
+              <div className="p-4 rounded-xl sm:rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 space-y-1.5">
                 <div className="flex items-center gap-2 text-slate-900 dark:text-white font-semibold">
                   <Layers className="w-4 h-4 text-cyan-500" />
                   <span>Cross-Platform Depth</span>
                 </div>
-                <p className="text-slate-500 dark:text-slate-400 leading-normal">
+                <p className="text-slate-500 dark:text-slate-400 leading-normal text-xs sm:text-sm">
                   Fluid in modern React/TypeScript web apps and native Android mobile apps in Kotlin.
                 </p>
               </div>
 
-              <div className="p-4 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 space-y-1.5">
+              <div className="p-4 rounded-xl sm:rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 space-y-1.5">
                 <div className="flex items-center gap-2 text-slate-900 dark:text-white font-semibold">
                   <ShieldCheck className="w-4 h-4 text-cyan-500" />
                   <span>Verified & Honest</span>
                 </div>
-                <p className="text-slate-500 dark:text-slate-400 leading-normal">
+                <p className="text-slate-500 dark:text-slate-400 leading-normal text-xs sm:text-sm">
                   No mock metrics or placeholder logos. All codebases are publicly accessible on GitHub.
                 </p>
               </div>

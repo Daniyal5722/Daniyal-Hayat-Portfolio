@@ -253,14 +253,14 @@ export function PortfolioChatbot() {
             </div>
 
             {/* Suggested Question Chips */}
-            <div className="px-3 py-2 bg-white dark:bg-[#111422] border-t border-slate-200 dark:border-slate-800 overflow-x-auto no-scrollbar flex items-center gap-1.5">
+            <div className="px-3 py-2 bg-white dark:bg-[#111422] border-t border-slate-200 dark:border-slate-800 overflow-x-auto no-scrollbar flex items-center gap-1.5 scrollbar-hide">
               {SUGGESTED_QUESTIONS.map((item, idx) => (
                 <button
                   key={idx}
                   type="button"
                   onClick={() => handleSendMessage(item.query)}
                   disabled={isLoading}
-                  className="shrink-0 px-3 py-1 rounded-full text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-cyan-500 hover:text-slate-950 dark:hover:bg-cyan-500 dark:hover:text-slate-950 transition-colors disabled:opacity-50 cursor-pointer"
+                  className="shrink-0 min-h-[36px] px-3.5 py-1.5 rounded-full text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-cyan-500 hover:text-slate-950 dark:hover:bg-cyan-500 dark:hover:text-slate-950 transition-colors disabled:opacity-50 cursor-pointer whitespace-nowrap"
                 >
                   {item.label}
                 </button>
@@ -280,16 +280,16 @@ export function PortfolioChatbot() {
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Ask about Daniyal, projects, skills..."
+                placeholder="Ask Daniyal AI..."
                 disabled={isLoading}
                 aria-label="Message input"
-                className="flex-1 px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all"
+                className="flex-1 min-h-[44px] px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-base sm:text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all"
               />
               <button
                 type="submit"
                 disabled={!input.trim() || isLoading}
                 aria-label="Send message"
-                className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-cyan-500 text-slate-950 hover:bg-cyan-400 disabled:opacity-50 disabled:hover:bg-cyan-500 transition-colors shrink-0 shadow-sm cursor-pointer"
+                className="inline-flex items-center justify-center min-w-[44px] min-h-[44px] rounded-xl bg-cyan-500 text-slate-950 hover:bg-cyan-400 disabled:opacity-50 disabled:hover:bg-cyan-500 transition-colors shrink-0 shadow-sm cursor-pointer"
               >
                 <Send className="w-4 h-4" />
               </button>

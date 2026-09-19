@@ -152,7 +152,7 @@ export function CommandPalette({
       category: 'External',
       icon: <Github className="w-4 h-4 text-slate-300" />,
       action: () => {
-        window.open(GITHUB_PROFILE_URL, '_blank');
+        window.open(GITHUB_PROFILE_URL, '_blank', 'noopener,noreferrer');
         onClose();
       },
     },
@@ -237,7 +237,7 @@ export function CommandPalette({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: -15 }}
             transition={{ type: 'spring', damping: 25, stiffness: 350 }}
-            className="relative z-10 w-full max-w-xl rounded-2xl bg-white dark:bg-[#0c0e14] border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden font-sans"
+            className="relative z-10 w-full max-w-xl rounded-2xl bg-white dark:bg-[#0c0e14] border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden font-sans mx-auto"
           >
             {/* Input Bar */}
             <div className="flex items-center gap-3 px-4 py-3.5 border-b border-slate-200 dark:border-slate-800/80">
@@ -248,18 +248,18 @@ export function CommandPalette({
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Type a command, section, or action..."
-                className="w-full bg-transparent text-sm sm:text-base text-slate-900 dark:text-slate-100 placeholder:text-slate-400 outline-none"
+                className="w-full min-h-[44px] bg-transparent text-base text-slate-900 dark:text-slate-100 placeholder:text-slate-400 outline-none"
               />
               <button
                 onClick={onClose}
-                className="p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+                className="min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
               >
-                <X className="w-4 h-4" />
+                <X className="w-5 h-5" />
               </button>
             </div>
 
             {/* Results List */}
-            <div className="max-h-[340px] overflow-y-auto p-2 space-y-1">
+            <div className="max-h-[60vh] sm:max-h-[400px] overflow-y-auto p-2 space-y-1">
               {filtered.map((item, idx) => {
                 const isSelected = idx === selectedIndex;
                 return (
@@ -273,7 +273,7 @@ export function CommandPalette({
                       setSelectedIndex(idx);
                       soundManager.playHover();
                     }}
-                    className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-left text-xs sm:text-sm transition-colors cursor-pointer ${
+                    className={`w-full flex items-center justify-between min-h-[56px] px-3.5 py-3 rounded-xl text-left text-sm transition-colors cursor-pointer ${
                       isSelected
                         ? 'bg-cyan-500/15 dark:bg-cyan-500/20 text-cyan-900 dark:text-cyan-200 font-semibold'
                         : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-900'

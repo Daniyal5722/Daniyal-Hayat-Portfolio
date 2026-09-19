@@ -56,11 +56,13 @@ export function useGitHubRepos() {
           r.name.toLowerCase() === proj.name.toLowerCase() || 
           r.name.toLowerCase().replace(/[-_]/g, '') === proj.name.toLowerCase().replace(/[-_]/g, '')
         ))
+        // Filter out repositories with empty or placeholder descriptions
+        .filter((r: any) => r.description && r.description.trim().length > 0 && !r.description.toLowerCase().includes('no description provided'))
         .map((repo: any) => ({
           id: repo.name,
           name: repo.name,
           displayName: repo.name.replace(/[-_]/g, ' '),
-          description: repo.description || "No description provided.",
+          description: repo.description.trim(),
           technologies: repo.language ? [repo.language] : [],
           language: repo.language || "Unknown",
           githubUrl: repo.html_url,

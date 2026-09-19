@@ -9,7 +9,14 @@ export function Preloader({ onComplete }: PreloaderProps) {
   const [phase, setPhase] = useState<'initial' | 'revealed' | 'done'>('initial');
 
   useEffect(() => {
-    // Fast, ultra-crisp loading experience (<750ms total)
+    // Fast, ultra-crisp loading experience (<750ms total), immediate if reduced motion requested
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+      setPhase('done');
+      onComplete();
+      return;
+    }
+
     const t1 = setTimeout(() => {
       setPhase('revealed');
     }, 450);

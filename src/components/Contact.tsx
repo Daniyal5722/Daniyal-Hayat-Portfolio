@@ -83,11 +83,11 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" className="py-28 relative border-t dark:border-slate-800/80 border-slate-200 bg-gradient-to-b from-transparent via-cyan-500/[0.02] to-transparent">
+    <section id="contact" className="py-14 sm:py-20 md:py-28 relative border-t dark:border-slate-800/80 border-slate-200 bg-gradient-to-b from-transparent via-cyan-500/[0.02] to-transparent">
       <div className="max-w-[88rem] mx-auto px-4 sm:px-6 lg:px-12">
         
         {/* Section Heading */}
-        <div className="space-y-4 max-w-3xl mb-14">
+        <div className="space-y-3 sm:space-y-4 max-w-3xl mb-10 sm:mb-14">
           <div className="flex items-center gap-3">
             <span className="px-2.5 py-1 rounded-md bg-cyan-500/10 border border-cyan-500/30 text-cyan-600 dark:text-cyan-400 font-mono text-xs font-bold uppercase tracking-widest">
               CONTACT // 04
@@ -96,33 +96,33 @@ export function Contact() {
               Initiate Transmission
             </span>
           </div>
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.05]">
+          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.05]">
             LET'S BUILD SOMETHING.
           </h2>
-          <p className="text-base sm:text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
+          <p className="text-sm sm:text-base lg:text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
             Have a web platform, native Android mobile app, or AI integration in mind? Let's turn ideas into high-performance reality.
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-12 gap-10 items-start">
+        <div className="grid lg:grid-cols-12 gap-6 sm:gap-10 items-start">
           
           {/* Left Column: Direct Contact Info & Guarantees */}
           <div className="lg:col-span-5 space-y-6">
-            <div className="p-8 rounded-3xl bg-white dark:bg-[#111422] border border-slate-200 dark:border-slate-800 shadow-sm space-y-6">
+            <div className="p-5 sm:p-8 rounded-2xl sm:rounded-3xl bg-white dark:bg-[#111422] border border-slate-200 dark:border-slate-800 shadow-sm space-y-6">
               
               <div className="space-y-2">
                 <span className="text-xs font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400">
                   Direct Inbox
                 </span>
-                <div className="flex items-center justify-between p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-700">
-                  <div className="flex items-center gap-2.5 text-sm font-mono text-slate-800 dark:text-slate-200 truncate">
+                <div className="flex items-center justify-between p-3 sm:p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-700 gap-2">
+                  <div className="flex items-center gap-2.5 text-xs sm:text-sm font-mono text-slate-800 dark:text-slate-200 truncate">
                     <Mail className="w-4 h-4 text-cyan-500 shrink-0" />
                     <span className="truncate">{DEVELOPER_EMAIL}</span>
                   </div>
                   <button
                     type="button"
                     onClick={handleCopyEmail}
-                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-all duration-200 cursor-pointer shrink-0 border select-none ${
+                    className={`min-h-[40px] inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-all duration-200 cursor-pointer shrink-0 border select-none ${
                       copied
                         ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-600 dark:text-emerald-400'
                         : 'bg-slate-200/70 hover:bg-cyan-500/10 border-slate-300/80 dark:bg-slate-800 dark:hover:bg-cyan-500/10 dark:border-slate-700 hover:border-cyan-500/30 text-slate-700 hover:text-cyan-600 dark:text-slate-300 dark:hover:text-cyan-400'
@@ -148,7 +148,7 @@ export function Contact() {
               <div className="space-y-3">
                 <a
                   href={`mailto:${DEVELOPER_EMAIL}?subject=Portfolio%20Inquiry%20for%20Daniyal%20Hayat`}
-                  className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-cyan-500/50 bg-slate-50 dark:bg-slate-900 text-xs font-mono text-slate-700 dark:text-slate-300 hover:text-cyan-500 transition-all text-center"
+                  className="w-full min-h-[44px] flex items-center justify-center gap-2 py-3 px-4 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-cyan-500/50 bg-slate-50 dark:bg-slate-900 text-xs font-mono text-slate-700 dark:text-slate-300 hover:text-cyan-500 transition-all text-center"
                 >
                   <Mail className="w-3.5 h-3.5 text-cyan-500" />
                   <span>Open in Default Mail App</span>
@@ -182,40 +182,40 @@ export function Contact() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="lg:col-span-7 rounded-3xl bg-white dark:bg-[#111422] border border-slate-200 dark:border-slate-800 p-8 sm:p-10 shadow-sm relative overflow-hidden"
+            className="lg:col-span-7 rounded-2xl sm:rounded-3xl bg-white dark:bg-[#111422] border border-slate-200 dark:border-slate-800 p-5 sm:p-8 md:p-10 shadow-sm relative overflow-hidden"
           >
             {status === 'success' ? (
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="py-10 text-center space-y-4"
+                className="py-8 sm:py-10 text-center space-y-4"
               >
-                <div className="w-16 h-16 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center mx-auto text-emerald-500">
-                  <CheckCircle2 className="w-8 h-8" />
+                <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center mx-auto text-emerald-500">
+                  <CheckCircle2 className="w-7 h-7 sm:w-8 sm:h-8" />
                 </div>
-                <h3 className="text-2xl font-bold text-slate-900 dark:text-white">Message Transmitted!</h3>
-                <p className="text-sm text-slate-600 dark:text-slate-300 max-w-md mx-auto leading-relaxed">
+                <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">Message Transmitted!</h3>
+                <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 max-w-md mx-auto leading-relaxed">
                   Thank you for reaching out. Your inquiry has been safely recorded. Daniyal will follow up with you promptly.
                 </p>
                 <button
                   type="button"
                   onClick={() => setStatus('idle')}
-                  className="mt-4 px-6 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-mono text-cyan-600 dark:text-cyan-400 border border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors cursor-pointer"
+                  className="min-h-[44px] mt-4 px-6 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-mono text-cyan-600 dark:text-cyan-400 border border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors cursor-pointer"
                 >
                   Send Another Inquiry
                 </button>
               </motion.div>
             ) : (
-              <form id="contact-form" onSubmit={handleSubmit} className="space-y-6">
+              <form id="contact-form" onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
                 {status === 'error' && (
-                  <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/30 flex items-center gap-3 text-red-600 dark:text-red-400 text-xs font-mono">
+                  <div className="p-3.5 sm:p-4 rounded-xl bg-red-500/10 border border-red-500/30 flex items-center gap-3 text-red-600 dark:text-red-400 text-xs font-mono">
                     <AlertCircle className="w-4 h-4 shrink-0" />
                     <span>{errorMessage}</span>
                   </div>
                 )}
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                  <div className="space-y-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+                  <div className="space-y-1.5 sm:space-y-2">
                     <label htmlFor="contact-name" className="text-xs font-mono uppercase tracking-wider text-slate-600 dark:text-slate-400 block">
                       Full Name *
                     </label>
@@ -226,11 +226,11 @@ export function Contact() {
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       placeholder="e.g. Alex Chen"
-                      className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 text-slate-900 dark:text-white text-sm outline-none transition-all placeholder:text-slate-400"
+                      className="w-full min-h-[44px] px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 text-slate-900 dark:text-white text-base sm:text-sm outline-none transition-all placeholder:text-slate-400"
                     />
                   </div>
 
-                  <div className="space-y-2">
+                  <div className="space-y-1.5 sm:space-y-2">
                     <label htmlFor="contact-email" className="text-xs font-mono uppercase tracking-wider text-slate-600 dark:text-slate-400 block">
                       Email Address *
                     </label>
@@ -241,23 +241,23 @@ export function Contact() {
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       placeholder="e.g. alex@company.com"
-                      className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 text-slate-900 dark:text-white text-sm outline-none transition-all placeholder:text-slate-400"
+                      className="w-full min-h-[44px] px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 text-slate-900 dark:text-white text-base sm:text-sm outline-none transition-all placeholder:text-slate-400"
                     />
                   </div>
                 </div>
 
-                <div className="space-y-2">
+                <div className="space-y-1.5 sm:space-y-2">
                   <label htmlFor="contact-message" className="text-xs font-mono uppercase tracking-wider text-slate-600 dark:text-slate-400 block">
                     Message Details *
                   </label>
                   <textarea
                     id="contact-message"
-                    rows={5}
+                    rows={4}
                     required
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     placeholder="Describe your project, timeline, or engineering opportunity..."
-                    className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 text-slate-900 dark:text-white text-sm outline-none transition-all placeholder:text-slate-400 resize-none"
+                    className="w-full px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 text-slate-900 dark:text-white text-base sm:text-sm outline-none transition-all placeholder:text-slate-400 resize-none"
                   />
                 </div>
 
@@ -265,7 +265,7 @@ export function Contact() {
                   id="contact-submit-btn"
                   type="submit"
                   disabled={status === 'loading'}
-                  className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-sm shadow-md shadow-cyan-500/20 transition-all disabled:opacity-50 hover:scale-[1.01] active:scale-[0.99] cursor-pointer"
+                  className="w-full min-h-[48px] flex items-center justify-center gap-2 py-3.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-sm shadow-md shadow-cyan-500/20 transition-all disabled:opacity-50 hover:scale-[1.01] active:scale-[0.99] cursor-pointer"
                 >
                   {status === 'loading' ? (
                     <>

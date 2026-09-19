@@ -20,10 +20,13 @@ export function LayeredBackground() {
   const smoothGridY = useSpring(gridY, { damping: 40, stiffness: 120 });
 
   useEffect(() => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const checkTouch = () => {
-      setIsTouch(window.matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window);
+      setIsTouch(prefersReducedMotion || window.matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window);
     };
     checkTouch();
+
+    if (prefersReducedMotion) return;
 
     const handleMouseMove = (e: MouseEvent) => {
       if (isTouch) return;

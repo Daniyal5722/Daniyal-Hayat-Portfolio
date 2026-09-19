@@ -205,21 +205,21 @@ export function Skills() {
   };
 
   return (
-    <section id="skills" className="py-24 relative border-t dark:border-slate-800/80 border-slate-200">
+    <section id="skills" className="py-14 sm:py-20 md:py-24 relative border-t dark:border-slate-800/80 border-slate-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Heading & View Switcher */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
-          <div className="space-y-4 max-w-2xl">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 sm:mb-12">
+          <div className="space-y-3 sm:space-y-4 max-w-2xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-600 dark:text-cyan-400 text-xs font-mono uppercase tracking-widest">
               <Cpu className="w-3.5 h-3.5" />
               <span>Interactive Ecosystem</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 dark:text-white">
+            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 dark:text-white">
               Skills & Technology Matrix
             </h2>
-            <p className="text-base sm:text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
-              Explore my technical architecture as an interconnected ecosystem. Hover any node to trace relationships and view implementation depth.
+            <p className="text-sm sm:text-base lg:text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
+              Explore my technical architecture as an interconnected ecosystem. Hover or tap any node to trace relationships and view implementation depth.
             </p>
           </div>
 
@@ -230,7 +230,7 @@ export function Skills() {
                 setViewMode('ecosystem');
                 soundManager.playClick();
               }}
-              className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-mono transition-colors cursor-pointer ${
+              className={`min-h-[40px] flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-mono transition-colors cursor-pointer ${
                 viewMode === 'ecosystem'
                   ? 'bg-cyan-500 text-slate-950 font-bold shadow-xs'
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
@@ -244,7 +244,7 @@ export function Skills() {
                 setViewMode('grid');
                 soundManager.playClick();
               }}
-              className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-mono transition-colors cursor-pointer ${
+              className={`min-h-[40px] flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-mono transition-colors cursor-pointer ${
                 viewMode === 'grid'
                   ? 'bg-cyan-500 text-slate-950 font-bold shadow-xs'
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
@@ -257,7 +257,7 @@ export function Skills() {
         </div>
 
         {/* Category Filter Pills */}
-        <div className="flex flex-wrap items-center gap-2 mb-10">
+        <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-8 sm:mb-10">
           {categories.map((cat) => {
             const isSelected = selectedCategory === cat;
             return (
@@ -267,7 +267,7 @@ export function Skills() {
                   setSelectedCategory(cat);
                   soundManager.playClick();
                 }}
-                className={`relative px-4 py-2 rounded-full text-xs font-mono transition-all duration-200 cursor-pointer ${
+                className={`min-h-[40px] inline-flex items-center justify-center px-3.5 py-2 rounded-full text-xs font-mono transition-all duration-200 cursor-pointer ${
                   isSelected
                     ? 'bg-cyan-500 text-slate-950 font-bold shadow-md shadow-cyan-500/20'
                     : 'bg-white dark:bg-slate-900/80 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
@@ -281,15 +281,15 @@ export function Skills() {
 
         {/* Interactive Ecosystem Mode */}
         {viewMode === 'ecosystem' ? (
-          <div className="rounded-3xl bg-white/70 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 p-6 sm:p-10 backdrop-blur-xl relative overflow-hidden">
+          <div className="rounded-2xl sm:rounded-3xl bg-white/70 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 p-4 sm:p-6 md:p-10 backdrop-blur-xl relative overflow-hidden">
             
             {/* Active Node Detail Banner */}
-            <div className="mb-8 p-5 rounded-2xl bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800/80 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+            <div className="mb-6 sm:mb-8 p-4 sm:p-5 rounded-xl sm:rounded-2xl bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800/80 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
               <div className="space-y-1">
                 <span className="text-[10px] font-mono uppercase tracking-widest text-cyan-600 dark:text-cyan-400 block">
                   {activeSkillObj ? 'INSPECTING NODE' : 'INTERACTIVE TIP'}
                 </span>
-                <h4 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                <h4 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white flex flex-wrap items-center gap-2">
                   {activeSkillObj ? (
                     <>
                       <span>{activeSkillObj.name}</span>
@@ -298,7 +298,7 @@ export function Skills() {
                       </span>
                     </>
                   ) : (
-                    <span>Hover or click any node to trace relationships</span>
+                    <span>Hover or tap any node to trace relationships</span>
                   )}
                 </h4>
                 <p className="text-xs text-slate-600 dark:text-slate-400 max-w-2xl">
@@ -307,12 +307,12 @@ export function Skills() {
               </div>
 
               {activeSkillObj && (
-                <div className="flex flex-wrap items-center gap-2 self-start md:self-auto">
+                <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 self-start md:self-auto">
                   <span className="text-[11px] font-mono text-slate-400">Interlinked with:</span>
                   {activeSkillObj.connections.map((conn) => (
                     <span
                       key={conn}
-                      className="text-[11px] font-mono px-2.5 py-1 rounded-lg bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200 border border-slate-300 dark:border-slate-700"
+                      className="text-[10px] sm:text-[11px] font-mono px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-lg bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200 border border-slate-300 dark:border-slate-700"
                     >
                       {conn}
                     </span>
@@ -332,7 +332,7 @@ export function Skills() {
               />
             </div>
 
-            <div className="grid md:hidden grid-cols-2 sm:grid-cols-3 gap-4">
+            <div className="grid md:hidden grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-4">
               {displayedSkills.map((node) => {
                 const isHovered = hoveredSkill === node.id;
                 const isConnected = hoveredSkill 
@@ -352,7 +352,7 @@ export function Skills() {
                     }}
                     whileHover={{ scale: 1.05 }}
                     transition={{ type: 'spring', stiffness: 400, damping: 20 }}
-                    className={`p-4 rounded-2xl border transition-all duration-300 cursor-pointer flex flex-col justify-between select-none ${
+                    className={`p-3 sm:p-4 rounded-xl sm:rounded-2xl border transition-all duration-300 cursor-pointer flex flex-col justify-between select-none ${
                       isHovered
                         ? 'bg-cyan-500/15 border-cyan-500 dark:border-cyan-400 shadow-lg shadow-cyan-500/10'
                         : isConnected
@@ -361,11 +361,11 @@ export function Skills() {
                     }`}
                   >
                     <div>
-                      <div className="flex items-center justify-between mb-3">
-                        <div className="p-2 rounded-xl bg-slate-100 dark:bg-slate-800">
+                      <div className="flex items-center justify-between mb-2 sm:mb-3">
+                        <div className="p-1.5 sm:p-2 rounded-lg sm:rounded-xl bg-slate-100 dark:bg-slate-800">
                           {getIcon(node.icon)}
                         </div>
-                        <span className={`text-[10px] font-mono px-2 py-0.5 rounded-full ${
+                        <span className={`text-[9px] sm:text-[10px] font-mono px-1.5 py-0.5 rounded-full truncate max-w-[80px] ${
                           isHovered || isConnected
                             ? 'bg-cyan-500 text-slate-950 font-bold'
                             : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400'
@@ -374,17 +374,17 @@ export function Skills() {
                         </span>
                       </div>
 
-                      <h4 className={`text-xs sm:text-sm font-bold transition-colors ${
+                      <h4 className={`text-xs sm:text-sm font-bold transition-colors line-clamp-1 ${
                         isHovered ? 'text-cyan-600 dark:text-cyan-400' : 'text-slate-900 dark:text-white'
                       }`}>
                         {node.name}
                       </h4>
                     </div>
 
-                    <div className="mt-3 pt-2 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-[10px] font-mono text-slate-400">
-                      <span>{node.category.split(' ')[0]}</span>
+                    <div className="mt-2 sm:mt-3 pt-2 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-[9px] sm:text-[10px] font-mono text-slate-400">
+                      <span className="truncate">{node.category.split(' ')[0]}</span>
                       {isConnected && (
-                        <span className="text-cyan-500 font-semibold">LINKED</span>
+                        <span className="text-cyan-500 font-semibold shrink-0">LINKED</span>
                       )}
                     </div>
                   </motion.div>

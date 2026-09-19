@@ -79,11 +79,11 @@ export function TechStack() {
     <section className="py-12 overflow-hidden relative border-y dark:border-slate-800/80 border-slate-200/80 bg-slate-50/50 dark:bg-slate-950/40 backdrop-blur-sm select-none">
       
       {/* Side gradient blends */}
-      <div className="absolute left-0 top-0 bottom-0 w-20 sm:w-36 z-20 pointer-events-none bg-gradient-to-r from-slate-50 dark:from-[#090a0f] to-transparent" />
-      <div className="absolute right-0 top-0 bottom-0 w-20 sm:w-36 z-20 pointer-events-none bg-gradient-to-l from-slate-50 dark:from-[#090a0f] to-transparent" />
+      <div className="absolute left-0 top-0 bottom-0 w-8 sm:w-36 z-20 pointer-events-none bg-gradient-to-r from-slate-50 dark:from-[#090a0f] to-transparent" />
+      <div className="absolute right-0 top-0 bottom-0 w-8 sm:w-36 z-20 pointer-events-none bg-gradient-to-l from-slate-50 dark:from-[#090a0f] to-transparent" />
 
-      {/* Row 1: High-impact editorial typographic marquee (Left to Right) */}
-      <div className="overflow-hidden mb-5">
+      {/* Row 1: High-impact editorial typographic marquee (Desktop/Tablet only to avoid mobile noise) */}
+      <div className="overflow-hidden mb-5 hidden sm:block">
         <div 
           className="flex items-center gap-8 whitespace-nowrap animate-marquee"
           style={{ 

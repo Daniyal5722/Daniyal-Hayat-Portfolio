@@ -12,18 +12,18 @@ export function FeaturedProject({ onOpenCaseStudy }: FeaturedProjectProps) {
   const featured = PROJECTS.find((p) => p.id === 'cortexiq-by-dnyl') || PROJECTS[0];
 
   return (
-    <section id="featured-project" className="py-20 relative overflow-hidden bg-[#f8fafd] dark:bg-[#0a0c14] border-t dark:border-slate-800/80 border-slate-200">
+    <section id="featured-project" className="py-12 sm:py-16 md:py-20 relative overflow-hidden bg-[#f8fafd] dark:bg-[#0a0c14] border-t dark:border-slate-800/80 border-slate-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <div className="space-y-3 max-w-3xl mb-12">
+        <div className="space-y-3 max-w-3xl mb-8 sm:mb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-500/10 border border-violet-500/20 text-violet-600 dark:text-violet-400 text-xs font-mono uppercase tracking-widest">
             <Sparkles className="w-3.5 h-3.5" />
             <span>Architecture Spotlight</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white tracking-tight">
+          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white tracking-tight">
             Flagship Build: {featured.displayName}
           </h2>
-          <p className="text-base text-slate-600 dark:text-slate-400">
+          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400">
             A deep-dive showcase into the computational intelligence suite, highlighting reactive state, type safety, and real-time processing.
           </p>
         </div>
@@ -33,7 +33,7 @@ export function FeaturedProject({ onOpenCaseStudy }: FeaturedProjectProps) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="relative rounded-3xl bg-white dark:bg-[#111422] dark:border-slate-800 border border-slate-200 p-8 sm:p-12 shadow-2xl overflow-hidden group"
+          className="relative rounded-2xl sm:rounded-3xl bg-white dark:bg-[#111422] dark:border-slate-800 border border-slate-200 p-5 sm:p-8 md:p-12 shadow-2xl overflow-hidden group"
         >
           {/* Ambient decorative glow */}
           <div className="absolute top-0 right-0 w-96 h-96 bg-violet-600/10 blur-[100px] rounded-full pointer-events-none group-hover:bg-violet-600/20 transition-all duration-700" />
@@ -42,7 +42,7 @@ export function FeaturedProject({ onOpenCaseStudy }: FeaturedProjectProps) {
           <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             
             <div className="lg:col-span-7 space-y-6">
-              <div className="flex flex-wrap items-center gap-2.5">
+              <div className="flex flex-wrap items-center gap-2">
                 <span className="px-3 py-1 rounded-full bg-violet-500/10 border border-violet-500/30 text-violet-600 dark:text-violet-300 text-xs font-mono font-medium">
                   {featured.category}
                 </span>
@@ -61,7 +61,7 @@ export function FeaturedProject({ onOpenCaseStudy }: FeaturedProjectProps) {
                 </span>
               </div>
 
-              <h3 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+              <h3 className="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
                 {featured.displayName}
               </h3>
 
@@ -96,10 +96,10 @@ export function FeaturedProject({ onOpenCaseStudy }: FeaturedProjectProps) {
               </div>
 
               {/* Action Buttons */}
-              <div className="flex flex-wrap items-center gap-3 pt-4">
+              <div className="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-3 pt-4">
                 <button
                   onClick={() => onOpenCaseStudy(featured)}
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-violet-600 hover:bg-violet-500 text-white font-semibold text-xs sm:text-sm transition-all shadow-md shadow-violet-600/20 cursor-pointer"
+                  className="inline-flex items-center justify-center min-h-[44px] gap-2 px-5 py-2.5 rounded-xl bg-violet-600 hover:bg-violet-500 text-white font-semibold text-sm transition-all shadow-md shadow-violet-600/20 cursor-pointer active:scale-[0.98]"
                 >
                   <BookOpen className="w-4 h-4" />
                   <span>Explore Case Study</span>
@@ -111,7 +111,7 @@ export function FeaturedProject({ onOpenCaseStudy }: FeaturedProjectProps) {
                     href={featured.liveUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs sm:text-sm transition-all shadow-md shadow-cyan-500/20"
+                    className="inline-flex items-center justify-center min-h-[44px] gap-2 px-5 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-sm transition-all shadow-md shadow-cyan-500/20 active:scale-[0.98]"
                   >
                     <ExternalLink className="w-4 h-4" />
                     <span>Launch Live App</span>
@@ -122,7 +122,7 @@ export function FeaturedProject({ onOpenCaseStudy }: FeaturedProjectProps) {
                   href={featured.githubUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl dark:bg-slate-950 bg-white hover:dark:bg-slate-800 hover:bg-slate-100 dark:border-slate-800 border-slate-200 text-slate-700 dark:text-slate-300 text-xs sm:text-sm font-medium transition-all shadow-xs"
+                  className="inline-flex items-center justify-center min-h-[44px] gap-2 px-5 py-2.5 rounded-xl dark:bg-slate-950 bg-white hover:dark:bg-slate-800 hover:bg-slate-100 dark:border-slate-800 border-slate-200 text-slate-700 dark:text-slate-300 text-sm font-medium transition-all shadow-xs active:scale-[0.98]"
                 >
                   <Github className="w-4 h-4 text-slate-500" />
                   <span>Inspect Source</span>
@@ -132,7 +132,7 @@ export function FeaturedProject({ onOpenCaseStudy }: FeaturedProjectProps) {
 
             {/* Right Interactive Mockup Preview */}
             <div className="lg:col-span-5">
-              <div className="relative rounded-2xl dark:bg-slate-950 bg-slate-900 border dark:border-slate-800 border-slate-700 p-5 shadow-2xl space-y-4 font-mono text-xs text-slate-300">
+              <div className="relative rounded-2xl dark:bg-slate-950 bg-slate-900 border dark:border-slate-800 border-slate-700 p-4 sm:p-5 shadow-2xl space-y-4 font-mono text-xs text-slate-300 overflow-hidden">
                 {/* Simulated window header */}
                 <div className="flex items-center justify-between pb-3 border-b border-slate-800">
                   <div className="flex items-center gap-1.5">
@@ -143,9 +143,9 @@ export function FeaturedProject({ onOpenCaseStudy }: FeaturedProjectProps) {
                   <span className="text-[11px] text-slate-500">cortexiq.runtime.ts</span>
                 </div>
 
-                <div className="space-y-2 text-slate-400">
+                <div className="space-y-2 text-slate-400 overflow-x-auto break-all">
                   <p className="text-cyan-400 font-semibold">// Initializing CortexIQ AI Prompt Telemetry</p>
-                  <p><span className="text-purple-400">const</span> intelligence = <span className="text-yellow-400">new</span> CortexIQ({'{\n  mode: "reactive",\n  framework: "TypeScript",\n  rateLimitSafety: true\n}'});</p>
+                  <p><span className="text-purple-400">const</span> intelligence = <span className="text-yellow-400">new</span> CortexIQ({`{\n  mode: "reactive",\n  framework: "TypeScript",\n  rateLimitSafety: true\n}`});</p>
                   <p className="text-emerald-400">✓ Token weighting calculated in 4.2ms</p>
                   <p className="text-blue-400">✓ Model pipeline active with 0 layout shift</p>
                 </div>

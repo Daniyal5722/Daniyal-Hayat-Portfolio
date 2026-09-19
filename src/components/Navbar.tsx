@@ -208,30 +208,30 @@ export function Navbar({
           </a>
         </div>
 
-        {/* Mobile Actions & Hamburger */}
-        <div className="flex items-center gap-2 sm:hidden">
+        {/* Mobile Actions & Hamburger (Compact: logo left, 44x44px icons right) */}
+        <div className="flex items-center gap-1.5 sm:hidden">
           <button
             onClick={onOpenCommandPalette}
-            className="p-2 rounded-lg dark:bg-slate-900 bg-slate-100 border dark:border-slate-800 border-slate-200 text-slate-600 dark:text-slate-300"
-            aria-label="Open command palette"
+            className="w-11 h-11 flex items-center justify-center rounded-xl dark:bg-slate-900 bg-slate-100 border dark:border-slate-800 border-slate-200 text-slate-600 dark:text-slate-300 hover:text-cyan-500 cursor-pointer transition-colors active:scale-95"
+            aria-label="Search and command palette"
           >
-            <Search className="w-4 h-4 text-cyan-400" />
+            <Search className="w-5 h-5 text-cyan-500 dark:text-cyan-400" />
           </button>
 
           <button
             onClick={onToggleTheme}
-            className="p-2 rounded-lg dark:bg-slate-900 bg-slate-100 border dark:border-slate-800 border-slate-200 text-slate-600 dark:text-slate-300"
-            aria-label="Toggle theme"
+            className="w-11 h-11 flex items-center justify-center rounded-xl dark:bg-slate-900 bg-slate-100 border dark:border-slate-800 border-slate-200 text-slate-600 dark:text-slate-300 hover:text-cyan-500 cursor-pointer transition-colors active:scale-95"
+            aria-label="Toggle light or dark theme"
           >
-            {isDarkMode ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-cyan-600" />}
+            {isDarkMode ? <Sun className="w-5 h-5 text-amber-400" /> : <Moon className="w-5 h-5 text-cyan-600" />}
           </button>
 
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 rounded-lg dark:bg-slate-900 bg-slate-100 border dark:border-slate-800 border-slate-200 text-slate-600 dark:text-slate-300 focus:outline-none"
-            aria-label="Toggle navigation menu"
+            className="w-11 h-11 flex items-center justify-center rounded-xl dark:bg-slate-900 bg-slate-100 border dark:border-slate-800 border-slate-200 text-slate-600 dark:text-slate-300 hover:text-cyan-500 cursor-pointer transition-colors active:scale-95 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+            aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
           >
-            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            {mobileMenuOpen ? <X className="w-5 h-5 text-cyan-500" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
       </div>
@@ -243,26 +243,26 @@ export function Navbar({
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="sm:hidden border-b dark:border-slate-800 border-slate-200 dark:bg-[#090a0f]/95 bg-white/95 backdrop-blur-xl px-4 pt-4 pb-6 space-y-2"
+            className="sm:hidden border-b dark:border-slate-800 border-slate-200 dark:bg-[#090a0f]/98 bg-white/98 backdrop-blur-xl px-4 pt-3 pb-6 space-y-1 max-h-[calc(100vh-5rem)] overflow-y-auto"
           >
             {navItems.map((item) => (
               <a
                 key={item.name}
                 href={item.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="block px-4 py-2 rounded-lg text-sm font-medium dark:text-slate-300 text-slate-700 hover:text-cyan-500 dark:hover:bg-slate-900/80 hover:bg-slate-100 transition-colors"
+                className="flex items-center min-h-[44px] px-4 py-2.5 rounded-xl text-base font-medium dark:text-slate-200 text-slate-800 hover:text-cyan-500 dark:hover:bg-slate-900/80 hover:bg-slate-100 active:bg-cyan-500/10 transition-colors"
               >
                 {item.name}
               </a>
             ))}
 
-            <div className="pt-3 border-t dark:border-slate-800 border-slate-200 flex flex-col gap-2">
+            <div className="pt-3 mt-2 border-t dark:border-slate-800 border-slate-200 flex flex-col gap-2">
               <button
                 onClick={() => {
                   setMobileMenuOpen(false);
                   onOpenResume();
                 }}
-                className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-cyan-500 text-slate-950 font-semibold text-xs"
+                className="flex items-center justify-center gap-2 min-h-[44px] px-4 py-3 rounded-xl bg-cyan-500 text-slate-950 font-bold text-sm shadow-sm active:scale-[0.98] transition-transform cursor-pointer"
               >
                 <FileText className="w-4 h-4" />
                 <span>View Resume / CV</span>
@@ -273,7 +273,7 @@ export function Navbar({
                   setMobileMenuOpen(false);
                   onOpenEasterEgg();
                 }}
-                className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg dark:bg-slate-900 bg-slate-100 border dark:border-slate-800 border-slate-200 text-xs font-mono dark:text-slate-300 text-slate-700"
+                className="flex items-center justify-center gap-2 min-h-[44px] px-4 py-3 rounded-xl dark:bg-slate-900 bg-slate-100 border dark:border-slate-800 border-slate-200 text-xs font-mono dark:text-slate-300 text-slate-700 active:scale-[0.98] transition-transform cursor-pointer"
               >
                 <Terminal className="w-4 h-4 text-cyan-400" />
                 <span>Open Developer Terminal</span>
@@ -283,7 +283,7 @@ export function Navbar({
                 href={GITHUB_PROFILE_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg dark:bg-slate-900 bg-slate-100 border dark:border-slate-800 border-slate-200 text-xs font-mono dark:text-slate-300 text-slate-700"
+                className="flex items-center justify-center gap-2 min-h-[44px] px-4 py-3 rounded-xl dark:bg-slate-900 bg-slate-100 border dark:border-slate-800 border-slate-200 text-xs font-mono dark:text-slate-300 text-slate-700 active:scale-[0.98] transition-transform"
               >
                 <Github className="w-4 h-4 text-cyan-400" />
                 <span>GitHub Profile (@Daniyal5722)</span>

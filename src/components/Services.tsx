@@ -17,24 +17,24 @@ export function Services() {
   };
 
   return (
-    <section id="services" className="py-24 relative">
+    <section id="services" className="py-14 sm:py-20 md:py-24 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Heading */}
-        <div className="space-y-4 max-w-3xl mb-16">
+        <div className="space-y-3 sm:space-y-4 max-w-3xl mb-10 sm:mb-16">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-600 dark:text-cyan-400 text-xs font-mono uppercase tracking-widest">
             <span>Specialized Capabilities</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 dark:text-white">
+          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 dark:text-white">
             What I Can Build & Deliver
           </h2>
-          <p className="text-base sm:text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
+          <p className="text-sm sm:text-base lg:text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
             Focused engineering services backed by hands-on production code, from modern web applications to native Android mobile apps and AI pipelines.
           </p>
         </div>
 
         {/* Services Grid */}
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-2 gap-4 sm:gap-8">
           {SERVICES_DATA.map((service, index) => (
             <motion.div
               key={service.id}
@@ -42,15 +42,15 @@ export function Services() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-40px' }}
               transition={{ duration: 0.4, delay: index * 0.1 }}
-              className="p-8 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 hover:border-cyan-500/40 dark:hover:border-cyan-500/40 transition-all duration-300 shadow-sm hover:shadow-cyan-500/5 group flex flex-col justify-between"
+              className="p-5 sm:p-8 rounded-xl sm:rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 hover:border-cyan-500/40 dark:hover:border-cyan-500/40 transition-all duration-300 shadow-sm hover:shadow-cyan-500/5 group flex flex-col justify-between"
             >
-              <div className="space-y-5">
-                <div className="w-12 h-12 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center group-hover:scale-110 transition-transform">
+              <div className="space-y-4 sm:space-y-5">
+                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center group-hover:scale-110 transition-transform">
                   {getIcon(service.icon)}
                 </div>
 
                 <div className="space-y-1">
-                  <h3 className="text-xl font-bold text-slate-900 dark:text-white group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">
+                  <h3 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">
                     {service.title}
                   </h3>
                   <p className="text-xs font-mono text-cyan-600 dark:text-cyan-400">
@@ -63,7 +63,7 @@ export function Services() {
                 </p>
 
                 {/* Deliverables Checklist */}
-                <div className="pt-4 space-y-2 border-t border-slate-100 dark:border-slate-800/80">
+                <div className="pt-3 sm:pt-4 space-y-2 border-t border-slate-100 dark:border-slate-800/80">
                   <span className="text-xs font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400 block mb-2">
                     Key Deliverables:
                   </span>
@@ -76,10 +76,10 @@ export function Services() {
                 </div>
               </div>
 
-              <div className="pt-6 mt-6 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
+              <div className="pt-4 sm:pt-6 mt-4 sm:mt-6 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
                 <a
                   href="#contact"
-                  className="inline-flex items-center gap-2 text-xs font-semibold text-cyan-600 dark:text-cyan-400 hover:text-cyan-500 transition-colors group-hover:translate-x-1"
+                  className="min-h-[44px] inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-cyan-600 dark:text-cyan-400 hover:text-cyan-500 transition-colors group-hover:translate-x-1"
                 >
                   <span>Discuss a Project</span>
                   <ArrowRight className="w-3.5 h-3.5" />
