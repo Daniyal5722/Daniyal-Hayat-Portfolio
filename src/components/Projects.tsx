@@ -221,7 +221,7 @@ export function Projects({ onOpenCaseStudy }: ProjectsProps) {
   };
 
   return (
-    <section id="projects" className="py-14 sm:py-20 md:py-28 relative border-t border-b dark:border-slate-800/80 border-slate-200 bg-[#f8fafd] dark:bg-[#0a0c14]">
+    <section id="projects" className="py-14 sm:py-20 md:py-28 relative border-t border-b dark:border-slate-800/80 border-slate-200 bg-[#f8fafd]/80 dark:bg-[#0a0c14]/85 backdrop-blur-[2px]">
       <div className="max-w-[88rem] mx-auto px-4 sm:px-6 lg:px-12">
         
         {/* Header with Live Sync Status */}

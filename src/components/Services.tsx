@@ -17,7 +17,7 @@ export function Services() {
   };
 
   return (
-    <section id="services" className="py-14 sm:py-20 md:py-24 relative">
+    <section id="services" className="py-14 sm:py-20 md:py-24 relative bg-transparent dark:bg-slate-900/30 backdrop-blur-[1px]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Heading */}

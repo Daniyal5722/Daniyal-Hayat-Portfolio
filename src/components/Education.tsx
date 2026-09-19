@@ -4,7 +4,7 @@ import { motion } from 'motion/react';
 
 export function Education() {
   return (
-    <section id="education" className="py-14 sm:py-20 relative">
+    <section id="education" className="py-14 sm:py-20 relative bg-transparent dark:bg-slate-900/40 backdrop-blur-[2px]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Heading */}

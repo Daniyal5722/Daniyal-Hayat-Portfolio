@@ -205,7 +205,7 @@ export function Skills() {
   };
 
   return (
-    <section id="skills" className="py-14 sm:py-20 md:py-24 relative border-t dark:border-slate-800/80 border-slate-200">
+    <section id="skills" className="py-14 sm:py-20 md:py-24 relative border-t dark:border-slate-800/80 border-slate-200 bg-transparent dark:bg-slate-900/40 backdrop-blur-[2px]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Heading & View Switcher */}

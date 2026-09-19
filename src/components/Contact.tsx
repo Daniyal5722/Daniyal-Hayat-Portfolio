@@ -83,7 +83,7 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" className="py-14 sm:py-20 md:py-28 relative border-t dark:border-slate-800/80 border-slate-200 bg-gradient-to-b from-transparent via-cyan-500/[0.02] to-transparent">
+    <section id="contact" className="py-14 sm:py-20 md:py-28 relative border-t dark:border-slate-800/80 border-slate-200 bg-transparent dark:bg-slate-900/40 backdrop-blur-[2px]">
       <div className="max-w-[88rem] mx-auto px-4 sm:px-6 lg:px-12">
         
         {/* Section Heading */}
