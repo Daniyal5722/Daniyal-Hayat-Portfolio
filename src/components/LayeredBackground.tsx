@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { motion, useMotionValue, useSpring } from 'motion/react';
 import { ParticleField } from './ParticleField';
+import { BackgroundBeams } from './BackgroundBeams';
 
 export function LayeredBackground() {
   const [isTouch, setIsTouch] = useState(false);
@@ -62,8 +63,38 @@ export function LayeredBackground() {
         className="absolute -inset-10 opacity-35 dark:opacity-25 bg-[linear-gradient(to_right,#0ea5e918_1px,transparent_1px),linear-gradient(to_bottom,#0ea5e918_1px,transparent_1px)] bg-[size:3.5rem_3.5rem] [mask-image:radial-gradient(ellipse_75%_65%_at_50%_40%,#000_60%,transparent_100%)]"
       />
 
+      {/* Layer 2.5: Animated Beams */}
+      <BackgroundBeams />
+
       {/* Layer 3: Interactive Lightweight Canvas Particle Field */}
       <ParticleField />
+
+      {/* Layer 3.5: Floating Glass Orbs */}
+      <div className="absolute inset-0 overflow-hidden">
+        {[...Array(3)].map((_, i) => (
+          <motion.div
+            key={`orb-${i}`}
+            initial={{ 
+              x: Math.random() * 100 + '%', 
+              y: Math.random() * 100 + '%',
+              scale: 0.8,
+              opacity: 0.2
+            }}
+            animate={{ 
+              x: [null, Math.random() * 100 + '%', Math.random() * 100 + '%'],
+              y: [null, Math.random() * 100 + '%', Math.random() * 100 + '%'],
+              scale: [0.8, 1.2, 0.8],
+              opacity: [0.2, 0.4, 0.2]
+            }}
+            transition={{
+              duration: 25 + i * 10,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+            className="absolute w-64 h-64 rounded-full bg-gradient-to-br from-cyan-500/5 to-blue-500/5 blur-3xl pointer-events-none"
+          />
+        ))}
+      </div>
 
       {/* Layer 4: Soft Mouse-Reactive Ambient Torch Light */}
       {!isTouch && (
@@ -78,12 +109,20 @@ export function LayeredBackground() {
         />
       )}
 
+
       {/* Layer 5: Subtle Noise / Editorial Grain Texture */}
       <div
         className="absolute inset-0 opacity-[0.022] dark:opacity-[0.035] pointer-events-none z-[4]"
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
         }}
+      />
+
+      {/* Layer 5.5: Scanning Pulse Line */}
+      <motion.div
+        animate={{ y: ['-100%', '200%'] }}
+        transition={{ duration: 15, repeat: Infinity, ease: 'linear' }}
+        className="absolute inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-cyan-500/10 to-transparent z-[5] pointer-events-none"
       />
 
       {/* Layer 6: Floating Architectural Geometric Elements */}
@@ -94,6 +133,18 @@ export function LayeredBackground() {
         }}
         className="absolute inset-0 z-[1] hidden lg:block opacity-30 dark:opacity-40 text-cyan-600/60 dark:text-cyan-400/60 font-mono text-[10px]"
       >
+        {/* Floating tech stack labels */}
+        <div className="absolute top-1/4 left-[15%] select-none flex flex-col gap-1">
+          <span className="opacity-40">{`<div class="root">`}</span>
+          <span className="opacity-60 pl-4">{`await fetch('/api/projects')`}</span>
+          <span className="opacity-40">{`</div>`}</span>
+        </div>
+
+        <div className="absolute bottom-1/4 right-[15%] select-none flex flex-col gap-1 text-right">
+          <span className="opacity-40">{`interface Developer {`}</span>
+          <span className="opacity-60 pr-4">{`name: "Daniyal Hayat";`}</span>
+          <span className="opacity-40">{`}`}</span>
+        </div>
         {/* Top left technical coordinate */}
         <div className="absolute top-28 left-12 flex items-center gap-1.5">
           <span className="w-1.5 h-1.5 rounded-full bg-cyan-500" />
