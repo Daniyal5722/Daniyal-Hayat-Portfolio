@@ -16,6 +16,7 @@ import { ScrollProgress } from './components/ScrollProgress';
 import { ScrollToTop } from './components/ScrollToTop';
 import { RevealOnScroll } from './components/RevealOnScroll';
 import { LayeredBackground } from './components/LayeredBackground';
+import { PlexusWaveBackground } from './components/PlexusWaveBackground';
 import { CustomCursor } from './components/CustomCursor';
 import { Preloader } from './components/Preloader';
 import { SmoothScroll } from './components/SmoothScroll';
@@ -123,6 +124,11 @@ export default function App() {
 
         {/* 6-Layer Cinematic Background System */}
         <LayeredBackground />
+
+        {/* Premium Plexus Wave Background Animation Layer */}
+        <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
+          <PlexusWaveBackground />
+        </div>
 
         {/* Top Scroll Indicator */}
         <ScrollProgress />

@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { motion, useMotionValue, useSpring } from 'motion/react';
-import { PlexusWaveBackground } from './PlexusWaveBackground';
 import { BackgroundBeams } from './BackgroundBeams';
 
 export function LayeredBackground() {
@@ -65,9 +64,6 @@ export function LayeredBackground() {
 
       {/* Layer 2.5: Animated Beams */}
       <BackgroundBeams />
-
-      {/* Layer 3: Interactive Lightweight Canvas Plexus Wave Animation */}
-      <PlexusWaveBackground />
 
       {/* Layer 3.5: Floating Glass Orbs */}
       <div className="absolute inset-0 overflow-hidden">

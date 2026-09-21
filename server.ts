@@ -118,7 +118,7 @@ app.post("/api/chat", async (req, res) => {
     let reply = "";
     try {
       const response = await ai.models.generateContent({
-        model: "gemini-3.8-flash",
+        model: "gemini-2.0-flash",
         contents: contents,
         config: {
           systemInstruction: PORTFOLIO_CONTEXT,
@@ -129,9 +129,9 @@ app.post("/api/chat", async (req, res) => {
       reply = response.text || "I am here to help you explore Daniyal's portfolio!";
     } catch (firstErr: any) {
       console.warn("Primary model failed, falling back to backup model...", firstErr.message);
-      // Fallback to gemini-3.1-flash-lite
+      // Fallback to gemini-1.5-flash
       const backupResponse = await ai.models.generateContent({
-        model: "gemini-3.1-flash-lite",
+        model: "gemini-1.5-flash",
         contents: contents,
         config: {
           systemInstruction: PORTFOLIO_CONTEXT,

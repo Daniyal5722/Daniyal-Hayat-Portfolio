@@ -243,7 +243,7 @@ export function PlexusWaveBackground() {
   return (
     <div 
       ref={containerRef}
-      className="absolute inset-0 pointer-events-none z-[2] opacity-[0.25] dark:opacity-[0.35]"
+      className="absolute inset-0 pointer-events-none opacity-[0.25] dark:opacity-[0.35]"
       aria-hidden="true"
     >
       <canvas
