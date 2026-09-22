@@ -92,6 +92,25 @@ export function MagneticButton({
         rel={rel}
         onClick={(e) => {
           soundManager.playClick();
+          if (href.startsWith('#')) {
+            const targetId = href.substring(1);
+            const targetElement = document.getElementById(targetId);
+            if (targetElement) {
+              e.preventDefault();
+              const lenis = (window as unknown as { __lenis?: { scrollTo: (target: Element | string, options?: Record<string, unknown>) => void } }).__lenis;
+              if (lenis) {
+                lenis.scrollTo(targetElement, { offset: -70, duration: 1.1 });
+              } else {
+                const navOffset = 70;
+                const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+                const offsetPosition = elementPosition - navOffset;
+                window.scrollTo({
+                  top: offsetPosition,
+                  behavior: 'smooth'
+                });
+              }
+            }
+          }
           if (onClick) onClick(e);
         }}
         title={title}

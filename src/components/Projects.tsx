@@ -39,6 +39,78 @@ interface ProjectCardProps {
   onOpenCaseStudy: (project: Project) => void;
 }
 
+function getTechBadgeStyle(tech: string) {
+  const lower = tech.toLowerCase();
+  if (lower.includes('typescript') || lower === 'ts') {
+    return {
+      dotBg: 'bg-blue-500',
+      badgeClass: 'bg-blue-500/10 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300 border-blue-300 dark:border-blue-800/60',
+      label: 'TypeScript'
+    };
+  }
+  if (lower.includes('javascript') || lower === 'js') {
+    return {
+      dotBg: 'bg-amber-400',
+      badgeClass: 'bg-amber-500/10 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border-amber-300 dark:border-amber-800/60',
+      label: 'JavaScript'
+    };
+  }
+  if (lower.includes('kotlin')) {
+    return {
+      dotBg: 'bg-purple-500',
+      badgeClass: 'bg-purple-500/10 dark:bg-purple-950/40 text-purple-700 dark:text-purple-300 border-purple-300 dark:border-purple-800/60',
+      label: 'Kotlin'
+    };
+  }
+  if (lower.includes('react')) {
+    return {
+      dotBg: 'bg-cyan-400 animate-pulse',
+      badgeClass: 'bg-cyan-500/10 dark:bg-cyan-950/40 text-cyan-700 dark:text-cyan-300 border-cyan-300 dark:border-cyan-800/60',
+      label: 'React'
+    };
+  }
+  if (lower.includes('python')) {
+    return {
+      dotBg: 'bg-emerald-500',
+      badgeClass: 'bg-emerald-500/10 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border-emerald-300 dark:border-emerald-800/60',
+      label: 'Python'
+    };
+  }
+  if (lower.includes('gemini') || lower.includes('ai')) {
+    return {
+      dotBg: 'bg-indigo-400',
+      badgeClass: 'bg-indigo-500/10 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300 border-indigo-300 dark:border-indigo-800/60',
+      label: tech
+    };
+  }
+  if (lower.includes('tailwind')) {
+    return {
+      dotBg: 'bg-sky-400',
+      badgeClass: 'bg-sky-500/10 dark:bg-sky-950/40 text-sky-700 dark:text-sky-300 border-sky-300 dark:border-sky-800/60',
+      label: 'Tailwind'
+    };
+  }
+  if (lower.includes('android')) {
+    return {
+      dotBg: 'bg-green-500',
+      badgeClass: 'bg-green-500/10 dark:bg-green-950/40 text-green-700 dark:text-green-300 border-green-300 dark:border-green-800/60',
+      label: tech
+    };
+  }
+  if (lower.includes('html') || lower.includes('css')) {
+    return {
+      dotBg: 'bg-orange-500',
+      badgeClass: 'bg-orange-500/10 dark:bg-orange-950/40 text-orange-700 dark:text-orange-300 border-orange-300 dark:border-orange-800/60',
+      label: tech
+    };
+  }
+  return {
+    dotBg: 'bg-slate-400 dark:bg-slate-500',
+    badgeClass: 'bg-slate-100 dark:bg-[#161b2e] text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-800',
+    label: tech
+  };
+}
+
 function ProjectShowcase({ project, index, onOpenCaseStudy }: { project: Project, index: number, onOpenCaseStudy: (project: Project) => void, key?: React.Key }) {
   const isEven = index % 2 === 0;
 
@@ -74,16 +146,26 @@ function ProjectShowcase({ project, index, onOpenCaseStudy }: { project: Project
         </div>
 
         {/* Top Floating Badge */}
-        <div className="absolute top-3 sm:top-4 left-3 sm:left-4 z-20 flex items-center gap-2">
-          <span className="px-2.5 py-1 rounded-full text-[10px] sm:text-[11px] font-mono font-medium bg-white/90 dark:bg-slate-900/90 text-slate-800 dark:text-slate-200 border border-slate-200/80 dark:border-slate-700 shadow-sm backdrop-blur-sm">
-            {project.language}
-          </span>
+        <div className="absolute top-3 sm:top-4 left-3 sm:left-4 z-20 flex flex-wrap items-center gap-1.5 sm:gap-2">
+          {(() => {
+            const langStyle = getTechBadgeStyle(project.language);
+            return (
+              <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] sm:text-[11px] font-mono font-semibold border shadow-xs backdrop-blur-md ${langStyle.badgeClass}`}>
+                <span className={`w-2 h-2 rounded-full ${langStyle.dotBg}`} />
+                <span>{project.language}</span>
+              </span>
+            );
+          })()}
           {project.liveUrl && (
             <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] sm:text-[11px] font-mono font-medium bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 shadow-sm backdrop-blur-sm">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
               <span>Live</span>
             </span>
           )}
+          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] sm:text-[11px] font-mono font-medium bg-white/90 dark:bg-slate-900/90 text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-slate-700 shadow-sm backdrop-blur-sm" title="Estimated Reading Time">
+            <Clock className="w-3 h-3 text-cyan-500" />
+            <span>{getEstimatedReadingTime(project)}</span>
+          </span>
         </div>
 
         {/* Bottom Details Overlay */}
@@ -107,10 +189,15 @@ function ProjectShowcase({ project, index, onOpenCaseStudy }: { project: Project
       {/* Content Side */}
       <div className="w-full lg:w-1/2 space-y-4 sm:space-y-5">
         <div className="space-y-2 sm:space-y-3">
-          <div className="flex items-center gap-3 text-xs font-mono">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs font-mono">
             <span className="text-slate-400 dark:text-slate-500 font-bold">PROJECT {(index + 1).toString().padStart(2, '0')}</span>
-            <div className="h-px w-8 bg-slate-300 dark:bg-slate-700" />
+            <div className="h-px w-6 sm:w-8 bg-slate-300 dark:bg-slate-700" />
             <span className="text-cyan-600 dark:text-cyan-400 font-semibold">{project.category}</span>
+            <div className="h-px w-6 sm:w-8 bg-slate-300 dark:bg-slate-700" />
+            <span className="inline-flex items-center gap-1 text-slate-500 dark:text-slate-400 font-medium" title="Estimated reading time">
+              <Clock className="w-3.5 h-3.5 text-cyan-500" />
+              <span>{getEstimatedReadingTime(project)}</span>
+            </span>
           </div>
           <h3 className="text-xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
             {project.displayName}
@@ -121,11 +208,18 @@ function ProjectShowcase({ project, index, onOpenCaseStudy }: { project: Project
         </div>
 
         <div className="flex flex-wrap gap-1.5">
-          {project.technologies.slice(0, 5).map((tech, i) => (
-            <span key={i} className="px-2.5 py-1 rounded-lg text-xs font-mono font-medium bg-slate-100 dark:bg-[#161b2e] border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300">
-              {tech}
-            </span>
-          ))}
+          {project.technologies.slice(0, 5).map((tech, i) => {
+            const style = getTechBadgeStyle(tech);
+            return (
+              <span
+                key={i}
+                className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-mono font-medium border shadow-2xs ${style.badgeClass}`}
+              >
+                <span className={`w-1.5 h-1.5 rounded-full ${style.dotBg}`} />
+                <span>{tech}</span>
+              </span>
+            );
+          })}
           {project.technologies.length > 5 && (
             <span className="px-2.5 py-1 rounded-lg text-xs font-mono font-medium bg-slate-50 dark:bg-[#181d33] border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400">
               +{project.technologies.length - 5}

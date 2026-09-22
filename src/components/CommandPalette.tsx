@@ -57,7 +57,18 @@ export function CommandPalette({
     setTimeout(() => {
       const el = document.getElementById(id);
       if (el) {
-        el.scrollIntoView({ behavior: 'smooth' });
+        const lenis = (window as unknown as { __lenis?: { scrollTo: (target: Element | string, options?: Record<string, unknown>) => void } }).__lenis;
+        if (lenis) {
+          lenis.scrollTo(el, { offset: -70, duration: 1.1 });
+        } else {
+          const navOffset = 70;
+          const elementPosition = el.getBoundingClientRect().top + window.pageYOffset;
+          const offsetPosition = elementPosition - navOffset;
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
       }
     }, 150);
   };

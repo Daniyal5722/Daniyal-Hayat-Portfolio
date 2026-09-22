@@ -53,6 +53,16 @@ export function Navbar({
     if (newCount >= 5) {
       setLogoClicks(0);
       onOpenEasterEgg();
+    } else {
+      const homeElem = document.getElementById('home');
+      if (homeElem) {
+        const lenis = (window as unknown as { __lenis?: { scrollTo: (target: Element | string, options?: Record<string, unknown>) => void } }).__lenis;
+        if (lenis) {
+          lenis.scrollTo(homeElem, { offset: 0, duration: 1.1 });
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      }
     }
   };
 
@@ -64,14 +74,22 @@ export function Navbar({
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     soundManager.playClick();
     if (href.startsWith('#')) {
-      const target = document.querySelector(href);
-      if (target) {
+      const targetId = href.substring(1);
+      const targetElement = document.getElementById(targetId);
+      if (targetElement) {
         e.preventDefault();
         const lenis = (window as unknown as { __lenis?: { scrollTo: (target: Element | string, options?: Record<string, unknown>) => void } }).__lenis;
         if (lenis) {
-          lenis.scrollTo(target, { offset: -60, duration: 1.1 });
+          lenis.scrollTo(targetElement, { offset: -70, duration: 1.1 });
         } else {
-          target.scrollIntoView({ behavior: 'smooth' });
+          const navOffset = 70;
+          const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+          const offsetPosition = elementPosition - navOffset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
         }
       }
     }
