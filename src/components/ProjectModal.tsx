@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   X, 
@@ -39,44 +39,49 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
     };
   }, [project, isOpen, onClose]);
 
-  if (!project || isOpen === false) return null;
+  const activeProjectRef = useRef<Project | null>(project);
+  if (project) {
+    activeProjectRef.current = project;
+  }
+  const displayProject = project || activeProjectRef.current;
 
-  const caseStudy = project.caseStudy || {
-    overview: project.description,
+  const caseStudy = displayProject?.caseStudy || {
+    overview: displayProject?.description || '',
     problem: "Bridging real-time user needs with responsive, accessible software architectures.",
-    idea: `Develop ${project.displayName} with modern development frameworks and structured design patterns.`,
+    idea: `Develop ${displayProject?.displayName || 'Project'} with modern development frameworks and structured design patterns.`,
     design: "High-contrast typographic hierarchy, tactile feedback, and intuitive navigation.",
-    development: `Built using ${project.technologies.join(', ')} with strict attention to modular component structures.`,
-    technology: project.technologies.join(', '),
+    development: `Built using ${displayProject?.technologies?.join(', ') || ''} with strict attention to modular component structures.`,
+    technology: displayProject?.technologies?.join(', ') || '',
     challenges: "Ensuring zero layout shifts and high-speed data handling across all viewports.",
     solution: "Leveraged optimized asset loading and defensive exception handling routines.",
     screenshots: "",
-    liveDemo: project.liveUrl || "",
-    github: project.githubUrl || "",
+    liveDemo: displayProject?.liveUrl || "",
+    github: displayProject?.githubUrl || "",
     lessonsLearned: "",
     result: "Deployed and verified live, delivering responsive functionality and clean user interactions."
   } as any;
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
-        {/* Backdrop */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          onClick={onClose}
-          className="fixed inset-0 bg-slate-950/80 backdrop-blur-md"
-        />
+      {isOpen && displayProject && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+          {/* Backdrop */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+            className="fixed inset-0 bg-slate-950/80 backdrop-blur-md"
+          />
 
-        {/* Modal Window */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.94, y: 24 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.94, y: 24 }}
-          transition={{ type: 'spring', damping: 28, stiffness: 350 }}
-          className="relative w-full max-w-4xl max-h-[90vh] flex flex-col rounded-2xl bg-white dark:bg-[#0c0d14] border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden z-10"
-        >
+          {/* Modal Window */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.94, y: 24 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.94, y: 24 }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            className="relative w-full max-w-4xl max-h-[90vh] flex flex-col rounded-2xl bg-white dark:bg-[#0c0d14] border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden z-10"
+          >
           {/* Header Bar */}
           <div className="flex items-center justify-between px-5 py-3.5 sm:px-6 sm:py-4 border-b border-slate-200 dark:border-slate-800/80 bg-slate-50/70 dark:bg-slate-900/50 backdrop-blur-sm sticky top-0 z-20">
             <div className="flex items-center gap-3">
@@ -329,6 +334,7 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
           </div>
         </motion.div>
       </div>
+      )}
     </AnimatePresence>
   );
 }

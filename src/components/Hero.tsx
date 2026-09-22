@@ -19,6 +19,7 @@ import { MagneticButton } from './MagneticButton';
 
 interface HeroProps {
   onOpenResume?: () => void;
+  isLoaded?: boolean;
 }
 
 function ProfilePhotoCard({ className = "" }: { className?: string }) {
@@ -26,7 +27,7 @@ function ProfilePhotoCard({ className = "" }: { className?: string }) {
     <div className={`relative aspect-[4/5] group ${className}`}>
       {/* Subtle ambient glow behind the image */}
       <div 
-        className="absolute -inset-2 bg-gradient-to-tr from-cyan-500/20 via-blue-500/15 to-violet-500/20 dark:from-cyan-500/15 dark:via-blue-500/10 dark:to-indigo-500/15 rounded-3xl lg:rounded-[2.25rem] blur-2xl group-hover:blur-3xl group-hover:opacity-100 opacity-70 transition-all duration-700 pointer-events-none" 
+        className="absolute -inset-2 bg-gradient-to-tr from-cyan-500/20 via-blue-500/15 to-violet-500/20 dark:from-cyan-500/20 dark:via-blue-500/15 dark:to-indigo-500/20 rounded-3xl lg:rounded-[2.25rem] blur-2xl group-hover:blur-3xl group-hover:opacity-100 opacity-70 transition-all duration-700 pointer-events-none animate-pulse-glow" 
       />
       
       {/* Premium Image Frame */}
@@ -51,44 +52,96 @@ function ProfilePhotoCard({ className = "" }: { className?: string }) {
   );
 }
 
-export function Hero({ onOpenResume }: HeroProps) {
+export function Hero({ onOpenResume, isLoaded = true }: HeroProps) {
   const { activity } = useGitHubActivity();
   const { projects } = useGitHubRepos();
+
+  const easeCurve = [0.16, 1, 0.3, 1] as const;
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.08,
+        delayChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 16 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.55,
+        ease: easeCurve,
+      },
+    },
+  };
+
+  const headingVariants = {
+    hidden: { opacity: 0, y: 22 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.65,
+        ease: easeCurve,
+      },
+    },
+  };
+
+  const photoVariants = {
+    hidden: { opacity: 0, scale: 0.95, y: 20 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      y: 0,
+      transition: {
+        duration: 0.75,
+        delay: 0.2,
+        ease: easeCurve,
+      },
+    },
+  };
 
   return (
     <section id="home" className="relative min-h-[95vh] flex flex-col justify-center pt-24 sm:pt-28 pb-12 sm:pb-16 overflow-hidden">
       
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+      <motion.div 
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full"
+        variants={containerVariants}
+        initial="hidden"
+        animate={isLoaded ? "visible" : "hidden"}
+      >
         
         {/* Top Status Indicators: Availability Badge, then GitHub Activity */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 mb-6 sm:mb-8">
-          
+        <motion.div 
+          variants={itemVariants}
+          className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 mb-6 sm:mb-8"
+        >
           {/* 1. Availability Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4 }}
-            className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-white/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 shadow-xs text-xs font-mono backdrop-blur-md self-start sm:self-auto max-w-full"
+          <div
+            className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-white/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 shadow-xs text-xs font-mono backdrop-blur-md self-start sm:self-auto max-w-full hover:border-cyan-500/40 transition-colors"
           >
             <span className="relative flex h-2 w-2 shrink-0">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
             </span>
             <span className="text-slate-700 dark:text-slate-300 truncate">
-              Available for high-impact engineering & product roles
+              Available for high-impact engineering &amp; product roles
             </span>
-          </motion.div>
+          </div>
 
           {/* 2. Live GitHub Status Pill */}
-          <motion.a
+          <a
             href={activity.repoUrl}
             target="_blank"
             rel="noopener noreferrer"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.08 }}
             data-cursor="external"
-            className="group inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 text-xs font-mono hover:border-cyan-500/50 transition-colors shadow-xs self-start sm:self-auto max-w-full"
+            className="group inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 text-xs font-mono hover:border-cyan-500/50 transition-all shadow-xs self-start sm:self-auto max-w-full hover:shadow-cyan-500/10"
           >
             <GitBranch className="w-3.5 h-3.5 text-cyan-500 shrink-0" />
             <span className="text-slate-500 dark:text-slate-400 shrink-0">Git Event:</span>
@@ -96,9 +149,9 @@ export function Hero({ onOpenResume }: HeroProps) {
               {activity.actionText}
             </span>
             <span className="text-slate-400 dark:text-slate-500 text-[10px] shrink-0">({activity.timeAgo})</span>
-          </motion.a>
+          </a>
 
-        </div>
+        </motion.div>
 
         {/* Hero Grid with Profile Photo */}
         <div className="grid md:grid-cols-12 gap-8 lg:gap-12 items-center">
@@ -108,9 +161,7 @@ export function Hero({ onOpenResume }: HeroProps) {
             
             {/* 3. Portfolio Label / Monogram & Name Heading */}
             <motion.div
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.45, delay: 0.1 }}
+              variants={itemVariants}
               className="flex items-center gap-3"
             >
               <span className="px-2.5 py-1 rounded-md bg-cyan-500/10 border border-cyan-500/30 text-cyan-600 dark:text-cyan-400 font-mono text-xs font-bold uppercase tracking-widest shrink-0">
@@ -131,6 +182,7 @@ export function Hero({ onOpenResume }: HeroProps) {
             <div className="space-y-3">
               <motion.h1 
                 id="hero-main-heading"
+                variants={headingVariants}
                 className="text-[clamp(2.1rem,7.5vw,4.5rem)] md:text-7xl lg:text-7xl xl:text-8xl font-black tracking-tight text-slate-900 dark:text-white leading-[1.08] break-words"
               >
                 <span className="block font-bold">
@@ -143,9 +195,7 @@ export function Hero({ onOpenResume }: HeroProps) {
 
               {/* 5. Role Line */}
               <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.5, delay: 0.45 }}
+                variants={itemVariants}
                 className="text-xs sm:text-base md:text-lg font-mono text-cyan-700 dark:text-cyan-400 font-medium flex flex-wrap items-center gap-2 pt-1"
               >
                 <span>Full-Stack Web Architect</span>
@@ -158,9 +208,7 @@ export function Hero({ onOpenResume }: HeroProps) {
 
             {/* 6. Short Intro */}
             <motion.p
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.55 }}
+              variants={itemVariants}
               className="text-base sm:text-lg md:text-xl text-slate-600 dark:text-slate-300 max-w-2xl font-normal leading-relaxed"
             >
               Crafting production web applications with React &amp; TypeScript, native Android systems with Kotlin, and AI-accelerated tooling. Focused on zero-lag performance, resilient architectures, and editorial design fidelity.
@@ -168,15 +216,13 @@ export function Hero({ onOpenResume }: HeroProps) {
 
             {/* 7. Primary Action CTAs */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.65 }}
+              variants={itemVariants}
               className="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-3 pt-2"
             >
               <MagneticButton
                 href="#projects"
                 dataCursor="view"
-                className="min-h-[44px] px-7 py-3.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-sm shadow-lg shadow-cyan-500/25 transition-colors cursor-pointer flex items-center justify-center gap-2 active:scale-[0.98]"
+                className="min-h-[44px] px-7 py-3.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-sm shadow-lg shadow-cyan-500/25 transition-all duration-200 cursor-pointer flex items-center justify-center gap-2 active:scale-[0.98] hover:shadow-cyan-500/40"
               >
                 <span>Explore Projects</span>
                 <ArrowRight className="w-4 h-4" />
@@ -185,7 +231,7 @@ export function Hero({ onOpenResume }: HeroProps) {
               <MagneticButton
                 href="#contact"
                 dataCursor="pointer"
-                className="min-h-[44px] px-6 py-3.5 rounded-xl bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 font-semibold text-sm transition-colors cursor-pointer flex items-center justify-center gap-2 shadow-xs active:scale-[0.98]"
+                className="min-h-[44px] px-6 py-3.5 rounded-xl bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 font-semibold text-sm transition-all duration-200 cursor-pointer flex items-center justify-center gap-2 shadow-xs active:scale-[0.98] hover:border-cyan-500/40"
               >
                 <Mail className="w-4 h-4 text-cyan-500" />
                 <span>Get in Touch</span>
@@ -196,7 +242,7 @@ export function Hero({ onOpenResume }: HeroProps) {
                   <MagneticButton
                     onClick={onOpenResume}
                     dataCursor="pointer"
-                    className="flex-1 sm:flex-none min-h-[44px] px-5 py-3.5 rounded-xl bg-slate-100 dark:bg-slate-900/60 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 text-sm font-mono transition-colors cursor-pointer flex items-center justify-center gap-2 active:scale-[0.98]"
+                    className="flex-1 sm:flex-none min-h-[44px] px-5 py-3.5 rounded-xl bg-slate-100 dark:bg-slate-900/60 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 text-sm font-mono transition-all duration-200 cursor-pointer flex items-center justify-center gap-2 active:scale-[0.98] hover:border-cyan-500/40"
                   >
                     <FileText className="w-4 h-4 text-cyan-500" />
                     <span>Curriculum Vitae</span>
@@ -208,7 +254,7 @@ export function Hero({ onOpenResume }: HeroProps) {
                   target="_blank"
                   rel="noopener noreferrer"
                   dataCursor="external"
-                  className="min-w-[44px] min-h-[44px] p-3.5 rounded-xl bg-slate-100 dark:bg-slate-900/60 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-cyan-500 transition-colors cursor-pointer flex items-center justify-center shrink-0"
+                  className="min-w-[44px] min-h-[44px] p-3.5 rounded-xl bg-slate-100 dark:bg-slate-900/60 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-cyan-500 transition-all duration-200 cursor-pointer flex items-center justify-center shrink-0 hover:border-cyan-500/40"
                   title="GitHub Profile"
                   aria-label="GitHub Profile"
                 >
@@ -219,9 +265,7 @@ export function Hero({ onOpenResume }: HeroProps) {
 
             {/* 8. Quick Metrics / Stats Bar */}
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.75 }}
+              variants={itemVariants}
               className="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-4 max-w-lg border-t border-slate-200 dark:border-slate-800/80 font-mono text-xs"
             >
               <div>
@@ -240,9 +284,7 @@ export function Hero({ onOpenResume }: HeroProps) {
 
             {/* 9. Mobile Profile Photo (under 768px): Centered width of ~75vw below primary CTA buttons and stats */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.96, y: 15 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ duration: 0.55, delay: 0.8 }}
+              variants={photoVariants}
               className="flex md:hidden justify-center items-center pt-4 pb-2 my-2"
             >
               <ProfilePhotoCard className="w-[75vw] max-w-[340px]" />
@@ -252,9 +294,7 @@ export function Hero({ onOpenResume }: HeroProps) {
 
           {/* Right Column: Professional Profile Photo for Tablet & Desktop (>= 768px) */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.96, y: 15 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ duration: 0.65, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            variants={photoVariants}
             className="hidden md:flex md:col-span-5 items-center justify-center relative mt-8 md:mt-0"
           >
             <ProfilePhotoCard className="w-full max-w-[320px] md:max-w-[350px] lg:max-w-[390px] xl:max-w-[420px]" />
@@ -262,13 +302,13 @@ export function Hero({ onOpenResume }: HeroProps) {
 
         </div>
 
-      </div>
+      </motion.div>
 
       {/* Subtle Scroll Indicator */}
       <motion.div
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.9, duration: 0.5 }}
+        animate={{ opacity: isLoaded ? 1 : 0 }}
+        transition={{ delay: 0.65, duration: 0.5 }}
         className="mt-14 flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500 text-xs font-mono"
       >
         <span className="text-[10px] tracking-widest uppercase">Explore Works</span>

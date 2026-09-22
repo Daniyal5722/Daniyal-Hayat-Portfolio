@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { MotionConfig } from 'framer-motion';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { TechStack } from './components/TechStack';
@@ -109,7 +110,8 @@ export default function App() {
   }, []);
 
   return (
-    <SmoothScroll>
+    <MotionConfig reducedMotion="user">
+      <SmoothScroll>
       <div className={`min-h-screen relative selection:bg-cyan-500/30 selection:text-cyan-200 transition-colors duration-300 ${
         isDarkMode ? 'bg-[#090a0f] text-slate-100' : 'bg-[#fafbfe] text-slate-900'
       }`}>
@@ -145,7 +147,7 @@ export default function App() {
 
         <main className="relative z-10">
           {/* Hero Section */}
-          <Hero onOpenResume={() => setIsResumeOpen(true)} />
+          <Hero onOpenResume={() => setIsResumeOpen(true)} isLoaded={loadingComplete} />
 
           {/* Continuous Dual Tech Stack Marquee */}
           <TechStack />
@@ -237,5 +239,6 @@ export default function App() {
         </React.Suspense>
       </div>
     </SmoothScroll>
+  </MotionConfig>
   );
 }

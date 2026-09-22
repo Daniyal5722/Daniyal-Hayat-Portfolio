@@ -61,6 +61,22 @@ export function Navbar({
     setSoundEnabled(next);
   };
 
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    soundManager.playClick();
+    if (href.startsWith('#')) {
+      const target = document.querySelector(href);
+      if (target) {
+        e.preventDefault();
+        const lenis = (window as unknown as { __lenis?: { scrollTo: (target: Element | string, options?: Record<string, unknown>) => void } }).__lenis;
+        if (lenis) {
+          lenis.scrollTo(target, { offset: -60, duration: 1.1 });
+        } else {
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    }
+  };
+
   const navItems = [
     { name: 'Home', href: '#home', id: 'home' },
     { name: 'About', href: '#about', id: 'about' },
@@ -112,7 +128,7 @@ export function Navbar({
                 key={item.name}
                 href={item.href}
                 data-cursor="pointer"
-                onClick={() => soundManager.playClick()}
+                onClick={(e) => handleNavClick(e, item.href)}
                 onMouseEnter={() => soundManager.playHover()}
                 className={`relative px-3.5 py-1 text-xs font-medium transition-colors rounded-full ${
                   isActive
@@ -243,13 +259,17 @@ export function Navbar({
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
             className="sm:hidden border-b dark:border-slate-800 border-slate-200 dark:bg-[#090a0f]/98 bg-white/98 backdrop-blur-xl px-4 pt-3 pb-6 space-y-1 max-h-[calc(100vh-5rem)] overflow-y-auto"
           >
             {navItems.map((item) => (
               <a
                 key={item.name}
                 href={item.href}
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={(e) => {
+                  setMobileMenuOpen(false);
+                  handleNavClick(e, item.href);
+                }}
                 className="flex items-center min-h-[44px] px-4 py-2.5 rounded-xl text-base font-medium dark:text-slate-200 text-slate-800 hover:text-cyan-500 dark:hover:bg-slate-900/80 hover:bg-slate-100 active:bg-cyan-500/10 transition-colors"
               >
                 {item.name}

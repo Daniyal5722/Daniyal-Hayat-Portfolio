@@ -9,34 +9,54 @@ export function SmoothScroll({ children }: SmoothScrollProps) {
   const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
-    // Respect prefers-reduced-motion
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      return;
-    }
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let animId: number | null = null;
+    let lenis: Lenis | null = null;
 
-    const lenis = new Lenis({
-      duration: 1.1,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-      touchMultiplier: 1.5,
-    });
+    const startLenis = () => {
+      lenis = new Lenis({
+        duration: 1.1,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smoothWheel: true,
+        touchMultiplier: 1.5,
+      });
 
-    lenisRef.current = lenis;
+      lenisRef.current = lenis;
 
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
+      function raf(time: number) {
+        lenis?.raf(time);
+        animId = requestAnimationFrame(raf);
+      }
 
-    const animId = requestAnimationFrame(raf);
+      animId = requestAnimationFrame(raf);
+      (window as unknown as { __lenis: Lenis }).__lenis = lenis;
+    };
 
-    // Provide window.__lenis for anchor link clicks and programmatic scrolling
-    (window as unknown as { __lenis: Lenis }).__lenis = lenis;
+    const stopLenis = () => {
+      if (animId !== null) {
+        cancelAnimationFrame(animId);
+        animId = null;
+      }
+      if (lenis) {
+        lenis.destroy();
+        lenis = null;
+      }
+      lenisRef.current = null;
+      delete (window as unknown as { __lenis?: Lenis }).__lenis;
+    };
+
+    startLenis();
+
+    const handleMotionChange = () => {
+      stopLenis();
+      startLenis();
+    };
+
+    mediaQuery.addEventListener('change', handleMotionChange);
 
     return () => {
-      cancelAnimationFrame(animId);
-      lenis.destroy();
-      delete (window as unknown as { __lenis?: Lenis }).__lenis;
+      mediaQuery.removeEventListener('change', handleMotionChange);
+      stopLenis();
     };
   }, []);
 

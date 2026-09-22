@@ -42,8 +42,6 @@ export function EasterEggModal({ isOpen, onClose }: EasterEggModalProps) {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [history]);
 
-  if (!isOpen) return null;
-
   const handleCommand = (e: React.FormEvent) => {
     e.preventDefault();
     const trimmed = input.trim().toLowerCase();
@@ -122,23 +120,25 @@ export function EasterEggModal({ isOpen, onClose }: EasterEggModalProps) {
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-        {/* Backdrop */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          onClick={onClose}
-          className="fixed inset-0 bg-black/80 backdrop-blur-md"
-        />
+      {isOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          {/* Backdrop */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+            className="fixed inset-0 bg-black/80 backdrop-blur-md"
+          />
 
-        {/* Terminal Window */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95, y: 15 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.95, y: 15 }}
-          className="relative w-full max-w-2xl rounded-2xl bg-[#090a10] border border-slate-800 shadow-2xl overflow-hidden font-mono z-10 text-xs sm:text-sm"
-        >
+          {/* Terminal Window */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95, y: 15 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: 15 }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            className="relative w-full max-w-2xl rounded-2xl bg-[#090a10] border border-slate-800 shadow-2xl overflow-hidden font-mono z-10 text-xs sm:text-sm"
+          >
           {/* Top Bar */}
           <div className="flex items-center justify-between px-4 py-3 bg-[#0d0f18] border-b border-slate-800 text-slate-400">
             <div className="flex items-center gap-2">
@@ -197,6 +197,7 @@ export function EasterEggModal({ isOpen, onClose }: EasterEggModalProps) {
           </form>
         </motion.div>
       </div>
+      )}
     </AnimatePresence>
   );
 }

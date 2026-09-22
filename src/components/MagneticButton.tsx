@@ -29,21 +29,23 @@ export function MagneticButton({
 }: MagneticButtonProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [isTouch, setIsTouch] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
-  const springConfig = { damping: 15, stiffness: 200, mass: 0.1 };
+  const springConfig = { damping: 18, stiffness: 220, mass: 0.1 };
   const springX = useSpring(x, springConfig);
   const springY = useSpring(y, springConfig);
 
   useEffect(() => {
-    const checkTouch = () => {
+    const checkMedia = () => {
       setIsTouch(window.matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window);
+      setPrefersReducedMotion(window.matchMedia('(prefers-reduced-motion: reduce)').matches);
     };
-    checkTouch();
-    window.addEventListener('resize', checkTouch);
-    return () => window.removeEventListener('resize', checkTouch);
+    checkMedia();
+    window.addEventListener('resize', checkMedia);
+    return () => window.removeEventListener('resize', checkMedia);
   }, []);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -70,11 +72,11 @@ export function MagneticButton({
   const content = (
     <motion.div
       ref={ref}
-      style={{ x: springX, y: springY }}
+      style={prefersReducedMotion ? undefined : { x: springX, y: springY }}
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className={`inline-block transition-transform duration-100 ease-out will-change-transform ${className}`}
+      className={`inline-block transition-transform duration-100 ease-out ${className}`}
       data-cursor={dataCursor}
     >
       {children}

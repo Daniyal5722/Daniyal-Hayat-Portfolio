@@ -399,15 +399,15 @@ export function Skills() {
             layout
             className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
           >
-            <AnimatePresence>
+            <AnimatePresence mode="popLayout">
               {displayedSkills.map((skill, idx) => (
                 <motion.div
-                  key={`${skill.name}-${idx}`}
+                  key={skill.id || `${skill.name}-${idx}`}
                   layout
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 0.3 }}
+                  initial={{ opacity: 0, scale: 0.95, y: 15 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.95, y: -10 }}
+                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                   className="group p-6 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 hover:border-cyan-500/40 dark:hover:border-cyan-500/40 transition-all duration-300 shadow-xs hover:shadow-cyan-500/5 hover:-translate-y-1 flex flex-col justify-between"
                 >
                   <div>

@@ -12,9 +12,9 @@ export function useIntersectionObserver<T extends HTMLElement = HTMLDivElement>(
   options: UseIntersectionObserverOptions = {}
 ): [RefObject<T>, boolean, IntersectionObserverEntry | null] {
   const {
-    threshold = 0.12,
+    threshold = 0,
     root = null,
-    rootMargin = '0px 0px -50px 0px',
+    rootMargin = '0px 0px 120px 0px',
     freezeOnceVisible = true,
   } = options;
 
@@ -23,6 +23,12 @@ export function useIntersectionObserver<T extends HTMLElement = HTMLDivElement>(
   const [isIntersecting, setIsIntersecting] = useState(false);
 
   useEffect(() => {
+    // If user prefers reduced motion, immediately mark intersecting to avoid hiding or delaying elements
+    if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setIsIntersecting(true);
+      return;
+    }
+
     const node = ref.current;
     if (!node) return;
 

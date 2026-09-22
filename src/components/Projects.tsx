@@ -44,10 +44,12 @@ function ProjectShowcase({ project, index, onOpenCaseStudy }: { project: Project
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 40 }}
+      layout
+      initial={{ opacity: 0, y: 28 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      viewport={{ once: true, amount: 0.12 }}
+      exit={{ opacity: 0, scale: 0.96 }}
+      transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
       className={`p-4 sm:p-6 lg:p-10 rounded-2xl sm:rounded-3xl bg-white dark:bg-[#111422] border border-slate-200 dark:border-slate-800 shadow-xl dark:shadow-2xl flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-6 sm:gap-8 lg:gap-12 items-center relative overflow-hidden transition-all duration-300 hover:border-cyan-500/40`}
     >
       {/* Visual / Image Side */}
@@ -363,7 +365,7 @@ export function Projects({ onOpenCaseStudy }: ProjectsProps) {
 
         {/* Projects Showcase */}
         <div className="flex flex-col gap-10 sm:gap-14 pb-8">
-          <AnimatePresence>
+          <AnimatePresence mode="popLayout">
             {displayedProjects.map((project, index) => (
               <ProjectShowcase
                 key={project.id}

@@ -29,10 +29,10 @@ export function FeaturedProject({ onOpenCaseStudy }: FeaturedProjectProps) {
         </div>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
           className="relative rounded-2xl sm:rounded-3xl bg-white dark:bg-[#111422] dark:border-slate-800 border border-slate-200 p-5 sm:p-8 md:p-12 shadow-2xl overflow-hidden group"
         >
           {/* Ambient decorative glow */}

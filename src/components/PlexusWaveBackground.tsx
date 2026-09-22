@@ -102,8 +102,8 @@ export function PlexusWaveBackground() {
       initParticles(width, height);
     };
 
-    let lastTime = 0;
-    let isVisible = true;
+    let isRunning = false;
+    let isVisible = !document.hidden;
     let mouse = { x: -1000, y: -1000 };
 
     const handleMouseMove = (e: MouseEvent) => {
@@ -111,8 +111,27 @@ export function PlexusWaveBackground() {
       mouse.y = e.clientY;
     };
 
+    const startAnimation = () => {
+      if (!isRunning && isVisible) {
+        isRunning = true;
+        animationFrameId = requestAnimationFrame(render);
+      }
+    };
+
+    const stopAnimation = () => {
+      if (isRunning) {
+        isRunning = false;
+        cancelAnimationFrame(animationFrameId);
+      }
+    };
+
     const handleVisibilityChange = () => {
       isVisible = !document.hidden;
+      if (isVisible) {
+        startAnimation();
+      } else {
+        stopAnimation();
+      }
     };
     
     document.addEventListener('visibilitychange', handleVisibilityChange);
@@ -120,7 +139,7 @@ export function PlexusWaveBackground() {
 
     const render = (time: number, forceFrame = false) => {
       if (!forceFrame && (!isVisible || prefersReducedMotion)) {
-        animationFrameId = requestAnimationFrame(render);
+        isRunning = false;
         return;
       }
 
@@ -218,7 +237,7 @@ export function PlexusWaveBackground() {
         ctx.fill();
       }
 
-      if (!forceFrame) {
+      if (!forceFrame && isRunning) {
         animationFrameId = requestAnimationFrame(render);
       }
     };
@@ -226,14 +245,10 @@ export function PlexusWaveBackground() {
     window.addEventListener('resize', resize);
     resize();
     
-    if (prefersReducedMotion) {
-      render(0, true);
-    } else {
-      animationFrameId = requestAnimationFrame(render);
-    }
+    startAnimation();
 
     return () => {
-      cancelAnimationFrame(animationFrameId);
+      stopAnimation();
       window.removeEventListener('resize', resize);
       window.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('visibilitychange', handleVisibilityChange);

@@ -7,25 +7,28 @@ import './index.css';
 // Suppress benign Vite HMR websocket connection messages in container preview environment
 if (typeof window !== 'undefined') {
   const suppress = (...args: unknown[]) => {
-    const msg = typeof args[0] === 'string' ? args[0] : '';
-    if (
-      msg.includes('[vite] failed to connect to websocket') || 
-      msg.includes('[vite] connecting...') ||
-      msg.includes('[vite] server connection lost') ||
-      msg.includes('WebSocket connection to')
-    ) {
-      return true;
-    }
-    return false;
+    const msg = args.map(arg => String(arg).toLowerCase()).join(' ');
+    const patterns = [
+      '[vite] failed to connect to websocket',
+      '[vite] connecting...',
+      '[vite] server connection lost',
+      'websocket connection to',
+      '[vite] error',
+      '[vite] reconnecting...',
+      'failed to load resource: net::err_connection_refused'
+    ];
+    return patterns.some(p => msg.includes(p));
   };
 
   const originalLog = console.log;
   const originalWarn = console.warn;
   const originalError = console.error;
+  const originalDebug = console.debug;
 
   console.log = (...args: unknown[]) => { if (!suppress(...args)) originalLog.apply(console, args); };
   console.warn = (...args: unknown[]) => { if (!suppress(...args)) originalWarn.apply(console, args); };
   console.error = (...args: unknown[]) => { if (!suppress(...args)) originalError.apply(console, args); };
+  console.debug = (...args: unknown[]) => { if (!suppress(...args)) originalDebug.apply(console, args); };
 }
 
 // Auto-register service worker for progressive offline capabilities

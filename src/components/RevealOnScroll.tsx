@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import { useIntersectionObserver } from '../hooks/useIntersectionObserver';
+import { motion } from 'framer-motion';
 
 export interface RevealOnScrollProps {
   children: ReactNode;
@@ -12,66 +12,76 @@ export interface RevealOnScrollProps {
   duration?: number;
   triggerOnce?: boolean;
   id?: string;
-  as?: React.ElementType;
 }
 
 /**
- * A wrapper component that executes a smooth, hardware-accelerated
- * fade-in & glide-in reveal animation as it enters the viewport,
- * powered by the native IntersectionObserver API.
+ * A wrapper component that executes smooth, hardware-accelerated
+ * scroll-based animations using framer-motion's motion.div component
+ * with whileInView, initial, viewport, and transition properties.
  */
 export function RevealOnScroll({
   children,
   threshold = 0.1,
-  rootMargin = '0px 0px -60px 0px',
+  rootMargin = '0px 0px -50px 0px',
   className = '',
   delay = 0,
   direction = 'up',
-  distance = 32,
-  duration = 750,
+  distance = 24,
+  duration = 600,
   triggerOnce = true,
   id,
-  as: Component = 'div',
 }: RevealOnScrollProps) {
-  const [ref, isVisible] = useIntersectionObserver<HTMLElement>({
-    threshold,
-    rootMargin,
-    freezeOnceVisible: triggerOnce,
-  });
+  let initialX = 0;
+  let initialY = 0;
 
-  const getTransform = () => {
-    if (isVisible) return 'translate3d(0, 0, 0)';
-    switch (direction) {
-      case 'up':
-        return `translate3d(0, ${distance}px, 0)`;
-      case 'down':
-        return `translate3d(0, -${distance}px, 0)`;
-      case 'left':
-        return `translate3d(${distance}px, 0, 0)`;
-      case 'right':
-        return `translate3d(-${distance}px, 0, 0)`;
-      case 'none':
-      default:
-        return 'translate3d(0, 0, 0)';
-    }
-  };
+  switch (direction) {
+    case 'up':
+      initialY = distance;
+      break;
+    case 'down':
+      initialY = -distance;
+      break;
+    case 'left':
+      initialX = distance;
+      break;
+    case 'right':
+      initialX = -distance;
+      break;
+    case 'none':
+    default:
+      initialX = 0;
+      initialY = 0;
+      break;
+  }
 
   return (
-    <Component
-      ref={ref}
+    <motion.div
       id={id}
       className={className}
-      style={{
-        opacity: isVisible ? 1 : 0,
-        transform: getTransform(),
-        transitionProperty: 'opacity, transform',
-        transitionDuration: `${duration}ms`,
-        transitionDelay: `${delay}ms`,
-        transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)',
-        willChange: 'opacity, transform',
+      initial={{
+        opacity: 0,
+        x: initialX,
+        y: initialY,
+      }}
+      whileInView={{
+        opacity: 1,
+        x: 0,
+        y: 0,
+      }}
+      viewport={{
+        once: triggerOnce,
+        margin: rootMargin as any,
+        amount: threshold,
+      }}
+      transition={{
+        duration: duration / 1000,
+        delay: delay / 1000,
+        ease: [0.16, 1, 0.3, 1],
       }}
     >
       {children}
-    </Component>
+    </motion.div>
   );
 }
+
+
