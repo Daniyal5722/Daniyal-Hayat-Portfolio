@@ -165,7 +165,7 @@ export function Hero({ onOpenResume, isLoaded = true }: HeroProps) {
               className="flex items-center gap-3"
             >
               <span className="px-2.5 py-1 rounded-md bg-cyan-500/10 border border-cyan-500/30 text-cyan-600 dark:text-cyan-400 font-mono text-xs font-bold uppercase tracking-widest shrink-0">
-                PORTFOLIO // 2026
+                PORTFOLIO // {new Date().getFullYear()}
               </span>
               <div className="h-[1px] w-8 sm:w-12 bg-cyan-500/30 shrink-0" />
               <div className="tracking-wider uppercase text-xs sm:text-sm font-sans flex items-center gap-1.5">

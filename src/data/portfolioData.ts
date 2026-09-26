@@ -370,7 +370,7 @@ export const SKILL_GROUPS: SkillGroup[] = [
 export const EXPERIENCE_TIMELINE: ExperienceItem[] = [
   {
     id: "exp-1",
-    year: "2023 — Present",
+    year: "2025 — 2026",
     title: "Independent Software Engineer & Product Builder",
     role: "Full-Stack Web & Android Developer",
     type: "milestone",
@@ -385,7 +385,7 @@ export const EXPERIENCE_TIMELINE: ExperienceItem[] = [
   },
   {
     id: "exp-2",
-    year: "2023 — 2024",
+    year: "2024 — 2025",
     title: "Native Android Engineering Focus",
     role: "Mobile App Developer",
     type: "project",
@@ -400,7 +400,7 @@ export const EXPERIENCE_TIMELINE: ExperienceItem[] = [
   },
   {
     id: "exp-3",
-    year: "2022 — 2023",
+    year: "2023 — 2024",
     title: "Web Engineering & Modern Frontend Mastery",
     role: "Frontend Developer",
     type: "learning",

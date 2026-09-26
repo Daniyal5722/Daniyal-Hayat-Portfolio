@@ -22,17 +22,17 @@ export function About() {
 
   const timelineMilestones = [
     {
-      year: "2023 - 2024",
+      year: "2023 — 2024",
       title: "Foundations & Web Architecture",
       desc: "Deep immersion in TypeScript, modern React, DOM rendering optimization, and REST API design patterns."
     },
     {
-      year: "2024 - 2025",
+      year: "2024 — 2025",
       title: "Cross-Platform & Native Android",
       desc: "Expanded into native Android engineering with Kotlin, Jetpack Compose, Room database, and offline-first mobile synchronization."
     },
     {
-      year: "2025 - 2026",
+      year: "2025 — 2026",
       title: "Flagship Deployments & AI Tooling",
       desc: "Architected Darul Ifta web and Android apps, CortexIQ AI workspace, and cloud-deployed production services."
     }

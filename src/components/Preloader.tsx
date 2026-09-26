@@ -119,7 +119,7 @@ export function Preloader({ onComplete }: PreloaderProps) {
               </div>
 
               <div className="flex items-center justify-between text-[10px] font-mono text-slate-500">
-                <span>PORTFOLIO // 2026</span>
+                <span>PORTFOLIO // {new Date().getFullYear()}</span>
                 <span className="text-slate-300 font-bold">{progress}%</span>
               </div>
             </div>
