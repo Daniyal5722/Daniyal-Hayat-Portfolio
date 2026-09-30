@@ -5,7 +5,6 @@ import { soundManager } from '../utils/sound';
 interface MagneticButtonProps {
   children: React.ReactNode;
   className?: string;
-  containerClassName?: string;
   onClick?: (e: React.MouseEvent) => void;
   href?: string;
   target?: string;
@@ -19,7 +18,6 @@ interface MagneticButtonProps {
 export function MagneticButton({
   children,
   className = '',
-  containerClassName = '',
   onClick,
   href,
   target,
@@ -116,7 +114,7 @@ export function MagneticButton({
           if (onClick) onClick(e);
         }}
         title={title}
-        className={`inline-block ${containerClassName} ${className.includes('w-full') ? 'w-full sm:w-auto' : ''} ${className.includes('flex-1') ? 'flex-1' : ''}`}
+        className="inline-block"
       >
         {content}
       </a>
@@ -131,7 +129,7 @@ export function MagneticButton({
         if (onClick) onClick(e);
       }}
       title={title}
-      className={`inline-block ${containerClassName} ${className.includes('w-full') ? 'w-full sm:w-auto' : ''} ${className.includes('flex-1') ? 'flex-1' : ''}`}
+      className="inline-block"
     >
       {content}
     </div>

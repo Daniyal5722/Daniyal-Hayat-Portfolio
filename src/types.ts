@@ -1,68 +1,46 @@
-export interface CaseStudyDecision {
-  decision: string;
-  rationale: string;
-  tradeOff: string;
-}
-
-export interface ArchitectureLayer {
-  layer: string;
-  stack: string;
-  purpose: string;
-}
-
-export interface CaseStudyScreenshot {
-  title: string;
-  caption: string;
-  tag: string;
-}
-
 export interface CaseStudy {
-  overview: string;
-  problem: string;
-  idea?: string;
-  solution: string;
-  technicalDecisions: CaseStudyDecision[];
-  architecture: ArchitectureLayer[];
-  screenshots?: CaseStudyScreenshot[];
-  outcomes: string[];
-  lessonsLearned: string;
-  liveDemo?: string;
-  github?: string;
+  overview: string;        // 01 Overview
+  problem: string;         // 02 Problem
+  idea: string;            // 03 Idea
+  design: string;          // 04 Design
+  development: string;     // 05 Development
+  technology: string;      // 06 Technology
+  challenges: string;      // 07 Challenges
+  solution: string;        // 08 Solution
+  screenshots?: string;    // 09 Screenshots / Visual Architecture
+  liveDemo?: string;       // 10 Live Demo
+  github?: string;         // 11 GitHub
+  lessonsLearned: string;  // 12 Lessons Learned
+  result?: string;         // Result summary
 }
 
 export interface Project {
   id: string;
-  slug: string;
   name: string;
   displayName: string;
-  role: string;
-  oneLiner: string;
   description: string;
   technologies: string[];
   language: string;
   githubUrl: string;
   liveUrl?: string;
-  category: 'Web Platform' | 'Mobile App' | 'AI & Intelligence' | 'Mobile Game' | 'Showcase';
-  featured: boolean;
-  visualType: 'browser-portal' | 'ai-dashboard' | 'weather-telemetry' | 'mobile-mockup' | 'matrix-grid' | 'editorial-code';
+  category: string;
+  featured?: boolean;
+  iconName: string;
+  features: string[];
+  caseStudy?: CaseStudy;
   metrics?: { label: string; value: string }[];
-  caseStudy: CaseStudy;
-  readingTime?: string;
-  features?: string[];
   stars?: number;
   forks?: number;
   updatedAt?: string;
-  iconName?: string;
+  readingTime?: string;
 }
-
-export type ContactFormState = ContactFormValues;
 
 export interface SkillCategoryItem {
   name: string;
+  icon: string;
   level: string;
   description: string;
   badge: string;
-  icon?: string;
 }
 
 export interface SkillGroup {
@@ -70,27 +48,6 @@ export interface SkillGroup {
   subtitle: string;
   icon: string;
   skills: SkillCategoryItem[];
-}
-
-export interface EducationItem {
-  id: string;
-  institution: string;
-  program: string;
-  timeline: string;
-  description: string;
-  skillsGained: string[];
-}
-
-export interface SkillItem {
-  name: string;
-  level: 'Core' | 'Advanced' | 'Proficient';
-  context: string;
-}
-
-export interface SkillCategory {
-  category: string;
-  description: string;
-  skills: SkillItem[];
 }
 
 export interface ExperienceItem {
@@ -104,6 +61,15 @@ export interface ExperienceItem {
   technologies: string[];
 }
 
+export interface EducationItem {
+  id: string;
+  institution: string;
+  program: string;
+  timeline: string;
+  description: string;
+  skillsGained: string[];
+}
+
 export interface ServiceItem {
   id: string;
   title: string;
@@ -113,10 +79,8 @@ export interface ServiceItem {
   deliverables: string[];
 }
 
-export interface ContactFormValues {
+export interface ContactFormState {
   name: string;
   email: string;
-  subject?: string;
   message: string;
-  website?: string; // Honeypot field
 }

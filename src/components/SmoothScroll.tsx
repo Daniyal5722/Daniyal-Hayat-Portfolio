@@ -14,13 +14,11 @@ export function SmoothScroll({ children }: SmoothScrollProps) {
     let lenis: Lenis | null = null;
 
     const startLenis = () => {
-      if (mediaQuery.matches) return;
-
       lenis = new Lenis({
         duration: 1.1,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         smoothWheel: true,
-        touchMultiplier: 1.0,
+        touchMultiplier: 1.5,
       });
 
       lenisRef.current = lenis;
@@ -47,15 +45,11 @@ export function SmoothScroll({ children }: SmoothScrollProps) {
       delete (window as unknown as { __lenis?: Lenis }).__lenis;
     };
 
-    if (!mediaQuery.matches) {
-      startLenis();
-    }
+    startLenis();
 
     const handleMotionChange = () => {
       stopLenis();
-      if (!mediaQuery.matches) {
-        startLenis();
-      }
+      startLenis();
     };
 
     mediaQuery.addEventListener('change', handleMotionChange);

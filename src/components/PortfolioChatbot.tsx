@@ -70,17 +70,10 @@ export function PortfolioChatbot() {
     }
   }, [messages, isOpen]);
 
-  // Focus input on open & close on Escape
+  // Focus input on open
   useEffect(() => {
     if (isOpen) {
       setTimeout(() => inputRef.current?.focus(), 150);
-      const handleKeyDown = (e: KeyboardEvent) => {
-        if (e.key === 'Escape') {
-          setIsOpen(false);
-        }
-      };
-      window.addEventListener('keydown', handleKeyDown);
-      return () => window.removeEventListener('keydown', handleKeyDown);
     }
   }, [isOpen]);
 
@@ -192,23 +185,13 @@ export function PortfolioChatbot() {
       {/* Chat Window Modal / Panel */}
       <AnimatePresence>
         {isOpen && (
-          <>
-            {/* Mobile backdrop scrim to dismiss on tap */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsOpen(false)}
-              className="fixed inset-0 bg-slate-950/40 backdrop-blur-2xs z-40 sm:hidden"
-            />
-
-            <motion.div
-              initial={{ opacity: 0, y: 20, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 20, scale: 0.95 }}
-              transition={{ duration: 0.2, ease: 'easeOut' }}
-              className="fixed bottom-24 right-3 sm:right-6 z-50 w-[calc(100vw-1.5rem)] sm:w-[420px] max-w-[420px] h-[540px] max-h-[75vh] bg-white dark:bg-[#111422] border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl flex flex-col overflow-hidden backdrop-blur-xl"
-            >
+          <motion.div
+            initial={{ opacity: 0, y: 20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.95 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
+            className="fixed bottom-24 right-4 sm:right-6 z-50 w-[92vw] sm:w-[420px] h-[580px] max-h-[85vh] bg-white dark:bg-[#111422] border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl flex flex-col overflow-hidden backdrop-blur-xl"
+          >
             {/* Header */}
             <div className="flex items-center justify-between px-4 py-3.5 bg-slate-50 dark:bg-[#161a2e] border-b border-slate-200 dark:border-slate-800">
               <div className="flex items-center gap-3">
@@ -312,7 +295,6 @@ export function PortfolioChatbot() {
               </button>
             </form>
           </motion.div>
-          </>
         )}
       </AnimatePresence>
     </>

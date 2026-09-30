@@ -22,7 +22,7 @@ export function Experience() {
         </div>
 
         {/* Timeline Container */}
-        <div className="relative pl-4 sm:pl-8 lg:pl-10 border-l-2 border-slate-200 dark:border-slate-800 space-y-8 sm:space-y-12">
+        <div className="relative pl-5 sm:pl-10 border-l-2 border-slate-200 dark:border-slate-800 space-y-8 sm:space-y-12">
           {EXPERIENCE_TIMELINE.map((item, index) => (
             <motion.div
               key={item.id}
@@ -33,12 +33,12 @@ export function Experience() {
               className="relative group"
             >
               {/* Timeline Marker Dot */}
-              <div className="absolute -left-[25px] sm:-left-[41px] lg:-left-[49px] top-1.5 w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 rounded-full bg-white dark:bg-[#090a0f] border-2 border-cyan-500 flex items-center justify-center shadow-xs group-hover:scale-125 transition-transform duration-300">
+              <div className="absolute -left-[29px] sm:-left-[47px] top-1.5 w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-white dark:bg-[#090a0f] border-2 border-cyan-500 flex items-center justify-center shadow-xs group-hover:scale-125 transition-transform duration-300">
                 <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-cyan-500 animate-pulse" />
               </div>
 
               {/* Milestone Card */}
-              <div className="p-3.5 sm:p-6 lg:p-8 rounded-xl sm:rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 hover:border-cyan-500/40 dark:hover:border-cyan-500/40 transition-all duration-300 shadow-sm hover:shadow-cyan-500/5">
+              <div className="p-4 sm:p-8 rounded-xl sm:rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 hover:border-cyan-500/40 dark:hover:border-cyan-500/40 transition-all duration-300 shadow-sm hover:shadow-cyan-500/5">
                 {/* Year & Role Badge */}
                 <div className="flex flex-wrap items-center justify-between gap-2 sm:gap-3 mb-3 sm:mb-4">
                   <div className="flex items-center gap-2 text-xs font-mono px-2.5 sm:px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">

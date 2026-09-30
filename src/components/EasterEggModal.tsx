@@ -30,22 +30,13 @@ export function EasterEggModal({ isOpen, onClose }: EasterEggModalProps) {
   const bottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
-    };
-
     if (isOpen) {
       setTimeout(() => inputRef.current?.focus(), 100);
       document.body.style.overflow = 'hidden';
-      window.addEventListener('keydown', handleKeyDown);
     } else {
       document.body.style.overflow = 'unset';
     }
-
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [isOpen, onClose]);
+  }, [isOpen]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -164,22 +155,21 @@ export function EasterEggModal({ isOpen, onClose }: EasterEggModalProps) {
 
             <button
               onClick={onClose}
-              className="min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800 transition-colors cursor-pointer"
-              aria-label="Close terminal"
+              className="text-slate-500 hover:text-slate-300 transition-colors"
             >
               <X className="w-4 h-4" />
             </button>
           </div>
 
           {/* Terminal History */}
-          <div className="p-4 sm:p-6 max-h-[55vh] overflow-y-auto overflow-x-hidden space-y-4 text-slate-200">
+          <div className="p-4 sm:p-6 max-h-[60vh] overflow-y-auto space-y-4 text-slate-200">
             {history.map((item, idx) => (
               <div key={idx} className="space-y-1">
                 <div className="flex items-center gap-2 text-cyan-400">
                   <span className="text-slate-500">guest@dnyl:~$</span>
                   <span>{item.cmd}</span>
                 </div>
-                <div className="text-slate-300 pl-4 border-l border-slate-800 break-words">
+                <div className="text-slate-300 pl-4 border-l border-slate-800">
                   {item.output}
                 </div>
               </div>
@@ -189,19 +179,18 @@ export function EasterEggModal({ isOpen, onClose }: EasterEggModalProps) {
 
           {/* Terminal Input Line */}
           <form onSubmit={handleCommand} className="flex items-center gap-2 p-3 sm:p-4 bg-[#0d0f18] border-t border-slate-800">
-            <span className="text-cyan-400 font-bold shrink-0 text-xs font-mono">guest@dnyl:~$</span>
+            <span className="text-cyan-400 font-bold shrink-0">guest@dnyl:~$</span>
             <input
               ref={inputRef}
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="type a command (e.g. help, skills, sudo hire)..."
-              className="flex-1 min-h-[44px] bg-transparent border-none text-slate-100 placeholder:text-slate-600 focus:outline-none focus:ring-0 text-base sm:text-sm font-mono"
+              className="flex-1 bg-transparent border-none text-slate-100 placeholder:text-slate-600 focus:outline-none focus:ring-0 text-xs sm:text-sm"
             />
             <button
               type="submit"
-              className="min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg text-cyan-400 hover:text-cyan-300 hover:bg-slate-800 transition-colors cursor-pointer"
-              aria-label="Execute command"
+              className="p-1.5 rounded text-cyan-400 hover:text-cyan-300 hover:bg-slate-800 transition-colors"
             >
               <CornerDownLeft className="w-4 h-4" />
             </button>

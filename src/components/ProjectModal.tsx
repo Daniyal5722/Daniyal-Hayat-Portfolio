@@ -86,11 +86,11 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
           <div className="flex items-center justify-between px-5 py-3.5 sm:px-6 sm:py-4 border-b border-slate-200 dark:border-slate-800/80 bg-slate-50/70 dark:bg-slate-900/50 backdrop-blur-sm sticky top-0 z-20">
             <div className="flex items-center gap-3">
               <span className="text-[10px] sm:text-xs font-mono px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border border-cyan-500/20">
-                {displayProject.category}
+                {project.category}
               </span>
               <div className="flex items-center gap-1.5 text-[10px] sm:text-xs text-slate-500 dark:text-slate-400 font-mono">
                 <Clock className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-cyan-500" />
-                <span>{displayProject.readingTime || '2 min read'}</span>
+                <span>{project.readingTime || '2 min read'}</span>
               </div>
             </div>
 
@@ -108,17 +108,17 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
             {/* Title & Introduction */}
             <div className="space-y-2 sm:space-y-3">
               <h2 className="text-xl sm:text-3xl font-bold text-slate-900 dark:text-white tracking-tight">
-                {displayProject.displayName}
+                {project.displayName}
               </h2>
               <p className="text-sm sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
-                {displayProject.description}
+                {project.description}
               </p>
             </div>
 
             {/* Quick Metrics Bar if available */}
-            {displayProject.metrics && displayProject.metrics.length > 0 && (
+            {project.metrics && project.metrics.length > 0 && (
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 p-3.5 sm:p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/80">
-                {displayProject.metrics.map((m, idx) => (
+                {project.metrics.map((m, idx) => (
                   <div key={idx} className="space-y-0.5 sm:space-y-1">
                     <span className="text-[9px] sm:text-[11px] font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400 block">
                       {m.label}
@@ -199,7 +199,7 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
                   </p>
                 ) : (
                   <div className="flex flex-wrap gap-2">
-                    {displayProject.technologies.map((tech, idx) => (
+                    {project.technologies.map((tech, idx) => (
                       <span
                         key={idx}
                         className="px-3 py-1 rounded-md text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700/60"
@@ -285,13 +285,13 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
             </div>
 
             {/* Key Features Checklist */}
-            {displayProject.features && displayProject.features.length > 0 && (
+            {project.features && project.features.length > 0 && (
               <div className="space-y-3 pt-4">
                 <h4 className="text-sm font-semibold text-slate-900 dark:text-white uppercase tracking-wider font-mono">
                   Key Technical Features
                 </h4>
                 <div className="grid sm:grid-cols-2 gap-2.5">
-                  {displayProject.features.map((feat, idx) => (
+                  {project.features.map((feat, idx) => (
                     <div key={idx} className="flex items-start gap-2 text-xs sm:text-sm text-slate-600 dark:text-slate-300">
                       <CheckCircle2 className="w-4 h-4 text-cyan-500 shrink-0 mt-0.5" />
                       <span>{feat}</span>
@@ -306,13 +306,13 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
           <div className="px-5 py-4 sm:px-6 sm:py-4 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/90 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
             <div className="flex items-center gap-2 text-[10px] sm:text-xs font-mono text-slate-500">
               <span>Repository:</span>
-              <span className="text-slate-700 dark:text-slate-300 font-semibold truncate max-w-[150px] sm:max-w-none">{displayProject.name}</span>
+              <span className="text-slate-700 dark:text-slate-300 font-semibold truncate max-w-[150px] sm:max-w-none">{project.name}</span>
             </div>
 
             <div className="flex items-center gap-2 sm:gap-3">
-              {displayProject.liveUrl && (
+              {project.liveUrl && (
                 <a
-                  href={displayProject.liveUrl}
+                  href={project.liveUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex-1 min-h-[44px] inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs sm:text-sm transition-all shadow-sm shadow-cyan-500/20 active:scale-[0.98]"
@@ -322,7 +322,7 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
                 </a>
               )}
               <a
-                href={displayProject.githubUrl}
+                href={project.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex-1 min-h-[44px] inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-700 hover:border-slate-400 dark:hover:border-slate-600 text-slate-700 dark:text-slate-200 text-xs sm:text-sm transition-all active:scale-[0.98]"
