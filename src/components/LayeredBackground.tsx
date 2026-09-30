@@ -141,12 +141,6 @@ export function LayeredBackground() {
           <span className="opacity-60 pr-4">{`name: "Daniyal Hayat";`}</span>
           <span className="opacity-40">{`}`}</span>
         </div>
-        {/* Top left technical coordinate */}
-        <div className="absolute top-28 left-12 flex items-center gap-1.5">
-          <span className="w-1.5 h-1.5 rounded-full bg-cyan-500" />
-          <span>SYS.LAT: 33.6844° N // LON: 73.0479° E</span>
-        </div>
-
         {/* Floating cross marks */}
         <div className="absolute top-1/4 right-20 select-none text-slate-400 dark:text-slate-600 text-xs">
           +
@@ -155,13 +149,7 @@ export function LayeredBackground() {
           +
         </div>
         <div className="absolute top-2/3 right-1/4 select-none text-slate-400 dark:text-slate-600 text-xs">
-          [ ARCH: TS • KOTLIN • GEMINI ]
-        </div>
-
-        {/* Bottom right runtime indicator */}
-        <div className="absolute bottom-12 right-12 flex items-center gap-2 text-[10px]">
-          <span className="inline-block w-2 h-2 border border-cyan-500/60 rotate-45" />
-          <span>STATUS: ONLINE & VERIFIED</span>
+          +
         </div>
       </motion.div>
     </div>

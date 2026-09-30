@@ -230,7 +230,7 @@ export function Skills() {
                 setViewMode('ecosystem');
                 soundManager.playClick();
               }}
-              className={`min-h-[40px] flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-mono transition-colors cursor-pointer ${
+              className={`min-h-[44px] flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-mono transition-colors cursor-pointer ${
                 viewMode === 'ecosystem'
                   ? 'bg-cyan-500 text-slate-950 font-bold shadow-xs'
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
@@ -244,7 +244,7 @@ export function Skills() {
                 setViewMode('grid');
                 soundManager.playClick();
               }}
-              className={`min-h-[40px] flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-mono transition-colors cursor-pointer ${
+              className={`min-h-[44px] flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-mono transition-colors cursor-pointer ${
                 viewMode === 'grid'
                   ? 'bg-cyan-500 text-slate-950 font-bold shadow-xs'
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
@@ -267,7 +267,7 @@ export function Skills() {
                   setSelectedCategory(cat);
                   soundManager.playClick();
                 }}
-                className={`min-h-[40px] inline-flex items-center justify-center px-3.5 py-2 rounded-full text-xs font-mono transition-all duration-200 cursor-pointer ${
+                className={`min-h-[44px] inline-flex items-center justify-center px-3.5 py-2 rounded-full text-xs font-mono transition-all duration-200 cursor-pointer ${
                   isSelected
                     ? 'bg-cyan-500 text-slate-950 font-bold shadow-md shadow-cyan-500/20'
                     : 'bg-white dark:bg-slate-900/80 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
