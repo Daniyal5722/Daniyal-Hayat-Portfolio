@@ -3,8 +3,15 @@ import { MotionConfig } from 'framer-motion';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { TechStack } from './components/TechStack';
+import { About } from './components/About';
+import { FeaturedProject } from './components/FeaturedProject';
 import { Projects } from './components/Projects';
+import { Experience } from './components/Experience';
+import { Education } from './components/Education';
+import { Skills } from './components/Skills';
+import { Services } from './components/Services';
 import { GithubSection } from './components/GithubSection';
+import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { ScrollProgress } from './components/ScrollProgress';
 import { ScrollToTop } from './components/ScrollToTop';
@@ -84,7 +91,7 @@ export default function App() {
         return;
       }
 
-      const sections = ['github', 'projects', 'home'];
+      const sections = ['contact', 'github', 'services', 'education', 'experience', 'skills', 'projects', 'about', 'home'];
       for (const sectionId of sections) {
         const element = document.getElementById(sectionId);
         if (element) {
@@ -145,14 +152,49 @@ export default function App() {
           {/* Continuous Dual Tech Stack Marquee */}
           <TechStack />
 
+          {/* About Section */}
+          <RevealOnScroll direction="up" distance={30} duration={600}>
+            <About />
+          </RevealOnScroll>
+
+          {/* Featured Flagship Project */}
+          <RevealOnScroll direction="up" distance={30} duration={600}>
+            <FeaturedProject onOpenCaseStudy={(proj) => setSelectedCaseStudy(proj)} />
+          </RevealOnScroll>
+
           {/* Projects Centerpiece Showcase */}
           <RevealOnScroll direction="up" distance={30} duration={600}>
             <Projects onOpenCaseStudy={(proj) => setSelectedCaseStudy(proj)} />
           </RevealOnScroll>
 
+          {/* Skills & Interconnected Technology Matrix */}
+          <RevealOnScroll direction="up" distance={30} duration={600}>
+            <Skills />
+          </RevealOnScroll>
+
+          {/* Experience Timeline */}
+          <RevealOnScroll direction="up" distance={30} duration={600}>
+            <Experience />
+          </RevealOnScroll>
+
+          {/* Services & Technical Offerings */}
+          <RevealOnScroll direction="up" distance={30} duration={600}>
+            <Services />
+          </RevealOnScroll>
+
+          {/* Education & Foundations */}
+          <RevealOnScroll direction="up" distance={30} duration={600}>
+            <Education />
+          </RevealOnScroll>
+
           {/* GitHub & Open Source Activity */}
           <RevealOnScroll direction="up" distance={30} duration={600}>
             <GithubSection />
+          </RevealOnScroll>
+
+          {/* Contact Transmission Section */}
+          <RevealOnScroll direction="up" distance={30} duration={600}>
+            <Contact />
           </RevealOnScroll>
         </main>
 

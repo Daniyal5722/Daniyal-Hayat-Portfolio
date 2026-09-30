@@ -6,9 +6,6 @@
   .font-mono {
     font-family: 'JetBrains Mono', monospace;
   }
-  .font-display {
-    font-family: 'Syne', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-  }
 }
 
 html, body {

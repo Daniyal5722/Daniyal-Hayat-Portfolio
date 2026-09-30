@@ -19,6 +19,7 @@ app.post("/api/contact", (req, res) => {
     if (!name || !email || !message) {
       return res.status(400).json({ error: "Name, email, and message are required." });
     }
+    console.log(`[Contact Transmission] Received message from ${name} (${email}): ${message.slice(0, 50)}...`);
     return res.status(200).json({ 
       success: true, 
       message: "Message received successfully. Daniyal will follow up with you shortly." 

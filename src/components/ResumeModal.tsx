@@ -118,7 +118,7 @@ ${EDUCATION_DATA.map(e => `• ${e.program} - ${e.institution} (${e.timeline})\n
               <button
                 type="button"
                 onClick={copyFullTextResume}
-                className="min-h-[44px] inline-flex items-center gap-1.5 px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 hover:border-slate-400 dark:hover:border-slate-600 text-xs font-medium text-slate-700 dark:text-slate-200 transition-colors cursor-pointer"
+                className="min-h-[36px] inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-slate-300 dark:border-slate-700 hover:border-slate-400 dark:hover:border-slate-600 text-xs font-medium text-slate-700 dark:text-slate-200 transition-colors cursor-pointer"
                 title="Copy ATS Plain Text Version"
               >
                 {copiedText ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
@@ -129,7 +129,7 @@ ${EDUCATION_DATA.map(e => `• ${e.program} - ${e.institution} (${e.timeline})\n
                 type="button"
                 id="resume-header-download-pdf-btn"
                 onClick={handlePrint}
-                className="min-h-[44px] inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 text-cyan-600 dark:text-cyan-400 text-xs font-medium transition-colors cursor-pointer"
+                className="min-h-[36px] inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 text-cyan-600 dark:text-cyan-400 text-xs font-medium transition-colors cursor-pointer"
                 title="Save CV as PDF via printer dialog"
               >
                 <Download className="w-3.5 h-3.5" />

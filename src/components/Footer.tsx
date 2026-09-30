@@ -1,89 +1,134 @@
-import React from 'react';
-import { DEVELOPER_NAME, GITHUB_PROFILE_URL, LIVE_PORTFOLIO_URL, NAV_LINKS } from '../data/portfolioData';
-import { ArrowUp, Github, Mail } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { DEVELOPER_NAME, GITHUB_PROFILE_URL, LIVE_DEPLOYMENTS } from '../data/portfolioData';
+import { Github, ExternalLink, ArrowUp, Clock, Globe } from 'lucide-react';
+import { MagneticButton } from './MagneticButton';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
+  const [timeString, setTimeString] = useState('');
+
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+      setTimeString(
+        now.toLocaleTimeString('en-US', {
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          hour12: true,
+        })
+      );
+    };
+    updateTime();
+    const interval = setInterval(updateTime, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
-    <footer className="py-12 sm:py-16 bg-[#06080d] border-t border-slate-800 text-slate-400 text-xs font-mono relative" role="contentinfo">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+    <footer className="py-12 sm:py-16 md:py-20 bg-[#06070a] border-t border-slate-800/80 text-slate-400 text-xs font-mono relative overflow-hidden">
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 sm:space-y-12 relative z-10">
         
-        {/* Top Row: Brand & Back to Top */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-slate-800/80">
+        {/* Status & Local Time Row */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 sm:pb-8 border-b border-slate-900">
           
-          <div className="flex items-center gap-3">
-            <span className="w-7 h-7 rounded-lg bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center font-mono text-xs font-bold text-cyan-500">
-              DH
-            </span>
-            <div>
-              <span className="font-bold text-slate-200 tracking-tight block">
-                {DEVELOPER_NAME}
+          <div className="flex flex-wrap items-center gap-3 sm:gap-6">
+            {/* Live Availability Status */}
+            <div className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-slate-900/90 border border-slate-800">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
               </span>
-              <span className="text-[11px] text-slate-500">
-                Software Engineer &amp; Builder
+              <span className="text-slate-200 font-medium tracking-wider uppercase text-[11px]">
+                Available For Work
               </span>
+            </div>
+
+            {/* Live Local Clock */}
+            <div className="inline-flex items-center gap-2 text-slate-400 text-xs">
+              <Clock className="w-3.5 h-3.5 text-cyan-500" />
+              <span>LOCAL TIME: <strong className="text-slate-200 font-semibold">{timeString || 'SYNCING...'}</strong></span>
             </div>
           </div>
 
-          {/* Accessible Back-to-Top Control */}
-          <button
+          {/* Scroll to Top */}
+          <MagneticButton
             onClick={scrollToTop}
-            aria-label="Scroll back to top of the page"
-            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-cyan-400 border border-slate-800 transition-colors focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:outline-none min-h-[40px] text-xs font-mono"
+            dataCursor="pointer"
+            className="min-h-[44px] inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-cyan-400 transition-colors cursor-pointer self-start sm:self-auto"
+            title="Return to top"
           >
             <span>Back to top</span>
-            <ArrowUp className="w-3.5 h-3.5 text-cyan-400" />
-          </button>
+            <ArrowUp className="w-3.5 h-3.5" />
+          </MagneticButton>
 
         </div>
 
-        {/* Middle Navigation Row */}
-        <div className="flex flex-wrap items-center justify-between gap-4 text-slate-500 text-xs">
-          <nav aria-label="Footer Navigation" className="flex flex-wrap items-center gap-x-6 gap-y-2">
-            {NAV_LINKS.map((link) => (
+        {/* Giant Typographic Editorial Signoff */}
+        <div className="select-none py-4 sm:py-6">
+          <h2 className="text-3xl sm:text-6xl md:text-8xl lg:text-9xl font-extrabold tracking-tighter text-slate-800/40 hover:text-slate-700/60 transition-colors uppercase leading-none break-words">
+            {DEVELOPER_NAME}
+          </h2>
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3 pt-3 sm:pt-4 text-xs font-mono text-slate-500">
+            <span className="text-cyan-500">BUILD</span> • <span>CREATE</span> • <span>EXPLORE</span>
+            <span className="hidden sm:inline">•</span>
+            <span className="hidden sm:inline">ENGINEERED FOR PRODUCTION SPEED &amp; RIGOR</span>
+          </div>
+        </div>
+
+        {/* Live Deployments Strip */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 pt-4 sm:pt-6 border-t border-slate-900">
+          <div className="flex items-center gap-2 text-slate-400 text-xs">
+            <Globe className="w-3.5 h-3.5 text-cyan-400" />
+            <span>Direct Deployments:</span>
+          </div>
+          <div className="flex flex-wrap items-center gap-2 sm:gap-4">
+            {LIVE_DEPLOYMENTS.map((deploy, idx) => (
               <a
-                key={link.label}
-                href={link.href}
-                className="hover:text-cyan-400 transition-colors py-1 focus-visible:ring-2 focus-visible:ring-cyan-400 rounded"
+                key={idx}
+                href={deploy.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-cursor="external"
+                className="min-h-[40px] inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-900/50 hover:bg-slate-900 text-slate-300 hover:text-cyan-400 transition-colors text-xs"
               >
-                {link.label}
+                <span>{deploy.title}</span>
+                <ExternalLink className="w-3 h-3 text-cyan-400/60" />
               </a>
             ))}
-          </nav>
+          </div>
+        </div>
 
-          <div className="flex items-center gap-4">
+        {/* Bottom Bar: Copyright & Attribution */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-slate-500 pt-6 border-t border-slate-900/60 text-[11px]">
+          <div>
+            © {currentYear} {DEVELOPER_NAME}. Built with React 18, TypeScript &amp; Tailwind CSS.
+          </div>
+
+          <div className="flex flex-wrap items-center gap-4 sm:gap-6">
             <a
               href={GITHUB_PROFILE_URL}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Daniyal Hayat on GitHub"
-              className="hover:text-cyan-400 transition-colors flex items-center gap-1.5 py-1 focus-visible:ring-2 focus-visible:ring-cyan-400 rounded min-h-[36px]"
+              data-cursor="external"
+              className="min-h-[44px] inline-flex items-center gap-1 hover:text-cyan-400 transition-colors"
             >
               <Github className="w-3.5 h-3.5" />
               <span>GitHub</span>
             </a>
-            <a
-              href="#contact"
-              className="hover:text-cyan-400 transition-colors flex items-center gap-1.5 py-1 focus-visible:ring-2 focus-visible:ring-cyan-400 rounded min-h-[36px]"
-            >
-              <Mail className="w-3.5 h-3.5" />
-              <span>Transmission</span>
+            <a href="#projects" className="min-h-[44px] inline-flex items-center hover:text-cyan-400 transition-colors">
+              Projects
             </a>
-          </div>
-        </div>
-
-        {/* Bottom Attribution & Integrity Row */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 pt-6 border-t border-slate-900 text-slate-500 text-[11px]">
-          <div>
-            © {currentYear} {DEVELOPER_NAME}. Built with React 19, TypeScript &amp; Tailwind CSS.
-          </div>
-          <div className="text-slate-600">
-            Proof of work over empty templates · WCAG AA Compliant
+            <a href="#skills" className="min-h-[44px] inline-flex items-center hover:text-cyan-400 transition-colors">
+              Matrix
+            </a>
+            <a href="#contact" className="min-h-[44px] inline-flex items-center hover:text-cyan-400 transition-colors">
+              Transmission
+            </a>
           </div>
         </div>
 
