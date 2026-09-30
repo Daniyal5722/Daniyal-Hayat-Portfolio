@@ -38,28 +38,6 @@ export function Navbar({
   const [logoClicks, setLogoClicks] = useState(0);
   const [soundEnabled, setSoundEnabled] = useState(soundManager.isEnabled());
 
-  // Lock body scroll when mobile menu is open
-  useEffect(() => {
-    if (mobileMenuOpen) {
-      const originalStyle = window.getComputedStyle(document.body).overflow;
-      document.body.style.overflow = 'hidden';
-      return () => {
-        document.body.style.overflow = originalStyle;
-      };
-    }
-  }, [mobileMenuOpen]);
-
-  // Close mobile menu on Escape key
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && mobileMenuOpen) {
-        setMobileMenuOpen(false);
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [mobileMenuOpen]);
-
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -295,72 +273,61 @@ export function Navbar({
       {/* Mobile Menu Dropdown */}
       <AnimatePresence>
         {mobileMenuOpen && (
-          <>
-            {/* Backdrop Scrim (Click outside to close) */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setMobileMenuOpen(false)}
-              className="fixed inset-0 top-16 bg-slate-950/60 backdrop-blur-xs z-40 sm:hidden"
-            />
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            className="sm:hidden border-b dark:border-slate-800 border-slate-200 dark:bg-[#090a0f]/98 bg-white/98 backdrop-blur-xl px-4 pt-3 pb-6 space-y-1 max-h-[calc(100vh-5rem)] overflow-y-auto"
+          >
+            {navItems.map((item) => (
+              <a
+                key={item.name}
+                href={item.href}
+                onClick={(e) => {
+                  setMobileMenuOpen(false);
+                  handleNavClick(e, item.href);
+                }}
+                className="flex items-center min-h-[44px] px-4 py-2.5 rounded-xl text-base font-medium dark:text-slate-200 text-slate-800 hover:text-cyan-500 dark:hover:bg-slate-900/80 hover:bg-slate-100 active:bg-cyan-500/10 transition-colors"
+              >
+                {item.name}
+              </a>
+            ))}
 
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              className="relative z-50 sm:hidden border-b dark:border-slate-800 border-slate-200 dark:bg-[#090a0f]/98 bg-white/98 backdrop-blur-xl px-4 pt-3 pb-6 space-y-1 max-h-[calc(100vh-4.5rem)] overflow-y-auto safe-bottom shadow-2xl"
-            >
-              {navItems.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  onClick={(e) => {
-                    setMobileMenuOpen(false);
-                    handleNavClick(e, item.href);
-                  }}
-                  className="flex items-center min-h-[44px] px-4 py-2.5 rounded-xl text-base font-medium dark:text-slate-200 text-slate-800 hover:text-cyan-500 dark:hover:bg-slate-900/80 hover:bg-slate-100 active:bg-cyan-500/10 transition-colors"
-                >
-                  {item.name}
-                </a>
-              ))}
+            <div className="pt-3 mt-2 border-t dark:border-slate-800 border-slate-200 flex flex-col gap-2">
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  onOpenResume();
+                }}
+                className="flex items-center justify-center gap-2 min-h-[44px] px-4 py-3 rounded-xl bg-cyan-500 text-slate-950 font-bold text-sm shadow-sm active:scale-[0.98] transition-transform cursor-pointer"
+              >
+                <FileText className="w-4 h-4" />
+                <span>View Resume / CV</span>
+              </button>
 
-              <div className="pt-3 mt-2 border-t dark:border-slate-800 border-slate-200 flex flex-col gap-2">
-                <button
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    onOpenResume();
-                  }}
-                  className="flex items-center justify-center gap-2 min-h-[44px] px-4 py-3 rounded-xl bg-cyan-500 text-slate-950 font-bold text-sm shadow-sm active:scale-[0.98] transition-transform cursor-pointer"
-                >
-                  <FileText className="w-4 h-4" />
-                  <span>View Resume / CV</span>
-                </button>
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  onOpenEasterEgg();
+                }}
+                className="flex items-center justify-center gap-2 min-h-[44px] px-4 py-3 rounded-xl dark:bg-slate-900 bg-slate-100 border dark:border-slate-800 border-slate-200 text-xs font-mono dark:text-slate-300 text-slate-700 active:scale-[0.98] transition-transform cursor-pointer"
+              >
+                <Terminal className="w-4 h-4 text-cyan-400" />
+                <span>Open Developer Terminal</span>
+              </button>
 
-                <button
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    onOpenEasterEgg();
-                  }}
-                  className="flex items-center justify-center gap-2 min-h-[44px] px-4 py-3 rounded-xl dark:bg-slate-900 bg-slate-100 border dark:border-slate-800 border-slate-200 text-xs font-mono dark:text-slate-300 text-slate-700 active:scale-[0.98] transition-transform cursor-pointer"
-                >
-                  <Terminal className="w-4 h-4 text-cyan-400" />
-                  <span>Open Developer Terminal</span>
-                </button>
-
-                <a
-                  href={GITHUB_PROFILE_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 min-h-[44px] px-4 py-3 rounded-xl dark:bg-slate-900 bg-slate-100 border dark:border-slate-800 border-slate-200 text-xs font-mono dark:text-slate-300 text-slate-700 active:scale-[0.98] transition-transform"
-                >
-                  <Github className="w-4 h-4 text-cyan-400" />
-                  <span>GitHub Profile (@Daniyal5722)</span>
-                </a>
-              </div>
-            </motion.div>
-          </>
+              <a
+                href={GITHUB_PROFILE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 min-h-[44px] px-4 py-3 rounded-xl dark:bg-slate-900 bg-slate-100 border dark:border-slate-800 border-slate-200 text-xs font-mono dark:text-slate-300 text-slate-700 active:scale-[0.98] transition-transform"
+              >
+                <Github className="w-4 h-4 text-cyan-400" />
+                <span>GitHub Profile (@Daniyal5722)</span>
+              </a>
+            </div>
+          </motion.div>
         )}
       </AnimatePresence>
     </header>

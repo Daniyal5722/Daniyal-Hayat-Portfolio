@@ -40,6 +40,12 @@ export function About() {
 
   return (
     <section id="about" className="py-14 sm:py-20 md:py-28 lg:py-32 relative overflow-hidden bg-gradient-to-b from-transparent via-purple-500/[0.015] to-transparent">
+      
+      {/* Editorial Watermark Backdrop */}
+      <div className="absolute top-12 -right-16 pointer-events-none select-none opacity-[0.03] dark:opacity-[0.05] text-7xl sm:text-9xl font-extrabold font-mono tracking-tighter">
+        DANIYAL
+      </div>
+
       <div className="max-w-[88rem] mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
         
         {/* Section Heading */}
@@ -68,7 +74,7 @@ export function About() {
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-5 space-y-6"
           >
-            <div className="p-4 sm:p-8 rounded-2xl sm:rounded-3xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 shadow-xl relative overflow-hidden group">
+            <div className="p-5 sm:p-8 rounded-2xl sm:rounded-3xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 shadow-xl relative overflow-hidden group">
               <div className="absolute top-0 right-0 w-36 h-36 bg-cyan-500/10 rounded-full blur-2xl group-hover:bg-cyan-500/20 transition-all duration-500" />
               
               <div className="flex items-center gap-3.5 mb-6">

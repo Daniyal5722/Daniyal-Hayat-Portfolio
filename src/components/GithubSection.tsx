@@ -13,7 +13,6 @@ import {
 import { GITHUB_PROFILE_URL, GITHUB_USERNAME } from '../data/portfolioData';
 import { useGitHubRepos } from '../hooks/useGitHubRepos';
 import { useGitHubActivity } from '../hooks/useGitHubActivity';
-import { TiltCard } from './TiltCard';
 
 export function GithubSection() {
   const { projects } = useGitHubRepos();
@@ -83,59 +82,50 @@ export function GithubSection() {
         {/* Pinned Repositories Grid */}
         <div className="grid sm:grid-cols-2 gap-4 sm:gap-6 mb-8 sm:mb-12">
           {pinnedRepos.map((repo, idx) => (
-            <TiltCard
+            <motion.a
               key={repo.id}
-              maxTilt={7}
-              perspective={950}
-              scale={1.018}
-              glareMaxOpacity={0.12}
-              className="h-full"
-              containerClassName="h-full"
+              href={repo.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{ duration: 0.55, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 hover:border-cyan-500/40 dark:hover:border-cyan-500/40 transition-all duration-300 shadow-xs hover:shadow-cyan-500/5 group flex flex-col justify-between"
             >
-              <motion.a
-                href={repo.githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.15 }}
-                transition={{ duration: 0.55, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                className="p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 hover:border-cyan-500/40 dark:hover:border-cyan-500/40 transition-colors duration-300 shadow-xs hover:shadow-cyan-500/5 group flex flex-col justify-between h-full"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="flex items-center gap-2">
-                      <Code2 className="w-4 h-4 text-cyan-500" />
-                      <h3 className="font-bold text-slate-900 dark:text-white text-sm sm:text-base group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">
-                        {repo.displayName}
-                      </h3>
-                    </div>
-                    <ArrowUpRight className="w-4 h-4 text-slate-400 group-hover:text-cyan-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
-                  </div>
-
-                  <p className="text-xs text-slate-600 dark:text-slate-400 line-clamp-2 leading-relaxed mb-4">
-                    {repo.description}
-                  </p>
-                </div>
-
-                <div className="flex items-center justify-between pt-3 border-t border-slate-100 dark:border-slate-800/80 text-xs font-mono text-slate-500 dark:text-slate-400">
+              <div>
+                <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-cyan-500" />
-                    <span>{repo.language}</span>
+                    <Code2 className="w-4 h-4 text-cyan-500" />
+                    <h3 className="font-bold text-slate-900 dark:text-white text-sm sm:text-base group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">
+                      {repo.displayName}
+                    </h3>
                   </div>
-
-                  <div className="flex items-center gap-3">
-                    {repo.stars !== undefined && repo.stars > 0 && (
-                      <span className="flex items-center gap-1 text-amber-500">
-                        <Star className="w-3.5 h-3.5 fill-amber-400" />
-                        <span>{repo.stars}</span>
-                      </span>
-                    )}
-                    <span>public</span>
-                  </div>
+                  <ArrowUpRight className="w-4 h-4 text-slate-400 group-hover:text-cyan-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
                 </div>
-              </motion.a>
-            </TiltCard>
+
+                <p className="text-xs text-slate-600 dark:text-slate-400 line-clamp-2 leading-relaxed mb-4">
+                  {repo.description}
+                </p>
+              </div>
+
+              <div className="flex items-center justify-between pt-3 border-t border-slate-100 dark:border-slate-800/80 text-xs font-mono text-slate-500 dark:text-slate-400">
+                <div className="flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-cyan-500" />
+                  <span>{repo.language}</span>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  {repo.stars !== undefined && repo.stars > 0 && (
+                    <span className="flex items-center gap-1 text-amber-500">
+                      <Star className="w-3.5 h-3.5 fill-amber-400" />
+                      <span>{repo.stars}</span>
+                    </span>
+                  )}
+                  <span>public</span>
+                </div>
+              </div>
+            </motion.a>
           ))}
         </div>
 
