@@ -194,11 +194,29 @@ export function Navbar({
             title={soundEnabled ? "Mute UI sounds" : "Enable UI micro-sounds"}
             aria-label="Toggle Sound"
           >
-            {soundEnabled ? (
-              <Volume2 className="w-4 h-4 text-cyan-400" />
-            ) : (
-              <VolumeX className="w-4 h-4 text-slate-400" />
-            )}
+            <AnimatePresence mode="wait">
+              {soundEnabled ? (
+                <motion.div
+                  key="enabled"
+                  initial={{ opacity: 0, scale: 0.5, rotate: -45 }}
+                  animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                  exit={{ opacity: 0, scale: 0.5, rotate: 45 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                >
+                  <Volume2 className="w-4 h-4 text-cyan-400" />
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="disabled"
+                  initial={{ opacity: 0, scale: 0.5, rotate: 45 }}
+                  animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                  exit={{ opacity: 0, scale: 0.5, rotate: -45 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                >
+                  <VolumeX className="w-4 h-4 text-slate-400" />
+                </motion.div>
+              )}
+            </AnimatePresence>
           </button>
 
           {/* Resume CV Modal Trigger */}
