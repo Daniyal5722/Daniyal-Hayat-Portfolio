@@ -117,41 +117,6 @@ export function Hero({ onOpenResume, isLoaded = true }: HeroProps) {
         animate={isLoaded ? "visible" : "hidden"}
       >
         
-        {/* Top Status Indicators: Availability Badge, then GitHub Activity */}
-        <motion.div 
-          variants={itemVariants}
-          className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 mb-6 sm:mb-8"
-        >
-          {/* 1. Availability Badge */}
-          <div
-            className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-white/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 shadow-xs text-xs font-mono backdrop-blur-md self-start sm:self-auto max-w-full hover:border-cyan-500/40 transition-colors"
-          >
-            <span className="relative flex h-2 w-2 shrink-0">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
-            </span>
-            <span className="text-slate-700 dark:text-slate-300 truncate">
-              Available for high-impact engineering &amp; product roles
-            </span>
-          </div>
-
-          {/* 2. Live GitHub Status Pill */}
-          <a
-            href={activity.repoUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            data-cursor="external"
-            className="group inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 text-xs font-mono hover:border-cyan-500/50 transition-all shadow-xs self-start sm:self-auto max-w-full hover:shadow-cyan-500/10"
-          >
-            <GitBranch className="w-3.5 h-3.5 text-cyan-500 shrink-0" />
-            <span className="text-slate-500 dark:text-slate-400 shrink-0">Git Event:</span>
-            <span className="text-cyan-600 dark:text-cyan-400 font-semibold group-hover:underline truncate max-w-[180px] sm:max-w-none">
-              {activity.actionText}
-            </span>
-            <span className="text-slate-400 dark:text-slate-500 text-[10px] shrink-0">({activity.timeAgo})</span>
-          </a>
-
-        </motion.div>
 
         {/* Hero Grid with Profile Photo */}
         <div className="grid md:grid-cols-12 gap-8 lg:gap-12 items-center">
@@ -159,24 +124,6 @@ export function Hero({ onOpenResume, isLoaded = true }: HeroProps) {
           {/* Left Column: Typography, CTAs, Stats */}
           <div className="md:col-span-7 space-y-6">
             
-            {/* 3. Portfolio Label / Monogram & Name Heading */}
-            <motion.div
-              variants={itemVariants}
-              className="flex items-center gap-3"
-            >
-              <span className="px-2.5 py-1 rounded-md bg-cyan-500/10 border border-cyan-500/30 text-cyan-600 dark:text-cyan-400 font-mono text-xs font-bold uppercase tracking-widest shrink-0">
-                PORTFOLIO // {new Date().getFullYear()}
-              </span>
-              <div className="h-[1px] w-8 sm:w-12 bg-cyan-500/30 shrink-0" />
-              <div className="tracking-wider uppercase text-xs sm:text-sm font-sans flex items-center gap-1.5">
-                <span className="font-bold text-slate-900 dark:text-white">
-                  DANIYAL
-                </span>
-                <span className="font-normal text-slate-500 dark:text-slate-400">
-                  HAYAT
-                </span>
-              </div>
-            </motion.div>
 
             {/* 4. Cinematic Main Heading with Fluid clamp() Typography */}
             <div className="space-y-3">
