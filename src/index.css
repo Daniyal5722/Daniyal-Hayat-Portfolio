@@ -12,12 +12,37 @@ html, body {
   overflow-x: hidden;
   width: 100%;
   max-width: 100%;
+  min-height: 100%;
 }
 
 #root {
   overflow-x: hidden;
   width: 100%;
   max-width: 100%;
+  min-height: 100%;
+}
+
+/* Ensure responsive images & media never cause horizontal overflow */
+img, video, canvas, svg {
+  max-width: 100%;
+}
+
+/* Fluid display headline balancing to prevent orphan words */
+h1, h2, h3 {
+  text-wrap: balance;
+}
+
+/* Media prefers-reduced-motion compliance */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .animate-marquee {
+    animation: none !important;
+  }
 }
 
 /* Safe area support for iOS notches & home bars */

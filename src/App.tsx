@@ -1,48 +1,44 @@
 import React, { useState, useEffect } from 'react';
-import { MotionConfig } from 'framer-motion';
-import { Navbar } from './components/Navbar';
+import { Route, Switch } from 'wouter';
+import { Header } from './components/Header';
 import { Hero } from './components/Hero';
-import { TechStack } from './components/TechStack';
-import { About } from './components/About';
-import { FeaturedProject } from './components/FeaturedProject';
-import { Projects } from './components/Projects';
-import { Experience } from './components/Experience';
-import { Education } from './components/Education';
-import { Skills } from './components/Skills';
-import { Services } from './components/Services';
-import { GithubSection } from './components/GithubSection';
-import { Contact } from './components/Contact';
+import { SelectedWork } from './components/SelectedWork';
+import { AboutSection } from './components/AboutSection';
+import { SkillsSection } from './components/SkillsSection';
+import { ExperienceServicesSection } from './components/ExperienceServicesSection';
+import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
-import { ScrollProgress } from './components/ScrollProgress';
-import { ScrollToTop } from './components/ScrollToTop';
-import { RevealOnScroll } from './components/RevealOnScroll';
-import { LayeredBackground } from './components/LayeredBackground';
-import { PlexusWaveBackground } from './components/PlexusWaveBackground';
-import { CustomCursor } from './components/CustomCursor';
-import { Preloader } from './components/Preloader';
-import { SmoothScroll } from './components/SmoothScroll';
-import { CommandPalette } from './components/CommandPalette';
-import { ProjectModal } from './components/ProjectModal';
+import { ProjectCaseStudyPage } from './components/ProjectCaseStudyPage';
+import { NotFoundPage } from './components/NotFoundPage';
 import { ResumeModal } from './components/ResumeModal';
-import { EasterEggModal } from './components/EasterEggModal';
-import { Project } from './types';
+import { DEVELOPER_NAME, DEVELOPER_ROLE } from './data/portfolioData';
 
-// Lazy load the PortfolioChatbot component to prevent slowing down initial page loads
-const PortfolioChatbot = React.lazy(() => import('./components/PortfolioChatbot').then(module => ({ default: module.PortfolioChatbot })));
+function HomePage({ onOpenResume }: { onOpenResume: () => void }) {
+  useEffect(() => {
+    document.title = `${DEVELOPER_NAME} – ${DEVELOPER_ROLE}`;
+  }, []);
+
+  return (
+    <main id="main-content" className="focus:outline-none">
+      <Hero onOpenResume={onOpenResume} />
+      <SelectedWork />
+      <AboutSection />
+      <SkillsSection />
+      <ExperienceServicesSection />
+      <ContactSection />
+    </main>
+  );
+}
 
 export default function App() {
-  const [loadingComplete, setLoadingComplete] = useState(false);
-  const [activeSection, setActiveSection] = useState('home');
-  const [selectedCaseStudy, setSelectedCaseStudy] = useState<Project | null>(null);
   const [isResumeOpen, setIsResumeOpen] = useState(false);
-  const [isEasterEggOpen, setIsEasterEggOpen] = useState(false);
-  const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
 
+  // Theme management: default to dark, respect localStorage
   const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
     try {
       const saved = localStorage.getItem('daniyal_portfolio_theme');
       return saved ? saved === 'dark' : true;
-    } catch (e) {
+    } catch {
       return true;
     }
   });
@@ -50,7 +46,7 @@ export default function App() {
   useEffect(() => {
     try {
       localStorage.setItem('daniyal_portfolio_theme', isDarkMode ? 'dark' : 'light');
-    } catch (e) {
+    } catch {
       // ignore
     }
     if (isDarkMode) {
@@ -61,184 +57,41 @@ export default function App() {
   }, [isDarkMode]);
 
   const toggleTheme = () => {
-    setIsDarkMode(!isDarkMode);
+    setIsDarkMode(prev => !prev);
   };
 
-  // Keyboard shortcut listener: Cmd+K opens CommandPalette, 5 clicks on logo opens CLI
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
-        e.preventDefault();
-        setIsCommandPaletteOpen((prev) => !prev);
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
-
-  // Active section scroll spy
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY < 120) {
-        setActiveSection('home');
-        return;
-      }
-      
-      const scrollHeight = document.documentElement.scrollHeight;
-      const scrollBottom = window.innerHeight + window.scrollY;
-      if (scrollBottom >= scrollHeight - 80) {
-        setActiveSection('contact');
-        return;
-      }
-
-      const sections = ['contact', 'github', 'services', 'education', 'experience', 'skills', 'projects', 'about', 'home'];
-      for (const sectionId of sections) {
-        const element = document.getElementById(sectionId);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          if (rect.top <= 280 && rect.bottom >= 120) {
-            setActiveSection(sectionId);
-            break;
-          }
-        }
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
-    <MotionConfig reducedMotion="user">
-      <SmoothScroll>
-      <div className={`min-h-screen relative selection:bg-cyan-500/30 selection:text-cyan-200 transition-colors duration-300 ${
-        isDarkMode ? 'bg-[#090a0f] text-slate-100' : 'bg-[#fafbfe] text-slate-900'
-      }`}>
-        
-        {/* Fast (<750ms) cinematic preloader */}
-        {!loadingComplete && (
-          <Preloader onComplete={() => setLoadingComplete(true)} />
-        )}
+    <div className="min-h-screen bg-slate-50 dark:bg-[#080a0f] text-slate-800 dark:text-slate-100 font-sans transition-colors duration-200 selection:bg-cyan-500/20 selection:text-cyan-600 dark:selection:text-cyan-300">
+      
+      {/* Sticky Header with navigation, theme toggle, and CTA */}
+      <Header 
+        isDarkMode={isDarkMode} 
+        onToggleTheme={toggleTheme} 
+        onOpenResume={() => setIsResumeOpen(true)} 
+      />
 
-        {/* Interactive Custom Cursor with badge modes */}
-        <CustomCursor />
+      {/* Dynamic Route Switcher */}
+      <Switch>
+        <Route path="/">
+          <HomePage onOpenResume={() => setIsResumeOpen(true)} />
+        </Route>
+        <Route path="/projects/:slug">
+          <ProjectCaseStudyPage />
+        </Route>
+        <Route>
+          <NotFoundPage />
+        </Route>
+      </Switch>
 
-        {/* 6-Layer Cinematic Background System */}
-        <LayeredBackground />
+      {/* Minimalist Editorial Footer */}
+      <Footer />
 
-        {/* Premium Plexus Wave Background Animation Layer */}
-        <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
-          <PlexusWaveBackground />
-        </div>
+      {/* Accessible Resume Dialog */}
+      <ResumeModal 
+        isOpen={isResumeOpen} 
+        onClose={() => setIsResumeOpen(false)} 
+      />
 
-        {/* Top Scroll Indicator */}
-        <ScrollProgress />
-
-        {/* Navbar with Sound, Theme, CV, and Command Palette triggers */}
-        <Navbar 
-          activeSection={activeSection} 
-          isDarkMode={isDarkMode} 
-          onToggleTheme={toggleTheme}
-          onOpenResume={() => setIsResumeOpen(true)}
-          onOpenEasterEgg={() => setIsEasterEggOpen(true)}
-          onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
-        />
-
-        <main className="relative z-10">
-          {/* Hero Section */}
-          <Hero onOpenResume={() => setIsResumeOpen(true)} isLoaded={loadingComplete} />
-
-          {/* Continuous Dual Tech Stack Marquee */}
-          <TechStack />
-
-          {/* About Section */}
-          <RevealOnScroll direction="up" distance={30} duration={600}>
-            <About />
-          </RevealOnScroll>
-
-          {/* Featured Flagship Project */}
-          <RevealOnScroll direction="up" distance={30} duration={600}>
-            <FeaturedProject onOpenCaseStudy={(proj) => setSelectedCaseStudy(proj)} />
-          </RevealOnScroll>
-
-          {/* Projects Centerpiece Showcase */}
-          <RevealOnScroll direction="up" distance={30} duration={600}>
-            <Projects onOpenCaseStudy={(proj) => setSelectedCaseStudy(proj)} />
-          </RevealOnScroll>
-
-          {/* Skills & Interconnected Technology Matrix */}
-          <RevealOnScroll direction="up" distance={30} duration={600}>
-            <Skills />
-          </RevealOnScroll>
-
-          {/* Experience Timeline */}
-          <RevealOnScroll direction="up" distance={30} duration={600}>
-            <Experience />
-          </RevealOnScroll>
-
-          {/* Services & Technical Offerings */}
-          <RevealOnScroll direction="up" distance={30} duration={600}>
-            <Services />
-          </RevealOnScroll>
-
-          {/* Education & Foundations */}
-          <RevealOnScroll direction="up" distance={30} duration={600}>
-            <Education />
-          </RevealOnScroll>
-
-          {/* GitHub & Open Source Activity */}
-          <RevealOnScroll direction="up" distance={30} duration={600}>
-            <GithubSection />
-          </RevealOnScroll>
-
-          {/* Contact Transmission Section */}
-          <RevealOnScroll direction="up" distance={30} duration={600}>
-            <Contact />
-          </RevealOnScroll>
-        </main>
-
-        {/* Footer */}
-        <Footer />
-
-        {/* Floating Scroll to Top button */}
-        <ScrollToTop />
-
-        {/* Command Palette (Cmd+K) */}
-        <CommandPalette
-          isOpen={isCommandPaletteOpen}
-          onClose={() => setIsCommandPaletteOpen(false)}
-          onOpenResume={() => setIsResumeOpen(true)}
-          onOpenEasterEgg={() => setIsEasterEggOpen(true)}
-          onToggleTheme={toggleTheme}
-          isDarkMode={isDarkMode}
-        />
-
-        {/* Case Study Deep-Dive Modal */}
-        <ProjectModal 
-          project={selectedCaseStudy}
-          isOpen={Boolean(selectedCaseStudy)}
-          onClose={() => setSelectedCaseStudy(null)}
-        />
-
-        {/* Resume / CV Modal */}
-        <ResumeModal 
-          isOpen={isResumeOpen}
-          onClose={() => setIsResumeOpen(false)}
-        />
-
-        {/* Tasteful CLI Easter Egg Terminal */}
-        <EasterEggModal 
-          isOpen={isEasterEggOpen}
-          onClose={() => setIsEasterEggOpen(false)}
-        />
-
-        {/* Daniyal AI Portfolio Assistant Chatbot with Suspense fallback */}
-        <React.Suspense fallback={null}>
-          <PortfolioChatbot />
-        </React.Suspense>
-      </div>
-    </SmoothScroll>
-  </MotionConfig>
+    </div>
   );
 }

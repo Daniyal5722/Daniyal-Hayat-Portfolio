@@ -10,9 +10,9 @@ export function Preloader({ onComplete }: PreloaderProps) {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    // Step 1: Progress count-up simulation (1.1s total sequence)
+    // Step 1: Rapid progress count-up sequence (<750ms total sequence)
     const startTime = Date.now();
-    const duration = 1100; // ms
+    const duration = 650; // ms
 
     const interval = setInterval(() => {
       const elapsed = Date.now() - startTime;
