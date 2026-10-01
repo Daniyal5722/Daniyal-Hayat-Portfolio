@@ -136,7 +136,16 @@ export function Hero({ onOpenResume, isLoaded = true }: HeroProps) {
                   DANIYAL <span className="font-normal text-slate-400 dark:text-slate-500">HAYAT</span>
                 </span>
                 <span className="block text-[clamp(1.35rem,5vw,2.75rem)] md:text-5xl lg:text-6xl font-extrabold tracking-tight mt-1 text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 via-blue-500 to-violet-500 dark:from-cyan-400 dark:via-blue-400 dark:to-violet-400 leading-snug">
-                  Full-Stack Web Developer
+                  {"Full-Stack Web Developer".split("").map((char, index) => (
+                    <motion.span
+                      key={index}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: index * 0.05, duration: 0.1 }}
+                    >
+                      {char}
+                    </motion.span>
+                  ))}
                 </span>
               </motion.h1>
 

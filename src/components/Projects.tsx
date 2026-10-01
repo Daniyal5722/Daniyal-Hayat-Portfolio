@@ -125,7 +125,9 @@ function ProjectShowcase({ project, index, onOpenCaseStudy }: { project: Project
       className={`p-4 sm:p-6 lg:p-10 rounded-2xl sm:rounded-3xl bg-white dark:bg-[#111422] border border-slate-200 dark:border-slate-800 shadow-xl dark:shadow-2xl flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-6 sm:gap-8 lg:gap-12 items-center relative overflow-hidden transition-all duration-300 hover:border-cyan-500/40`}
     >
       {/* Visual / Image Side */}
-      <div 
+      <motion.div 
+        whileHover={{ scale: 1.02, rotate: -1 }}
+        transition={{ duration: 0.3, ease: "easeOut" }}
         className="w-full lg:w-1/2 group relative rounded-xl sm:rounded-2xl overflow-hidden bg-gradient-to-br from-slate-100 to-slate-200 dark:from-[#0b0e1a] dark:to-[#161c2f] aspect-video border border-slate-200 dark:border-slate-800 shadow-md cursor-pointer"
         onClick={() => onOpenCaseStudy(project)}
       >
@@ -184,7 +186,7 @@ function ProjectShowcase({ project, index, onOpenCaseStudy }: { project: Project
             <ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:rotate-45 transition-transform duration-300" />
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Content Side */}
       <div className="w-full lg:w-1/2 space-y-4 sm:space-y-5">
