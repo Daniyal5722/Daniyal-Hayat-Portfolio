@@ -269,7 +269,7 @@ export const PROJECTS: Project[] = [
     technologies: ["React", "Node.js", "Express", "Gemini AI API", "Tailwind CSS"],
     language: "TypeScript",
     githubUrl: "https://github.com/Daniyal5722/cortexiq-by-dnyl",
-    liveUrl: "https://ais-dev-gvoirokmxhudyitnlrgk6m-935024525749.asia-east1.run.app",
+    liveUrl: "https://ais-pre-c2gas5bmz4riptqglg7i75-935024525749.asia-east1.run.app",
     category: "AI & Fullstack",
     featured: true,
     iconName: "Cpu",
