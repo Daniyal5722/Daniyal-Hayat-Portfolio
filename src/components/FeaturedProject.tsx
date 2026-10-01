@@ -9,7 +9,9 @@ interface FeaturedProjectProps {
 }
 
 export function FeaturedProject({ onOpenCaseStudy }: FeaturedProjectProps) {
-  const featured = PROJECTS.find((p) => p.id === 'cortexiq-by-dnyl') || PROJECTS[0];
+  // Find the first project marked as featured with a live URL, defaulting to the specific ID if live, or just the first live project
+  const liveProjects = PROJECTS.filter(p => p.liveUrl);
+  const featured = liveProjects.find((p) => p.featured === true) || liveProjects.find((p) => p.id === 'cortexiq-by-dnyl') || liveProjects[0] || PROJECTS[0];
 
   return (
     <section id="featured-project" className="py-12 sm:py-16 md:py-20 relative overflow-hidden bg-[#f8fafd] dark:bg-[#0a0c14] border-t dark:border-slate-800/80 border-slate-200">
