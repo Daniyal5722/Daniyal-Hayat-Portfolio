@@ -49,9 +49,9 @@ function OrbitVisualizer({
   if (!mounted) return null;
 
   // Split into 3 orbits based on category
-  const orbit1 = skills.filter(s => s.category === 'Frontend' || s.category === 'Programming');
-  const orbit2 = skills.filter(s => s.category === 'UI/UX' || s.category === 'AI');
-  const orbit3 = skills.filter(s => s.category === 'Tools' || s.category === 'Other');
+  const orbit1 = skills.filter(s => s.category === 'Frontend');
+  const orbit2 = skills.filter(s => s.category === 'Backend / Data' || s.category === 'AI');
+  const orbit3 = skills.filter(s => s.category === 'Tools / Platforms');
 
   const radii = [140, 240, 340];
 
@@ -152,8 +152,8 @@ export function Skills() {
         related = ['React & Next.js', 'Node.js & Express', 'RESTful API Design'];
       } else if (skill.name.includes('Kotlin') || skill.name.includes('Android')) {
         related = ['Kotlin & Java', 'Android SDK & Jetpack', 'RESTful API Design'];
-      } else if (skill.name.includes('Gemini') || skill.name.includes('AI')) {
-        related = ['Google Gemini API', 'TypeScript', 'Full-Stack Architecture'];
+      } else if (skill.name.includes('Gemini') || skill.name.includes('AI') || group.category.includes('AI')) {
+        related = ['Google AI Studio', 'Google Gemini AI SDK', 'TypeScript', 'Server-Side AI Proxying'];
       } else if (skill.name.includes('Tailwind')) {
         related = ['React & Next.js', 'Responsive UI Design', 'Motion Animations'];
       } else {

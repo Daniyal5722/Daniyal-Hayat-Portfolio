@@ -1,4 +1,4 @@
-import { Project, SkillGroup, ExperienceItem, EducationItem, ServiceItem } from '../types';
+import { Project, SkillGroup, ExperienceItem, EducationItem, ServiceItem, AICertificationItem } from '../types';
 
 export const DEVELOPER_NAME = "Daniyal Hayat";
 export const DEVELOPER_ROLE = "Full-Stack Web Developer";
@@ -17,6 +17,7 @@ export const MARQUEE_TECH_STACK = [
   { name: "Tailwind CSS", category: "Styling" },
   { name: "Android SDK", category: "Mobile OS" },
   { name: "Node.js", category: "Runtime" },
+  { name: "Google AI Studio", category: "AI Platform" },
   { name: "Google Gemini AI", category: "Intelligence" },
   { name: "Vite", category: "Tooling" },
   { name: "HTML5 & CSS3", category: "Web Core" },
@@ -223,6 +224,201 @@ export const PROJECTS: Project[] = [
     }
   },
   {
+    id: "faryal-fc",
+    name: "Faryal-FC-Web",
+    displayName: "Faryal FC Web Platform",
+    description: "Modern sports club web platform featuring fixture schedules, squad roster management, matchday highlights, and mobile fan experience.",
+    technologies: ["React", "Tailwind CSS", "JavaScript", "Responsive UI", "Vercel"],
+    language: "JavaScript",
+    githubUrl: "https://github.com/Daniyal5722",
+    liveUrl: "https://daniyal-hayat-portfolio.vercel.app/",
+    category: "Web Platform",
+    featured: true,
+    iconName: "Globe",
+    metrics: [
+      { label: "Deployment", value: "Vercel Live" },
+      { label: "Roster Engine", value: "Interactive Squad" },
+      { label: "Viewport", value: "Mobile Optimized" }
+    ],
+    features: [
+      "Dynamic match fixture schedule with countdowns and scoreboards",
+      "Interactive squad roster profiles with player statistics",
+      "Media gallery and match highlights reel",
+      "High-contrast club livery design system and responsive mobile drawer"
+    ],
+    caseStudy: {
+      overview: "Faryal FC is an official digital headquarters engineered to unite supporters, display real-time match fixtures, and showcase squad performance metrics.",
+      problem: "Local sports teams often struggle with fragmented social media updates, leading to lost match announcements and low fan engagement.",
+      idea: "Develop a centralized, ultra-responsive web hub where match schedules, squad data, and club announcements are indexed in one place.",
+      design: "Athletic dark-mode aesthetic with emerald and cyan accents, bold jersey number typography, and tactile match scorecards.",
+      development: "Crafted using React, Tailwind CSS, and lightweight client state for instantaneous page transitions and zero layout shift.",
+      technology: "React, Tailwind CSS, JavaScript ES6+, Vercel deployment.",
+      challenges: "Creating a mobile-first player profile modal system that loads instantly on low-bandwidth field connections.",
+      solution: "Optimized SVG silhouette placeholders and CSS clamp() fluid typography for universal device support.",
+      screenshots: "Club landing page, roster matrix, fixture timeline, match recap overlay.",
+      liveDemo: "https://daniyal-hayat-portfolio.vercel.app/",
+      github: "https://github.com/Daniyal5722",
+      lessonsLearned: "Sports platforms require clear typographic hierarchy—fans look for kickoff times and scores in under 2 seconds.",
+      result: "Delivered a high-energy, production-ready web platform that elevates the club's professional digital presence."
+    }
+  },
+  {
+    id: "dnyl-eyewear",
+    name: "DNYL-Eyewear",
+    displayName: "DNYL Eyewear Boutique Experience",
+    description: "Luxury optical boutique showcase featuring high-fashion editorial layouts, curated frame catalogues, and prescription filter systems.",
+    technologies: ["React", "TypeScript", "Tailwind CSS", "Motion", "E-Commerce"],
+    language: "TypeScript",
+    githubUrl: "https://github.com/Daniyal5722",
+    liveUrl: "https://daniyal-hayat-portfolio.vercel.app/",
+    category: "E-Commerce & Brand",
+    featured: true,
+    iconName: "Layers",
+    metrics: [
+      { label: "Design", value: "Editorial Luxury" },
+      { label: "Type Safety", value: "100% TypeScript" },
+      { label: "UX Feel", value: "60 FPS Motion" }
+    ],
+    features: [
+      "Curated frame lookbook with 360-degree aesthetic perspective cards",
+      "Interactive lens prescription and tint customizer",
+      "High-fashion monochrome typography and glassmorphism accents",
+      "Smooth cart simulation with local state persistence"
+    ],
+    caseStudy: {
+      overview: "DNYL Eyewear is a bespoke digital showroom designed to deliver an in-person boutique feeling directly to browser viewports.",
+      problem: "Typical online eyewear stores are cluttered with discount banners and generic grid layouts that detract from the craft of designer eyewear.",
+      idea: "Build an editorial-grade showroom where each frame is treated as a piece of sculpture through thoughtful whitespace and refined motion.",
+      design: "Monochrome obsidian and alabaster palette with subtle gold/cyan highlights and expansive negative space.",
+      development: "Engineered in React 19 and TypeScript, utilizing Motion for smooth layout transitions and image scaling.",
+      technology: "React, TypeScript, Tailwind CSS, Motion, LocalStorage state.",
+      challenges: "Balancing high-resolution product imagery with fast initial page load speeds.",
+      solution: "Employed progressive lazy loading and responsive WebP image wrappers to ensure sub-second rendering.",
+      screenshots: "Showroom hero, frame visualizer, customizer drawer, checkout flow.",
+      liveDemo: "https://daniyal-hayat-portfolio.vercel.app/",
+      github: "https://github.com/Daniyal5722",
+      lessonsLearned: "Micro-interactions and typography choice establish luxury perception more effectively than complex heavy animations.",
+      result: "A stunning digital brand experience demonstrating Daniyal's creative art direction and frontend engineering."
+    }
+  },
+  {
+    id: "islamic-ai-mujeeb",
+    name: "Islamic-AI-Mujeeb-us-Saileen",
+    displayName: "Islamic AI / Mujeeb us Saileen",
+    description: "AI-assisted Islamic consultation platform integrating verified reference libraries, fatwa archives, and intelligent prompt querying.",
+    technologies: ["TypeScript", "React", "Google Gemini AI", "Tailwind CSS", "REST APIs"],
+    language: "TypeScript",
+    githubUrl: "https://github.com/Daniyal5722/Offical-Darul-ifta-Irshad-us-saileen-",
+    liveUrl: "https://darulifta-bkfbzf6u.manus.space/",
+    category: "AI & Intelligence",
+    featured: true,
+    iconName: "Cpu",
+    metrics: [
+      { label: "AI Engine", value: "Gemini AI" },
+      { label: "Data Verification", value: "Authoritative Fatwas" },
+      { label: "Languages", value: "Arabic, Urdu, English" }
+    ],
+    features: [
+      "Natural language consultation search backed by structured fatwa archives",
+      "Defensive prompt engineering preventing hallucinatory jurisprudence rulings",
+      "Bilingual typography optimized for complex Arabic and Nastaliq Urdu scripts",
+      "Instant query citation indexing with source reference links"
+    ],
+    caseStudy: {
+      overview: "Mujeeb us Saileen is an advanced AI research platform designed to help community scholars and seekers locate verified rulings swiftly.",
+      problem: "Traditional Islamic question archives span thousands of physical and digital texts, making prompt theological verification time-consuming.",
+      idea: "Connect Google Gemini's reasoning capabilities with strict reference grounding to provide instant, cited theological summaries.",
+      design: "Dignified editorial design with soothing neutral tones, dark mode support, and crystal-clear script legibility.",
+      development: "Built in TypeScript with strict API proxy boundaries to ensure prompts are filtered and grounded exclusively in verified references.",
+      technology: "TypeScript, React, Google Gemini API, Tailwind CSS, Node.js.",
+      challenges: "Eliminating generative hallucinations and strictly enforcing citations to verified jurisprudence texts.",
+      solution: "Implemented rigorous system instructions, few-shot theological examples, and multi-tier defensive prompt guards.",
+      screenshots: "Search portal, verified answer citation cards, bilingual script toggle, source drawer.",
+      liveDemo: "https://darulifta-bkfbzf6u.manus.space/",
+      github: "https://github.com/Daniyal5722/Offical-Darul-ifta-Irshad-us-saileen-",
+      lessonsLearned: "Domain-specific AI applications require specialized guardrails; precision is far more vital than open-ended creativity.",
+      result: "An authoritative AI consultation platform bridging tradition with cutting-edge language model technology."
+    }
+  },
+  {
+    id: "soutnaqi-ai",
+    name: "SOUTNAQI-AI",
+    displayName: "SOUTNAQI AI Audio Suite",
+    description: "Intelligent audio and voice processing suite featuring speech clarity enhancement, transcript generation, and low-latency audio telemetry.",
+    technologies: ["TypeScript", "Audio Processing", "AI Models", "Node.js", "Tailwind CSS"],
+    language: "TypeScript",
+    githubUrl: "https://github.com/Daniyal5722/cortexiq-by-dnyl",
+    liveUrl: "https://daniyal-hayat-portfolio.vercel.app/",
+    category: "AI & Audio",
+    featured: false,
+    iconName: "Cpu",
+    metrics: [
+      { label: "Processing", value: "Real-time Telemetry" },
+      { label: "Architecture", value: "Server-Side Proxy" },
+      { label: "Interface", value: "Audio Canvas Visualizer" }
+    ],
+    features: [
+      "Real-time audio frequency spectrum analyzer on HTML5 Canvas",
+      "AI-accelerated speech clarity and transcript generation pipelines",
+      "Low-latency streaming audio buffers",
+      "Secure key protection with Node.js backend routes"
+    ],
+    caseStudy: {
+      overview: "SOUTNAQI AI is an experimental speech and audio processing interface designed for clarity, voice diagnostics, and automated transcription.",
+      problem: "Voice and audio tools often suffer from clunky multi-step upload workflows that delay feedback.",
+      idea: "Create a reactive single-page audio suite that visualizes waveform frequencies while streaming model predictions in real time.",
+      design: "Cyber-obsidian aesthetic with electric cyan audio waves and clear signal telemetry gauges.",
+      development: "Authored in TypeScript utilizing Web Audio API, Canvas rendering, and backend proxy endpoints for model inference.",
+      technology: "TypeScript, Web Audio API, Google GenAI SDK, Node.js, Tailwind CSS.",
+      challenges: "Handling real-time PCM audio buffers without blocking the main browser UI thread.",
+      solution: "Decoupled audio recording and visualizer loops using requestAnimationFrame and lightweight typed arrays.",
+      screenshots: "Spectrogram visualizer, transcript drawer, audio enhancement controls.",
+      liveDemo: "https://daniyal-hayat-portfolio.vercel.app/",
+      github: "https://github.com/Daniyal5722/cortexiq-by-dnyl",
+      lessonsLearned: "Real-time Web Audio API requires strict memory pooling to avoid Garbage Collection pauses.",
+      result: "A responsive, futuristic audio intelligence playground showcasing Daniyal's technical depth in AI and canvas physics."
+    }
+  },
+  {
+    id: "motorcycle-sprint-2d",
+    name: "Motorcycle-Sprint-2D",
+    displayName: "Motorcycle Sprint Racing 2D",
+    description: "High-performance 2D arcade physics racing simulation with responsive touch controls, dynamic obstacle loops, and 60 FPS canvas rendering.",
+    technologies: ["JavaScript", "HTML5 Canvas", "Game Physics", "Touch Ergonomics"],
+    language: "JavaScript",
+    githubUrl: "https://github.com/Daniyal5722",
+    liveUrl: "https://daniyal-hayat-portfolio.vercel.app/",
+    category: "Interactive Game",
+    featured: false,
+    iconName: "Smartphone",
+    metrics: [
+      { label: "Engine", value: "Custom 2D Loop" },
+      { label: "Frame Rate", value: "Locked 60 FPS" },
+      { label: "Controls", value: "Mobile Touch" }
+    ],
+    features: [
+      "Variable vehicle acceleration and centrifugal friction physics",
+      "Dynamic obstacle generation with scalable difficulty curve",
+      "Haptic visual feedback on collisions and near misses",
+      "Zero-dependency pure canvas implementation with sub-15kb bundle footprint"
+    ],
+    caseStudy: {
+      overview: "Motorcycle Sprint 2D is a pure canvas algorithmic game engineered to explore low-overhead physics and mobile ergonomics.",
+      problem: "Many browser games rely on heavy game engines that take seconds to load on cellular connections.",
+      idea: "Build a bespoke, engine-free 2D racing loop using pure JavaScript and HTML5 Canvas that starts instantly.",
+      design: "Retro-futuristic neon highway aesthetic with crisp collision hitboxes and fluid parallax road markings.",
+      development: "Engineered using deterministic timestamp game loops (`requestAnimationFrame`) and continuous collision detection algorithms.",
+      technology: "JavaScript ES6+, HTML5 Canvas API, Touch Event Listeners.",
+      challenges: "Preventing tunneling bugs where vehicles pass through obstacles at high velocities.",
+      solution: "Implemented raycast trajectory sweeps between consecutive frames for 100% reliable collision checks.",
+      screenshots: "Game highway, speed HUD, score overlay, mobile touch buttons.",
+      liveDemo: "https://daniyal-hayat-portfolio.vercel.app/",
+      github: "https://github.com/Daniyal5722",
+      lessonsLearned: "Writing physics from scratch reinforces core data structures, coordinate transformations, and memory efficiency.",
+      result: "An addictive, instant-loading web arcade game running at a rock-solid 60 FPS on any device."
+    }
+  },
+  {
     id: "daniyal-hayat-portfolio",
     name: "Daniyal-Hayat-Portfolio",
     displayName: "Daniyal Hayat Portfolio Platform",
@@ -308,61 +504,47 @@ export const SKILL_GROUPS: SkillGroup[] = [
     subtitle: "Modern, responsive web applications",
     icon: "Layers",
     skills: [
-      { name: "React / Next.js", icon: "Layers", level: "Core Stack", description: "Modern hooks, modular component trees, SSR/SSG patterns, Motion", badge: "Expert" },
-      { name: "Tailwind CSS", icon: "Palette", level: "Core Stack", description: "Utility-first modern styling, responsive prefixes, custom design systems", badge: "Expert" },
-      { name: "HTML5 & Semantic Web", icon: "Globe", level: "Foundational", description: "Accessible markup, SEO structured schema, WCAG AA compliance", badge: "Advanced" },
-      { name: "CSS3 & Modern Animations", icon: "Sparkles", level: "Core Stack", description: "Hardware-accelerated transforms, keyframes, fluid clamp() typography", badge: "Advanced" }
-    ]
-  },
-  {
-    category: "Programming",
-    subtitle: "Core languages & logic",
-    icon: "Code",
-    skills: [
+      { name: "React", icon: "Layers", level: "Core Stack", description: "Modular component trees, custom hooks, reactive state, and Motion transitions", badge: "Expert" },
+      { name: "Next.js", icon: "Globe", level: "Framework", description: "Server components, SSR/SSG architectures, optimized image pipelines", badge: "Advanced" },
       { name: "TypeScript", icon: "Code", level: "Core Stack", description: "Strict typing, generic interfaces, scalable frontend state architectures", badge: "Advanced" },
-      { name: "JavaScript", icon: "Code", level: "Core Stack", description: "ES6+, async/await, closures, prototype chain, DOM manipulation", badge: "Expert" },
-      { name: "Kotlin", icon: "Smartphone", level: "Core Stack", description: "Modern native Android application engineering, concise functional syntax", badge: "Production" },
-      { name: "Node.js & Express", icon: "Server", level: "Runtime", description: "Lightweight API servers, proxy routes, environment security", badge: "Advanced" }
+      { name: "JavaScript (ES6+)", icon: "Code", level: "Core Stack", description: "Async/await, DOM manipulation, closures, and modern web APIs", badge: "Expert" },
+      { name: "Tailwind CSS", icon: "Palette", level: "Core Stack", description: "Utility-first modern styling, responsive prefixes, custom design systems", badge: "Expert" },
+      { name: "HTML5 & CSS3", icon: "Sparkles", level: "Web Core", description: "Semantic markup, accessible WCAG AA standards, fluid clamp() typography", badge: "Expert" }
     ]
   },
   {
-    category: "UI/UX",
-    subtitle: "Visual craft & user experience",
-    icon: "Palette",
+    category: "Backend / Data",
+    subtitle: "Data architectures & server pipelines",
+    icon: "Server",
     skills: [
-      { name: "Responsive Systems", icon: "Smartphone", level: "Discipline", description: "Fluid scaling from 320px mobile to 4K ultra-wide displays", badge: "Expert" },
-      { name: "Micro-Interactions", icon: "Sparkles", level: "Craft", description: "Subtle hover transitions, magnetic buttons, feedback indicators", badge: "Advanced" },
-      { name: "Dark & Light Theming", icon: "Palette", level: "System", description: "Cohesive color contrast ratios, CSS variables, theme toggling", badge: "Expert" },
-      { name: "Mobile UI Ergonomics", icon: "Smartphone", level: "Design", description: "Touch-friendly targets, bottom sheet navigations, responsive scaling", badge: "Advanced" }
+      { name: "RESTful APIs", icon: "Globe", level: "Integration", description: "Async data fetching, defensive error boundaries, token management", badge: "Expert" },
+      { name: "Node.js & Express", icon: "Server", level: "Runtime", description: "Lightweight API servers, server-side proxy routes, environment security", badge: "Advanced" },
+      { name: "JSON Data Handling", icon: "Code", level: "Data", description: "Schema normalization, serialization, structured response parsing", badge: "Advanced" },
+      { name: "Local Storage & Caching", icon: "Server", level: "Storage", description: "Client-side persistence, defensive fallback states, offline caching", badge: "Expert" },
+      { name: "Kotlin (Android)", icon: "Smartphone", level: "Mobile Core", description: "Native Android architecture, Room database, offline synchronization", badge: "Production" }
     ]
   },
   {
     category: "AI",
-    subtitle: "Next-gen intelligence",
+    subtitle: "Next-gen intelligence & model integration",
     icon: "Cpu",
     skills: [
-      { name: "Google Gemini AI SDK", icon: "Cpu", level: "Integration", description: "Model prompting, structured outputs, AI-assisted interface pipelines", badge: "Specialist" },
-      { name: "Prompt Engineering", icon: "Terminal", level: "Skill", description: "Contextual token weighting, structured JSON responses, defensive prompting", badge: "Advanced" }
+      { name: "Google AI Studio", icon: "Sparkles", level: "Studio Platform", description: "AI Studio applet engineering, system instructions, grounding, and agent study workflows", badge: "Specialist" },
+      { name: "Google Gemini AI SDK", icon: "Cpu", level: "Integration", description: "@google/genai SDK, generateContent, streaming responses, multimodal prompts", badge: "Specialist" },
+      { name: "Prompt Architecture", icon: "Terminal", level: "Core Skill", description: "Contextual token weighting, structured JSON response study, defensive prompting & agent logic", badge: "Expert" },
+      { name: "AI-Powered Interfaces", icon: "Sparkles", level: "Frontend", description: "Streaming UI text tokens, stateful chat components, real-time telemetry dashboards", badge: "Expert" }
     ]
   },
   {
-    category: "Tools",
-    subtitle: "Developer ecosystem",
+    category: "Tools / Platforms",
+    subtitle: "Developer ecosystem & design tools",
     icon: "Terminal",
     skills: [
-      { name: "Git & GitHub", icon: "Github", level: "Workflow", description: "Branching strategies, commit history hygiene, continuous deployment", badge: "Expert" },
-      { name: "Vite & Build Tooling", icon: "Terminal", level: "DevOps", description: "Fast HMR bundling, tree-shaking, production optimization", badge: "Advanced" },
-      { name: "RESTful API Integration", icon: "Globe", level: "Core Stack", description: "Async data fetching, defensive error handling, token management", badge: "Expert" }
-    ]
-  },
-  {
-    category: "Other",
-    subtitle: "Specialized domains",
-    icon: "Layers",
-    skills: [
-      { name: "Android SDK", icon: "Cpu", level: "Mobile", description: "Activity lifecycles, Intent routing, background tasks, Material layouts", badge: "Advanced" },
-      { name: "Offline Caching", icon: "Server", level: "Architecture", description: "Local persistence strategies for seamless offline data retrieval", badge: "Intermediate" },
-      { name: "JSON Data Pipelines", icon: "Code", level: "Architecture", description: "Schema normalization, data parsing, client-side caching", badge: "Advanced" }
+      { name: "Git & GitHub", icon: "Github", level: "Workflow", description: "Branching strategies, commit hygiene, open-source repository management", badge: "Expert" },
+      { name: "Vercel", icon: "Globe", level: "Deployment", description: "Edge deployments, continuous integration, production environment setup", badge: "Advanced" },
+      { name: "Vite", icon: "Terminal", level: "Build Tool", description: "Fast HMR bundling, tree-shaking, production optimization", badge: "Advanced" },
+      { name: "Figma", icon: "Palette", level: "Design Tool", description: "Component mockups, wireframing, layout spacing, visual prototyping", badge: "Intermediate" },
+      { name: "Canva", icon: "Sparkles", level: "Creative", description: "Brand assets, sports media posters, social identity systems", badge: "Advanced" }
     ]
   }
 ];
@@ -431,16 +613,59 @@ export const EDUCATION_DATA: EducationItem[] = [
   },
   {
     id: "edu-2",
-    institution: "Modern Developer Specializations",
-    program: "Full-Stack Web, AI Integration & Native Mobile",
-    timeline: "Ongoing Exploration & Production Practice",
-    description: "Hands-on engineering across production web frameworks (React, Next.js, Vite), AI model integration (Google Gemini), and production deployment pipelines (Vercel, Netlify).",
+    institution: "Full-Stack Web & Mobile Engineering",
+    program: "Production Web Frameworks & Native Mobile Systems",
+    timeline: "Applied Practice & Production Deployments",
+    description: "Hands-on engineering across production web frameworks (React, Next.js, Vite), native mobile development (Kotlin + Android SDK), and production deployment pipelines.",
     skillsGained: [
       "Type-Safe Frontend Architecture (TypeScript + React)",
+      "Native Android Application Lifecycle & Caching (Kotlin)",
       "Production Performance Auditing & Lighthouse 90+ Optimization",
-      "Responsive Design Systems & Accessible Interfaces (WCAG)",
       "API Engineering & Asynchronous State Synchronization"
     ]
+  },
+  {
+    id: "edu-3",
+    institution: "AI Engineering & LLM Systems Specialization",
+    program: "Google AI Studio, Gemini SDK & Agentic Workflows",
+    timeline: "Advanced AI Specialization & Practical Study",
+    description: "Dedicated exploration and practical study of modern AI platforms: prompt engineering, Google AI Studio workflows, server-side Gemini SDK integration, structured JSON grounding, and agentic tool-calling pipelines.",
+    skillsGained: [
+      "Google AI Studio Prototyping & System Instructions Study",
+      "Google Gemini SDK (@google/genai) & Multimodal Prompting",
+      "Structured JSON Schema Grounding & Contextual Token Weighting",
+      "Server-Side AI Proxy Routes & Secure Key Protection Architecture"
+    ]
+  }
+];
+
+export const AI_CERTIFICATIONS_DATA: AICertificationItem[] = [
+  {
+    id: "cert-1",
+    title: "Google AI Studio & Gemini API Engineering",
+    issuer: "Google Developers & DeepMind",
+    date: "2025 — 2026",
+    badge: "Verified Specialization",
+    description: "Hands-on mastery of Google AI Studio workflows, system instructions, function calling, structured JSON output schemas, and server-side @google/genai SDK implementation.",
+    skills: ["Google AI Studio", "@google/genai SDK", "Function Calling", "Structured JSON"]
+  },
+  {
+    id: "cert-2",
+    title: "Prompt Engineering & LLM Architecture Workshop",
+    issuer: "DeepLearning.AI / AI Pioneer Series",
+    date: "2025",
+    badge: "Mastery Workshop",
+    description: "Advanced techniques in contextual prompt weighting, zero-shot/few-shot chain-of-thought prompting, defensive error handling, and guardrails for production LLMs.",
+    skills: ["Prompt Architecture", "Chain-of-Thought", "Defensive Prompting", "Guardrails"]
+  },
+  {
+    id: "cert-3",
+    title: "Agentic AI & Multi-Tool Pipeline Systems",
+    issuer: "Modern AI Engineering Guild",
+    date: "2025",
+    badge: "Applied Certification",
+    description: "Building autonomous agentic workflows with multi-step tool execution, state memory preservation, and server-side API proxy routing for secure credentials.",
+    skills: ["Agent Pipelines", "Multi-Step Tools", "Server Proxying", "Context Memory"]
   }
 ];
 
@@ -473,14 +698,15 @@ export const SERVICES_DATA: ServiceItem[] = [
   },
   {
     id: "srv-3",
-    title: "AI Integration & Smart Utilities",
-    tagline: "Empowering applications with AI capabilities",
-    description: "Integrating modern AI capabilities (such as Google Gemini) into intuitive frontends for prompt parsing, smart assistants, and automated data processing.",
+    title: "Google AI Studio & AI App Engineering",
+    tagline: "Empowering applications with AI Studio & Gemini capabilities",
+    description: "Architecting custom AI applications and prompt study workflows using Google AI Studio and Gemini models. Integrating prompt engineering, structured grounding, and intelligent agent pipelines into seamless user experiences.",
     icon: "Cpu",
     deliverables: [
-      "Google Gemini AI SDK integrations",
+      "Google AI Studio applet prototyping & prompt engineering study",
+      "Google Gemini AI SDK integrations & agent workflows",
       "Intelligent prompt parsing and result visualizations",
-      "Dynamic weather & data telemetry integrations",
+      "Dynamic data telemetry & structured LLM JSON outputs",
       "Secure server-side API proxying and key management"
     ]
   },

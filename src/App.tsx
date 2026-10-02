@@ -9,6 +9,7 @@ import { Projects } from './components/Projects';
 import { Experience } from './components/Experience';
 import { Education } from './components/Education';
 import { Skills } from './components/Skills';
+import { CreativeLab } from './components/CreativeLab';
 import { Services } from './components/Services';
 import { GithubSection } from './components/GithubSection';
 import { Contact } from './components/Contact';
@@ -91,7 +92,7 @@ export default function App() {
         return;
       }
 
-      const sections = ['contact', 'github', 'services', 'education', 'experience', 'skills', 'projects', 'about', 'home'];
+      const sections = ['contact', 'github', 'services', 'education', 'experience', 'creative-lab', 'projects', 'skills', 'about', 'home'];
       for (const sectionId of sections) {
         const element = document.getElementById(sectionId);
         if (element) {
@@ -157,6 +158,11 @@ export default function App() {
             <About />
           </RevealOnScroll>
 
+          {/* Skills & Interconnected Technology Matrix */}
+          <RevealOnScroll direction="up" distance={30} duration={600}>
+            <Skills />
+          </RevealOnScroll>
+
           {/* Featured Flagship Project */}
           <RevealOnScroll direction="up" distance={30} duration={600}>
             <FeaturedProject onOpenCaseStudy={(proj) => setSelectedCaseStudy(proj)} />
@@ -167,9 +173,9 @@ export default function App() {
             <Projects onOpenCaseStudy={(proj) => setSelectedCaseStudy(proj)} />
           </RevealOnScroll>
 
-          {/* Skills & Interconnected Technology Matrix */}
+          {/* Creative Lab (Visual concepts, UI experiments, Canva graphics) */}
           <RevealOnScroll direction="up" distance={30} duration={600}>
-            <Skills />
+            <CreativeLab />
           </RevealOnScroll>
 
           {/* Experience Timeline */}

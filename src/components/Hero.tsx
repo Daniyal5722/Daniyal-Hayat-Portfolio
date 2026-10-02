@@ -1,3 +1,4 @@
+import React from 'react';
 import { motion } from 'motion/react';
 import { 
   ArrowRight, 
@@ -15,7 +16,36 @@ import {
 import { GITHUB_PROFILE_URL } from '../data/portfolioData';
 import { useGitHubActivity } from '../hooks/useGitHubActivity';
 import { useGitHubRepos } from '../hooks/useGitHubRepos';
+import { useTypewriter } from '../hooks/useTypewriter';
 import { MagneticButton } from './MagneticButton';
+
+const TYPEWRITER_WORDS = [
+  "Full-Stack Web Developer",
+  "Native Android Developer",
+  "AI Systems Architect",
+  "Creative UI/UX Builder"
+];
+
+function TypewriterText() {
+  const { displayText } = useTypewriter({
+    words: TYPEWRITER_WORDS,
+    typingSpeed: 65,
+    deletingSpeed: 30,
+    pauseDuration: 2200,
+  });
+
+  return (
+    <span className="inline-flex items-baseline min-h-[1.2em]">
+      <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 via-blue-500 to-violet-500 dark:from-cyan-400 dark:via-blue-400 dark:to-violet-400">
+        {displayText}
+      </span>
+      <span 
+        aria-hidden="true" 
+        className="inline-block w-[3px] h-[0.75em] ml-1 bg-cyan-500 dark:bg-cyan-400 animate-pulse rounded-full align-baseline shrink-0" 
+      />
+    </span>
+  );
+}
 
 interface HeroProps {
   onOpenResume?: () => void;
@@ -130,44 +160,35 @@ export function Hero({ onOpenResume, isLoaded = true }: HeroProps) {
               <motion.h1 
                 id="hero-main-heading"
                 variants={headingVariants}
-                className="text-[clamp(2.1rem,7.5vw,4.5rem)] md:text-7xl lg:text-7xl xl:text-8xl font-black tracking-tight text-slate-900 dark:text-white leading-[1.08] break-words"
+                className="text-[clamp(2.4rem,7.5vw,4.8rem)] md:text-7xl lg:text-7xl xl:text-8xl font-black tracking-tight text-slate-900 dark:text-white leading-[1.08] break-words"
               >
                 <span className="block font-bold">
                   DANIYAL <span className="font-normal text-slate-400 dark:text-slate-500">HAYAT</span>
                 </span>
-                <span className="block text-[clamp(1.35rem,5vw,2.75rem)] md:text-5xl lg:text-6xl font-extrabold tracking-tight mt-1 text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 via-blue-500 to-violet-500 dark:from-cyan-400 dark:via-blue-400 dark:to-violet-400 leading-snug">
-                  {"Full-Stack Web Developer".split("").map((char, index) => (
-                    <motion.span
-                      key={index}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: index * 0.05, duration: 0.1 }}
-                    >
-                      {char}
-                    </motion.span>
-                  ))}
+                <span 
+                  className="block font-extrabold tracking-tight mt-1 leading-snug text-2xl sm:text-3xl lg:text-4xl"
+                >
+                  <TypewriterText />
                 </span>
               </motion.h1>
 
               {/* 5. Role Line */}
               <motion.div
                 variants={itemVariants}
-                className="text-xs sm:text-base md:text-lg font-mono text-cyan-700 dark:text-cyan-400 font-medium flex flex-wrap items-center gap-2 pt-1"
+                className="text-sm sm:text-base md:text-lg font-mono text-cyan-600 dark:text-cyan-400 font-semibold flex flex-wrap items-center gap-2 pt-1"
               >
-                <span>Full-Stack Web Architect</span>
+                <span>Full-Stack Developer &amp; Creative Builder</span>
                 <span>•</span>
-                <span>Native Android (Kotlin)</span>
-                <span>•</span>
-                <span>AI Systems</span>
+                <span>Available for Projects &amp; Remote Roles</span>
               </motion.div>
             </div>
 
             {/* 6. Short Intro */}
             <motion.p
               variants={itemVariants}
-              className="text-base sm:text-lg md:text-xl text-slate-600 dark:text-slate-300 max-w-2xl font-normal leading-relaxed"
+              className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl font-normal leading-relaxed"
             >
-              Crafting production web applications with React &amp; TypeScript, native Android systems with Kotlin, and AI-accelerated tooling. Focused on zero-lag performance, resilient architectures, and editorial design fidelity.
+              I build modern web experiences, interactive applications, AI-powered products, and creative digital experiences.
             </motion.p>
 
             {/* 7. Primary Action CTAs */}
@@ -180,7 +201,7 @@ export function Hero({ onOpenResume, isLoaded = true }: HeroProps) {
                 dataCursor="view"
                 className="min-h-[44px] px-7 py-3.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-sm shadow-lg shadow-cyan-500/25 transition-all duration-200 cursor-pointer flex items-center justify-center gap-2 active:scale-[0.98] hover:shadow-cyan-500/40"
               >
-                <span>Explore Projects</span>
+                <span>View My Work</span>
                 <ArrowRight className="w-4 h-4" />
               </MagneticButton>
 
@@ -190,7 +211,7 @@ export function Hero({ onOpenResume, isLoaded = true }: HeroProps) {
                 className="min-h-[44px] px-6 py-3.5 rounded-xl bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 font-semibold text-sm transition-all duration-200 cursor-pointer flex items-center justify-center gap-2 shadow-xs active:scale-[0.98] hover:border-cyan-500/40"
               >
                 <Mail className="w-4 h-4 text-cyan-500" />
-                <span>Get in Touch</span>
+                <span>Contact Me</span>
               </MagneticButton>
 
               <div className="flex items-center gap-2">
@@ -201,7 +222,7 @@ export function Hero({ onOpenResume, isLoaded = true }: HeroProps) {
                     className="flex-1 sm:flex-none min-h-[44px] px-5 py-3.5 rounded-xl bg-slate-100 dark:bg-slate-900/60 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 text-sm font-mono transition-all duration-200 cursor-pointer flex items-center justify-center gap-2 active:scale-[0.98] hover:border-cyan-500/40"
                   >
                     <FileText className="w-4 h-4 text-cyan-500" />
-                    <span>Curriculum Vitae</span>
+                    <span>Download Resume</span>
                   </MagneticButton>
                 )}
 

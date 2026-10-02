@@ -88,6 +88,15 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
               <span className="text-[10px] sm:text-xs font-mono px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border border-cyan-500/20">
                 {project.category}
               </span>
+              {project.liveUrl && (
+                <span className="inline-flex items-center gap-1.5 text-[10px] sm:text-xs font-mono px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30">
+                  <span className="relative flex h-2 w-2 shrink-0">
+                    <span className="animate-live-radar absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500 animate-live-pulse" />
+                  </span>
+                  <span>Live App</span>
+                </span>
+              )}
               <div className="flex items-center gap-1.5 text-[10px] sm:text-xs text-slate-500 dark:text-slate-400 font-mono">
                 <Clock className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-cyan-500" />
                 <span>{project.readingTime || '2 min read'}</span>

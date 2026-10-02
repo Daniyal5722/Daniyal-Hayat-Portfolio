@@ -159,8 +159,11 @@ function ProjectShowcase({ project, index, onOpenCaseStudy }: { project: Project
             );
           })()}
           {project.liveUrl && (
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] sm:text-[11px] font-mono font-medium bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 shadow-sm backdrop-blur-sm">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] sm:text-[11px] font-mono font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 shadow-xs backdrop-blur-md">
+              <span className="relative flex h-2 w-2 shrink-0">
+                <span className="animate-live-radar absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500 animate-live-pulse" />
+              </span>
               <span>Live</span>
             </span>
           )}
@@ -379,8 +382,12 @@ export function Projects({ onOpenCaseStudy }: ProjectsProps) {
               >
                 <div>
                   <div className="flex items-center justify-between gap-2 mb-2">
-                    <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 text-[10px] font-mono font-medium">
-                      {deploy.badge}
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 text-[10px] font-mono font-medium">
+                      <span className="relative flex h-1.5 w-1.5 shrink-0">
+                        <span className="animate-live-radar absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                        <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500 animate-live-pulse" />
+                      </span>
+                      <span>{deploy.badge}</span>
                     </span>
                     <span className="text-[11px] font-mono text-slate-500">
                       {deploy.type}

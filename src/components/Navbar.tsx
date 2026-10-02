@@ -46,6 +46,17 @@ export function Navbar({
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Escape key to close mobile menu
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && mobileMenuOpen) {
+        setMobileMenuOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [mobileMenuOpen]);
+
   const handleLogoClick = () => {
     soundManager.playClick();
     const newCount = logoClicks + 1;
@@ -98,10 +109,9 @@ export function Navbar({
   const navItems = [
     { name: 'Home', href: '#home', id: 'home' },
     { name: 'About', href: '#about', id: 'about' },
-    { name: 'Projects', href: '#projects', id: 'projects' },
     { name: 'Skills', href: '#skills', id: 'skills' },
-    { name: 'Journey', href: '#experience', id: 'experience' },
-    { name: 'Services', href: '#services', id: 'services' },
+    { name: 'Projects', href: '#projects', id: 'projects' },
+    { name: 'Creative Lab', href: '#creative-lab', id: 'creative-lab' },
     { name: 'Contact', href: '#contact', id: 'contact' },
   ];
 

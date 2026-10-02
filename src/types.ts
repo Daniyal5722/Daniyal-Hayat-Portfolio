@@ -61,6 +61,16 @@ export interface ExperienceItem {
   technologies: string[];
 }
 
+export interface AICertificationItem {
+  id: string;
+  title: string;
+  issuer: string;
+  date: string;
+  badge: string;
+  description: string;
+  skills: string[];
+}
+
 export interface EducationItem {
   id: string;
   institution: string;
