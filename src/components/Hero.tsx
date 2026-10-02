@@ -57,12 +57,12 @@ function ProfilePhotoCard({ className = "" }: { className?: string }) {
     <div className={`relative aspect-[4/5] group ${className}`}>
       {/* Subtle ambient glow behind the image */}
       <div 
-        className="absolute -inset-2 bg-gradient-to-tr from-cyan-500/20 via-blue-500/15 to-violet-500/20 dark:from-cyan-500/20 dark:via-blue-500/15 dark:to-indigo-500/20 rounded-3xl lg:rounded-[2.25rem] blur-2xl group-hover:blur-3xl group-hover:opacity-100 opacity-70 transition-all duration-700 pointer-events-none animate-pulse-glow" 
+        className="absolute -inset-2 bg-gradient-to-tr from-cyan-500/20 via-blue-500/15 to-violet-500/20 dark:from-cyan-500/20 dark:via-blue-500/15 dark:to-indigo-500/20 rounded-3xl lg:rounded-[2.25rem] blur-2xl group-hover:blur-3xl group-hover:opacity-100 opacity-25 dark:opacity-70 transition-all duration-700 pointer-events-none animate-pulse-glow" 
       />
       
       {/* Premium Image Frame */}
       <div 
-        className="relative w-full h-full rounded-2xl sm:rounded-3xl lg:rounded-[2rem] overflow-hidden border border-slate-200/80 dark:border-cyan-500/30 shadow-2xl shadow-slate-900/10 dark:shadow-cyan-950/40 transition-all duration-500 ease-out md:group-hover:scale-[1.02] md:group-hover:-translate-y-1 bg-slate-100 dark:bg-slate-900 ring-1 ring-black/5 dark:ring-white/10"
+        className="relative w-full h-full rounded-2xl sm:rounded-3xl lg:rounded-[2rem] overflow-hidden border border-slate-200/90 dark:border-cyan-500/30 shadow-lg dark:shadow-cyan-950/40 transition-all duration-500 ease-out md:group-hover:scale-[1.02] md:group-hover:-translate-y-1 bg-white dark:bg-slate-900 ring-1 ring-black/5 dark:ring-white/10"
       >
         <img 
           src="/profile.jpeg" 
@@ -175,7 +175,7 @@ export function Hero({ onOpenResume, isLoaded = true }: HeroProps) {
               {/* 5. Role Line */}
               <motion.div
                 variants={itemVariants}
-                className="text-sm sm:text-base md:text-lg font-mono text-cyan-600 dark:text-cyan-400 font-semibold flex flex-wrap items-center gap-2 pt-1"
+                className="text-sm sm:text-base md:text-lg font-mono text-cyan-700 dark:text-cyan-400 font-semibold flex flex-wrap items-center gap-2 pt-1"
               >
                 <span>Full-Stack Developer &amp; Creative Builder</span>
                 <span>•</span>
@@ -199,7 +199,7 @@ export function Hero({ onOpenResume, isLoaded = true }: HeroProps) {
               <MagneticButton
                 href="#projects"
                 dataCursor="view"
-                className="min-h-[44px] px-7 py-3.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-sm shadow-lg shadow-cyan-500/25 transition-all duration-200 cursor-pointer flex items-center justify-center gap-2 active:scale-[0.98] hover:shadow-cyan-500/40"
+                className="min-h-[44px] px-7 py-3.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-sm shadow-md shadow-cyan-500/20 transition-all duration-200 cursor-pointer flex items-center justify-center gap-2 active:scale-[0.98] hover:shadow-cyan-500/35"
               >
                 <span>View My Work</span>
                 <ArrowRight className="w-4 h-4" />
@@ -208,9 +208,9 @@ export function Hero({ onOpenResume, isLoaded = true }: HeroProps) {
               <MagneticButton
                 href="#contact"
                 dataCursor="pointer"
-                className="min-h-[44px] px-6 py-3.5 rounded-xl bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 font-semibold text-sm transition-all duration-200 cursor-pointer flex items-center justify-center gap-2 shadow-xs active:scale-[0.98] hover:border-cyan-500/40"
+                className="min-h-[44px] px-6 py-3.5 rounded-xl bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 border border-slate-300/90 dark:border-slate-700 text-slate-800 dark:text-slate-200 font-semibold text-sm transition-all duration-200 cursor-pointer flex items-center justify-center gap-2 shadow-xs active:scale-[0.98] hover:border-cyan-500/40"
               >
-                <Mail className="w-4 h-4 text-cyan-500" />
+                <Mail className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
                 <span>Contact Me</span>
               </MagneticButton>
 
@@ -219,9 +219,9 @@ export function Hero({ onOpenResume, isLoaded = true }: HeroProps) {
                   <MagneticButton
                     onClick={onOpenResume}
                     dataCursor="pointer"
-                    className="flex-1 sm:flex-none min-h-[44px] px-5 py-3.5 rounded-xl bg-slate-100 dark:bg-slate-900/60 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 text-sm font-mono transition-all duration-200 cursor-pointer flex items-center justify-center gap-2 active:scale-[0.98] hover:border-cyan-500/40"
+                    className="flex-1 sm:flex-none min-h-[44px] px-5 py-3.5 rounded-xl bg-white dark:bg-slate-900/60 hover:bg-slate-50 dark:hover:bg-slate-800 border border-slate-300/80 dark:border-slate-800 text-slate-700 dark:text-slate-300 text-sm font-mono transition-all duration-200 cursor-pointer flex items-center justify-center gap-2 active:scale-[0.98] hover:border-cyan-500/40 shadow-xs"
                   >
-                    <FileText className="w-4 h-4 text-cyan-500" />
+                    <FileText className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
                     <span>Download Resume</span>
                   </MagneticButton>
                 )}
@@ -231,7 +231,7 @@ export function Hero({ onOpenResume, isLoaded = true }: HeroProps) {
                   target="_blank"
                   rel="noopener noreferrer"
                   dataCursor="external"
-                  className="min-w-[44px] min-h-[44px] p-3.5 rounded-xl bg-slate-100 dark:bg-slate-900/60 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-cyan-500 transition-all duration-200 cursor-pointer flex items-center justify-center shrink-0 hover:border-cyan-500/40"
+                  className="min-w-[44px] min-h-[44px] p-3.5 rounded-xl bg-white dark:bg-slate-900/60 hover:bg-slate-50 dark:hover:bg-slate-800 border border-slate-300/80 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-all duration-200 cursor-pointer flex items-center justify-center shrink-0 hover:border-cyan-500/40 shadow-xs"
                   title="GitHub Profile"
                   aria-label="GitHub Profile"
                 >

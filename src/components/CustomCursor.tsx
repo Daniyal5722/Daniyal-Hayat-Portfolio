@@ -121,14 +121,14 @@ export function CustomCursor() {
           backgroundColor: cursorVariant === 'badge' 
             ? 'rgba(6, 182, 212, 0.92)' 
             : cursorVariant === 'pointer' 
-              ? 'rgba(6, 182, 212, 0.15)' 
-              : 'rgba(6, 182, 212, 0.04)',
+              ? 'rgba(6, 182, 212, 0.12)' 
+              : 'rgba(6, 182, 212, 0.03)',
           borderColor: cursorVariant === 'badge'
             ? 'rgba(6, 182, 212, 1)'
             : cursorVariant === 'pointer'
-              ? 'rgba(6, 182, 212, 0.7)'
-              : 'rgba(6, 182, 212, 0.35)',
-          color: cursorVariant === 'badge' ? '#090a0f' : '#38bdf8',
+              ? 'rgba(6, 182, 212, 0.55)'
+              : 'rgba(148, 163, 184, 0.35)',
+          color: cursorVariant === 'badge' ? '#090a0f' : '#0891b2',
           borderRadius: '9999px',
           borderWidth: '1.5px',
         }}

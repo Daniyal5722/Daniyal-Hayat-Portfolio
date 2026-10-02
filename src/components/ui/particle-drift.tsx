@@ -105,12 +105,21 @@ export default function ParticleDrift({
     let particles: ParticleNode[] = [];
     let streams: DataStream[] = [];
 
-    const PALETTE = {
-      cyan: { r: 34, g: 211, b: 238 },        // Cyan 400
-      electric: { r: 59, g: 130, b: 246 },    // Electric Blue 500
-      coolGray: { r: 148, g: 163, b: 184 },   // Slate 400
-      purple: { r: 139, g: 92, b: 246 },      // Purple 500
-    };
+    const isLightMode = mode === "light" || (mode === "auto" && typeof document !== "undefined" && !document.documentElement.classList.contains("dark"));
+
+    const PALETTE = isLightMode
+      ? {
+          cyan: { r: 14, g: 165, b: 233 },      // Sky 500
+          electric: { r: 71, g: 85, b: 105 },   // Slate 600
+          coolGray: { r: 100, g: 116, b: 139 }, // Slate 500
+          purple: { r: 100, g: 116, b: 139 },   // Slate 500
+        }
+      : {
+          cyan: { r: 34, g: 211, b: 238 },        // Cyan 400
+          electric: { r: 59, g: 130, b: 246 },    // Electric Blue 500
+          coolGray: { r: 148, g: 163, b: 184 },   // Slate 400
+          purple: { r: 139, g: 92, b: 246 },      // Purple 500
+        };
 
     const getParticleColor = (): ColorRGB => {
       if (color === "electric") return PALETTE.electric;
@@ -132,7 +141,7 @@ export default function ParticleDrift({
       particles = [];
       for (let i = 0; i < count; i++) {
         const rand = Math.random();
-        const baseAlpha = (Math.random() * 0.35 + 0.25) * particleOpacity;
+        const baseAlpha = (Math.random() * 0.35 + 0.25) * particleOpacity * (isLightMode ? 0.6 : 1);
         const y = Math.random() * h;
         const isAscii = rand < 0.18; // ~18% subtle ASCII characters
 
@@ -146,7 +155,7 @@ export default function ParticleDrift({
           alpha: baseAlpha,
           baseAlpha,
           color: getParticleColor(),
-          hasGlow: Math.random() > 0.82,
+          hasGlow: !isLightMode && Math.random() > 0.82,
           waveOffset: Math.random() * Math.PI * 2,
           waveSpeed: (0.006 + Math.random() * 0.01) * speed * speedMult,
           waveAmplitude: 18 + Math.random() * 28,
@@ -158,13 +167,15 @@ export default function ParticleDrift({
       // 2. Initialize Data Streams (Upward flowing data streaks)
       streams = [];
       for (let i = 0; i < numStreams; i++) {
-        const streamColor = Math.random() > 0.6 ? PALETTE.cyan : PALETTE.electric;
+        const streamColor = isLightMode 
+          ? PALETTE.coolGray 
+          : (Math.random() > 0.6 ? PALETTE.cyan : PALETTE.electric);
         streams.push({
           x: Math.random() * w,
           y: Math.random() * h,
           length: (Math.random() * 80 + 40) * particleSize,
           speed: (Math.random() * 2.5 + 1.2) * speed * speedMult,
-          opacity: (Math.random() * 0.22 + 0.08) * connectionOpacity * 2,
+          opacity: isLightMode ? 0.04 : (Math.random() * 0.22 + 0.08) * connectionOpacity * 2,
           width: Math.random() * 0.8 + 0.6,
           color: streamColor,
         });

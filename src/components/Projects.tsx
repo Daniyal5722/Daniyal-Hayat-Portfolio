@@ -122,17 +122,17 @@ function ProjectShowcase({ project, index, onOpenCaseStudy }: { project: Project
       viewport={{ once: true, amount: 0.12 }}
       exit={{ opacity: 0, scale: 0.96 }}
       transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-      className={`p-4 sm:p-6 lg:p-10 rounded-2xl sm:rounded-3xl bg-white dark:bg-[#111422] border border-slate-200 dark:border-slate-800 shadow-xl dark:shadow-2xl flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-6 sm:gap-8 lg:gap-12 items-center relative overflow-hidden transition-all duration-300 hover:border-cyan-500/40`}
+      className={`p-4 sm:p-6 lg:p-10 rounded-2xl sm:rounded-3xl bg-white dark:bg-[#111422] border border-slate-200/90 dark:border-slate-800 shadow-sm dark:shadow-2xl flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-6 sm:gap-8 lg:gap-12 items-center relative overflow-hidden transition-all duration-300 hover:border-cyan-500/40`}
     >
       {/* Visual / Image Side */}
       <motion.div 
         whileHover={{ scale: 1.02, rotate: -1 }}
         transition={{ duration: 0.3, ease: "easeOut" }}
-        className="w-full lg:w-1/2 group relative rounded-xl sm:rounded-2xl overflow-hidden bg-gradient-to-br from-slate-100 to-slate-200 dark:from-[#0b0e1a] dark:to-[#161c2f] aspect-video border border-slate-200 dark:border-slate-800 shadow-md cursor-pointer"
+        className="w-full lg:w-1/2 group relative rounded-xl sm:rounded-2xl overflow-hidden bg-gradient-to-br from-slate-100 to-slate-200/70 dark:from-[#0b0e1a] dark:to-[#161c2f] aspect-video border border-slate-200/90 dark:border-slate-800 shadow-xs cursor-pointer"
         onClick={() => onOpenCaseStudy(project)}
       >
         {/* Ambient glow inside visual card */}
-        <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/10 via-transparent to-violet-500/10 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/10 via-transparent to-violet-500/10 opacity-20 dark:opacity-100 pointer-events-none" />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent opacity-60 group-hover:opacity-90 transition-opacity duration-500 z-10" />
         
         {/* Decorative graphic & tech watermark */}
@@ -322,7 +322,7 @@ export function Projects({ onOpenCaseStudy }: ProjectsProps) {
   };
 
   return (
-    <section id="projects" className="py-14 sm:py-20 md:py-28 relative border-t border-b dark:border-slate-800/80 border-slate-200 bg-[#f8fafd]/80 dark:bg-[#0a0c14]/85 backdrop-blur-[2px]">
+    <section id="projects" className="py-14 sm:py-20 md:py-28 relative border-t border-b dark:border-slate-800/80 border-slate-200/90 bg-slate-100/50 dark:bg-[#0a0c14]/85 backdrop-blur-[2px]">
       <div className="max-w-[88rem] mx-auto px-4 sm:px-6 lg:px-12">
         
         {/* Header with Live Sync Status */}
@@ -337,7 +337,7 @@ export function Projects({ onOpenCaseStudy }: ProjectsProps) {
               <button
                 onClick={refreshRepos}
                 disabled={isSyncing}
-                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white dark:bg-[#111422] border border-slate-200 dark:border-slate-800 text-[11px] font-mono text-slate-700 dark:text-slate-300 hover:text-cyan-500 transition-colors shadow-xs cursor-pointer min-h-[32px]"
+                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white dark:bg-[#111422] border border-slate-200/90 dark:border-slate-800 text-[11px] font-mono text-slate-700 dark:text-slate-300 hover:text-cyan-500 transition-colors shadow-xs cursor-pointer min-h-[32px]"
                 title="Sync with GitHub API"
               >
                 <RefreshCw className={`w-3 h-3 ${isSyncing ? 'animate-spin text-cyan-500' : ''}`} />
@@ -357,7 +357,7 @@ export function Projects({ onOpenCaseStudy }: ProjectsProps) {
             href="https://github.com/Daniyal5722?tab=repositories"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center min-h-[44px] gap-2 px-4 py-2.5 rounded-xl bg-white dark:bg-[#111422] border border-slate-200 dark:border-slate-800 text-xs font-mono text-slate-700 dark:text-slate-300 hover:text-cyan-500 transition-colors group shadow-xs shrink-0 self-start md:self-auto"
+            className="inline-flex items-center justify-center min-h-[44px] gap-2 px-4 py-2.5 rounded-xl bg-white dark:bg-[#111422] border border-slate-200/90 dark:border-slate-800 text-xs font-mono text-slate-700 dark:text-slate-300 hover:text-cyan-500 transition-colors group shadow-xs shrink-0 self-start md:self-auto"
           >
             <span>View all on GitHub</span>
             <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -365,7 +365,7 @@ export function Projects({ onOpenCaseStudy }: ProjectsProps) {
         </div>
 
         {/* Highlighted Live Deployments Bar */}
-        <div className="mb-10 sm:mb-14 p-4 sm:p-6 lg:p-8 rounded-2xl sm:rounded-3xl bg-white dark:bg-[#111422] border border-cyan-500/30 shadow-xl">
+        <div className="mb-10 sm:mb-14 p-4 sm:p-6 lg:p-8 rounded-2xl sm:rounded-3xl bg-white dark:bg-[#111422] border border-slate-200/90 dark:border-cyan-500/30 shadow-sm dark:shadow-xl">
           <div className="flex items-center gap-2.5 mb-5">
             <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
             <h3 className="text-slate-900 dark:text-white font-bold text-xs sm:text-sm tracking-wide uppercase font-mono flex items-center gap-2">
@@ -378,7 +378,7 @@ export function Projects({ onOpenCaseStudy }: ProjectsProps) {
             {LIVE_DEPLOYMENTS.map((deploy, idx) => (
               <div
                 key={idx}
-                className="p-4 sm:p-5 rounded-xl sm:rounded-2xl bg-slate-50 dark:bg-[#161a2e] border border-slate-200 dark:border-slate-800 hover:border-cyan-500/40 transition-all flex flex-col justify-between group shadow-xs"
+                className="p-4 sm:p-5 rounded-xl sm:rounded-2xl bg-slate-50 dark:bg-[#161a2e] border border-slate-200/90 dark:border-slate-800 hover:border-cyan-500/40 transition-all flex flex-col justify-between group shadow-xs"
               >
                 <div>
                   <div className="flex items-center justify-between gap-2 mb-2">

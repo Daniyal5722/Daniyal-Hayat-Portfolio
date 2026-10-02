@@ -46,11 +46,11 @@ export function TechStack() {
   ];
 
   return (
-    <section className="py-12 overflow-hidden relative border-y dark:border-slate-800/80 border-slate-200/80 bg-slate-50/50 dark:bg-slate-950/40 backdrop-blur-sm select-none">
+    <section className="py-12 overflow-hidden relative border-y dark:border-slate-800/80 border-slate-200/90 bg-slate-100/60 dark:bg-slate-950/40 backdrop-blur-sm select-none">
       
       {/* Side gradient blends */}
-      <div className="absolute left-0 top-0 bottom-0 w-12 sm:w-36 z-20 pointer-events-none bg-gradient-to-r from-slate-50 dark:from-[#090a0f] to-transparent" />
-      <div className="absolute right-0 top-0 bottom-0 w-12 sm:w-36 z-20 pointer-events-none bg-gradient-to-l from-slate-50 dark:from-[#090a0f] to-transparent" />
+      <div className="absolute left-0 top-0 bottom-0 w-12 sm:w-36 z-20 pointer-events-none bg-gradient-to-r from-slate-100/90 dark:from-[#090a0f] to-transparent" />
+      <div className="absolute right-0 top-0 bottom-0 w-12 sm:w-36 z-20 pointer-events-none bg-gradient-to-l from-slate-100/90 dark:from-[#090a0f] to-transparent" />
 
       {/* Row 1: High-impact editorial typographic marquee */}
       <div className="overflow-hidden mb-4 sm:mb-5">
@@ -59,7 +59,7 @@ export function TechStack() {
             <div key={trackKey} className="flex items-center gap-6 sm:gap-8 shrink-0 pr-6 sm:pr-8">
               {typographicPhrases.map((word, i) => (
                 <div key={i} className="flex items-center gap-6 sm:gap-8 shrink-0">
-                  <span className="text-lg sm:text-3xl md:text-4xl font-extrabold font-mono tracking-tighter text-slate-300/50 dark:text-slate-800/90 uppercase">
+                  <span className="text-lg sm:text-3xl md:text-4xl font-extrabold font-mono tracking-tighter text-slate-300/80 dark:text-slate-800/90 uppercase">
                     {word}
                   </span>
                   <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-cyan-500/40 shrink-0" />
@@ -79,7 +79,7 @@ export function TechStack() {
                 <div
                   key={`${tech.name}-${idx}`}
                   data-cursor="pointer"
-                  className="flex items-center gap-2.5 px-4 py-2 rounded-xl border dark:border-slate-800 border-slate-200 bg-[#fdfefe] dark:bg-slate-900/80 hover:border-cyan-500/60 dark:hover:border-cyan-500/60 transition-all duration-200 shadow-xs cursor-default shrink-0 group"
+                  className="flex items-center gap-2.5 px-4 py-2 rounded-xl border dark:border-slate-800 border-slate-200/90 bg-white dark:bg-slate-900/80 hover:border-cyan-500/60 dark:hover:border-cyan-500/60 transition-all duration-200 shadow-xs cursor-default shrink-0 group"
                 >
                   <div className="p-1 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 group-hover:scale-110 transition-transform">
                     {getIcon(tech.name)}

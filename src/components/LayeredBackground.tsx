@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { motion, useMotionValue, useSpring } from 'motion/react';
 import { BackgroundBeams } from './BackgroundBeams';
 
-export function LayeredBackground() {
+export function LayeredBackground({ isDarkMode = true }: { isDarkMode?: boolean }) {
   const [isTouch, setIsTouch] = useState(false);
 
   // Mouse spring coordinates for subtle light & parallax
@@ -51,22 +51,22 @@ export function LayeredBackground() {
 
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden z-0 select-none">
-      {/* Layer 1: Ambient Gradient Mesh with subtle breathing pulsation */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-10%,rgba(6,182,212,0.12),transparent_70%)] dark:bg-[radial-gradient(ellipse_80%_60%_at_50%_-10%,rgba(6,182,212,0.14),transparent_70%)] transition-opacity duration-1000" />
-      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-gradient-to-tl from-indigo-500/10 via-cyan-500/5 to-transparent blur-[140px] rounded-full pointer-events-none" />
-      <div className="absolute top-1/3 left-0 w-[450px] h-[450px] bg-gradient-to-tr from-cyan-500/10 via-violet-500/5 to-transparent blur-[130px] rounded-full pointer-events-none" />
+      {/* Layer 1: Ambient Gradient Mesh - subdued in light mode to eliminate blinding glare */}
+      <div className="absolute inset-0 opacity-15 dark:opacity-100 bg-[radial-gradient(ellipse_80%_60%_at_50%_-10%,rgba(6,182,212,0.12),transparent_70%)] transition-opacity duration-700" />
+      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-gradient-to-tl from-indigo-500/10 via-cyan-500/5 to-transparent blur-[140px] rounded-full pointer-events-none opacity-20 dark:opacity-100 transition-opacity duration-700" />
+      <div className="absolute top-1/3 left-0 w-[450px] h-[450px] bg-gradient-to-tr from-cyan-500/10 via-violet-500/5 to-transparent blur-[130px] rounded-full pointer-events-none opacity-20 dark:opacity-100 transition-opacity duration-700" />
 
-      {/* Layer 2: Technical Grid with Subtle Mouse Parallax */}
+      {/* Layer 2: Technical Grid with Soft Neutral Contrast */}
       <motion.div
         style={{ x: smoothGridX, y: smoothGridY }}
-        className="absolute -inset-10 opacity-35 dark:opacity-25 bg-[linear-gradient(to_right,#0ea5e918_1px,transparent_1px),linear-gradient(to_bottom,#0ea5e918_1px,transparent_1px)] bg-[size:3.5rem_3.5rem] [mask-image:radial-gradient(ellipse_75%_65%_at_50%_40%,#000_60%,transparent_100%)]"
+        className="absolute -inset-10 opacity-15 dark:opacity-25 bg-[linear-gradient(to_right,#64748b14_1px,transparent_1px),linear-gradient(to_bottom,#64748b14_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#0ea5e918_1px,transparent_1px),linear-gradient(to_bottom,#0ea5e918_1px,transparent_1px)] bg-[size:3.5rem_3.5rem] [mask-image:radial-gradient(ellipse_75%_65%_at_50%_40%,#000_60%,transparent_100%)]"
       />
 
       {/* Layer 2.5: Animated Beams */}
       <BackgroundBeams />
 
       {/* Layer 3.5: Floating Glass Orbs */}
-      <div className="absolute inset-0 overflow-hidden">
+      <div className="absolute inset-0 overflow-hidden opacity-25 dark:opacity-100 transition-opacity duration-700">
         {[...Array(3)].map((_, i) => (
           <motion.div
             key={`orb-${i}`}
@@ -92,8 +92,8 @@ export function LayeredBackground() {
         ))}
       </div>
 
-      {/* Layer 4: Soft Mouse-Reactive Ambient Torch Light */}
-      {!isTouch && (
+      {/* Layer 4: Ambient Torch Light - only active in dark mode to prevent bright hotspot over light pages */}
+      {!isTouch && isDarkMode && (
         <motion.div
           style={{
             x: smoothX,
@@ -105,10 +105,9 @@ export function LayeredBackground() {
         />
       )}
 
-
       {/* Layer 5: Subtle Noise / Editorial Grain Texture */}
       <div
-        className="absolute inset-0 opacity-[0.022] dark:opacity-[0.035] pointer-events-none z-[4]"
+        className="absolute inset-0 opacity-[0.018] dark:opacity-[0.035] pointer-events-none z-[4]"
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
         }}
@@ -118,7 +117,7 @@ export function LayeredBackground() {
       <motion.div
         animate={{ y: ['-100%', '200%'] }}
         transition={{ duration: 15, repeat: Infinity, ease: 'linear' }}
-        className="absolute inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-cyan-500/10 to-transparent z-[5] pointer-events-none"
+        className="absolute inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-cyan-500/10 to-transparent z-[5] pointer-events-none opacity-30 dark:opacity-100"
       />
 
       {/* Layer 6: Floating Architectural Geometric Elements */}
@@ -127,7 +126,7 @@ export function LayeredBackground() {
           x: smoothGridX,
           y: smoothGridY,
         }}
-        className="absolute inset-0 z-[1] hidden lg:block opacity-30 dark:opacity-40 text-cyan-600/60 dark:text-cyan-400/60 font-mono text-[10px]"
+        className="absolute inset-0 z-[1] hidden lg:block opacity-25 dark:opacity-40 text-slate-500/70 dark:text-cyan-400/60 font-mono text-[10px]"
       >
         {/* Floating tech stack labels */}
         <div className="absolute top-1/4 left-[15%] select-none flex flex-col gap-1">

@@ -44,11 +44,11 @@ export function CreativeLab() {
   };
 
   return (
-    <section id="creative-lab" className="py-16 sm:py-24 md:py-28 relative overflow-hidden bg-slate-950/40 border-t border-slate-200/80 dark:border-slate-800/80">
+    <section id="creative-lab" className="py-16 sm:py-24 md:py-28 relative overflow-hidden bg-slate-100/50 dark:bg-slate-950/40 border-t border-slate-200/90 dark:border-slate-800/80">
       
       {/* Background ambient aesthetic */}
-      <div className="absolute top-1/2 -left-48 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute top-1/3 -right-48 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/2 -left-48 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl pointer-events-none opacity-20 dark:opacity-100" />
+      <div className="absolute top-1/3 -right-48 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl pointer-events-none opacity-20 dark:opacity-100" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         

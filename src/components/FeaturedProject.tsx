@@ -14,7 +14,7 @@ export function FeaturedProject({ onOpenCaseStudy }: FeaturedProjectProps) {
   const featured = liveProjects.find((p) => p.featured === true) || liveProjects.find((p) => p.id === 'cortexiq-by-dnyl') || liveProjects[0] || PROJECTS[0];
 
   return (
-    <section id="featured-project" className="py-12 sm:py-16 md:py-20 relative overflow-hidden bg-[#f8fafd] dark:bg-[#0a0c14] border-t dark:border-slate-800/80 border-slate-200">
+    <section id="featured-project" className="py-12 sm:py-16 md:py-20 relative overflow-hidden bg-slate-100/60 dark:bg-[#0a0c14] border-t dark:border-slate-800/80 border-slate-200/90">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className="space-y-3 max-w-3xl mb-8 sm:mb-12">
@@ -35,11 +35,11 @@ export function FeaturedProject({ onOpenCaseStudy }: FeaturedProjectProps) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.15 }}
           transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-          className="relative rounded-2xl sm:rounded-3xl bg-white dark:bg-[#111422] dark:border-slate-800 border border-slate-200 p-5 sm:p-8 md:p-12 shadow-2xl overflow-hidden group"
+          className="relative rounded-2xl sm:rounded-3xl bg-white dark:bg-[#111422] dark:border-slate-800 border border-slate-200/90 p-5 sm:p-8 md:p-12 shadow-sm dark:shadow-2xl overflow-hidden group"
         >
           {/* Ambient decorative glow */}
-          <div className="absolute top-0 right-0 w-96 h-96 bg-violet-600/10 blur-[100px] rounded-full pointer-events-none group-hover:bg-violet-600/20 transition-all duration-700" />
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-cyan-500/10 blur-[100px] rounded-full pointer-events-none" />
+          <div className="absolute top-0 right-0 w-96 h-96 bg-violet-600/10 blur-[100px] rounded-full pointer-events-none opacity-20 dark:opacity-100 group-hover:bg-violet-600/20 transition-all duration-700" />
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-cyan-500/10 blur-[100px] rounded-full pointer-events-none opacity-20 dark:opacity-100" />
 
           <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             

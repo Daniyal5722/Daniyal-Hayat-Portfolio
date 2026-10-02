@@ -113,8 +113,8 @@ export default function App() {
   return (
     <MotionConfig reducedMotion="user">
       <SmoothScroll>
-      <div className={`min-h-screen relative selection:bg-cyan-500/30 selection:text-cyan-200 transition-colors duration-300 ${
-        isDarkMode ? 'bg-[#090a0f] text-slate-100' : 'bg-[#fafbfe] text-slate-900'
+      <div className={`min-h-screen relative selection:bg-cyan-500/30 selection:text-cyan-800 dark:selection:text-cyan-200 transition-colors duration-300 ${
+        isDarkMode ? 'bg-[#090a0f] text-slate-100' : 'bg-[#f4f5f8] text-slate-800'
       }`}>
         
         {/* Fast (<750ms) cinematic preloader */}
@@ -126,11 +126,11 @@ export default function App() {
         <CustomCursor />
 
         {/* 6-Layer Cinematic Background System */}
-        <LayeredBackground />
+        <LayeredBackground isDarkMode={isDarkMode} />
 
         {/* Premium Plexus Wave Background Animation Layer */}
         <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
-          <PlexusWaveBackground />
+          <PlexusWaveBackground isDarkMode={isDarkMode} />
         </div>
 
         {/* Top Scroll Indicator */}

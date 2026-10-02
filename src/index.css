@@ -63,7 +63,7 @@ button, input, select, textarea, [role="button"] {
 .animate-marquee {
   display: flex;
   width: max-content;
-  animation: marquee 30s linear infinite;
+  animation: marquee 28s linear infinite;
   will-change: transform;
   backface-visibility: hidden;
 }
@@ -71,14 +71,17 @@ button, input, select, textarea, [role="button"] {
 .animate-marquee-reverse {
   display: flex;
   width: max-content;
-  animation: marquee-reverse 32s linear infinite;
+  animation: marquee-reverse 30s linear infinite;
   will-change: transform;
   backface-visibility: hidden;
 }
 
-.animate-marquee:hover,
-.animate-marquee-reverse:hover {
-  animation-play-state: paused;
+/* Maintain smooth continuous motion without freezing the whole track on touch */
+@media (hover: hover) and (pointer: fine) {
+  .animate-marquee:hover,
+  .animate-marquee-reverse:hover {
+    animation-play-state: running;
+  }
 }
 
 /* Smooth Keyframe Animations */
@@ -131,6 +134,99 @@ button, input, select, textarea, [role="button"] {
 
 .animate-live-radar {
   animation: live-radar 2.4s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+/* CSS-based Hardware-Accelerated Aurora Flow */
+@keyframes aurora-1 {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+    opacity: 0.14;
+  }
+  33% {
+    transform: translate3d(50px, -40px, 0) scale(1.15) rotate(15deg);
+    opacity: 0.22;
+  }
+  66% {
+    transform: translate3d(-30px, 30px, 0) scale(0.95) rotate(-10deg);
+    opacity: 0.16;
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+    opacity: 0.14;
+  }
+}
+
+@keyframes aurora-2 {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+    opacity: 0.12;
+  }
+  33% {
+    transform: translate3d(-60px, 40px, 0) scale(1.18) rotate(-20deg);
+    opacity: 0.20;
+  }
+  66% {
+    transform: translate3d(40px, -50px, 0) scale(0.9) rotate(12deg);
+    opacity: 0.14;
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+    opacity: 0.12;
+  }
+}
+
+@keyframes aurora-3 {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+    opacity: 0.10;
+  }
+  50% {
+    transform: translate3d(70px, 60px, 0) scale(1.22) rotate(25deg);
+    opacity: 0.18;
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+    opacity: 0.10;
+  }
+}
+
+@keyframes aurora-4 {
+  0% {
+    transform: translate3d(0, 0, 0) scale(0.95);
+    opacity: 0.08;
+  }
+  50% {
+    transform: translate3d(-40px, -30px, 0) scale(1.12);
+    opacity: 0.16;
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(0.95);
+    opacity: 0.08;
+  }
+}
+
+.animate-aurora-1 {
+  animation: aurora-1 22s ease-in-out infinite;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+
+.animate-aurora-2 {
+  animation: aurora-2 28s ease-in-out infinite;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+
+.animate-aurora-3 {
+  animation: aurora-3 25s ease-in-out infinite;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+
+.animate-aurora-4 {
+  animation: aurora-4 32s ease-in-out infinite;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
 }
 
 /* Subtle background grid pattern */
@@ -194,6 +290,22 @@ button, input, select, textarea, [role="button"] {
 
   .print\:hidden {
     display: none !important;
+  }
+}
+
+/* Accessibility: Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .animate-aurora-1,
+  .animate-aurora-2,
+  .animate-aurora-3,
+  .animate-aurora-4,
+  .animate-pulse-glow,
+  .animate-live-pulse,
+  .animate-live-radar,
+  .animate-marquee,
+  .animate-marquee-reverse {
+    animation: none !important;
+    transform: none !important;
   }
 }
 

@@ -74,18 +74,18 @@ export function About() {
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-5 space-y-6"
           >
-            <div className="p-5 sm:p-8 rounded-2xl sm:rounded-3xl bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 shadow-xl relative overflow-hidden group">
-              <div className="absolute top-0 right-0 w-36 h-36 bg-cyan-500/10 rounded-full blur-2xl group-hover:bg-cyan-500/20 transition-all duration-500" />
+            <div className="p-5 sm:p-8 rounded-2xl sm:rounded-3xl bg-white dark:bg-slate-900/70 border border-slate-200/90 dark:border-slate-800 shadow-sm dark:shadow-xl relative overflow-hidden group">
+              <div className="absolute top-0 right-0 w-36 h-36 bg-cyan-500/10 rounded-full blur-2xl opacity-20 dark:opacity-100 group-hover:bg-cyan-500/20 transition-all duration-500" />
               
               <div className="flex items-center gap-3.5 mb-6">
-                <div className="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-500">
+                <div className="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-600 dark:text-cyan-400">
                   <Terminal className="w-6 h-6" />
                 </div>
                 <div>
                   <h3 className="font-bold text-lg text-slate-900 dark:text-white leading-tight">
                     {DEVELOPER_NAME}
                   </h3>
-                  <span className="text-xs font-mono text-cyan-600 dark:text-cyan-400">
+                  <span className="text-xs font-mono text-cyan-700 dark:text-cyan-400">
                     @{GITHUB_USERNAME}
                   </span>
                 </div>
@@ -101,7 +101,7 @@ export function About() {
 
               {/* Verified Metrics Counter */}
               <div className="grid grid-cols-2 gap-3 sm:gap-4 pt-6 mt-6 border-t border-slate-100 dark:border-slate-800">
-                <div className="p-3 sm:p-3.5 rounded-xl sm:rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800/80 text-center">
+                <div className="p-3 sm:p-3.5 rounded-xl sm:rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200/90 dark:border-slate-800/80 text-center">
                   <span className="block text-2xl sm:text-3xl font-bold text-cyan-600 dark:text-cyan-400 font-mono">
                     {repoCount}
                   </span>
@@ -110,7 +110,7 @@ export function About() {
                   </span>
                 </div>
 
-                <div className="p-3 sm:p-3.5 rounded-xl sm:rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800/80 text-center">
+                <div className="p-3 sm:p-3.5 rounded-xl sm:rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200/90 dark:border-slate-800/80 text-center">
                   <span className="block text-2xl sm:text-3xl font-bold text-emerald-600 dark:text-emerald-400 font-mono">
                     {LIVE_DEPLOYMENTS.length}
                   </span>
