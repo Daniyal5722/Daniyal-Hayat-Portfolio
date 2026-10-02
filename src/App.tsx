@@ -17,7 +17,7 @@ import { Footer } from './components/Footer';
 import { ScrollProgress } from './components/ScrollProgress';
 import { ScrollToTop } from './components/ScrollToTop';
 import { RevealOnScroll } from './components/RevealOnScroll';
-import { AuroraMeshBackground } from './components/AuroraMeshBackground';
+import { AuroraInteractiveBackground } from './components/AuroraInteractiveBackground';
 import { CustomCursor } from './components/CustomCursor';
 import { Preloader } from './components/Preloader';
 import { SmoothScroll } from './components/SmoothScroll';
@@ -124,8 +124,8 @@ export default function App() {
         {/* Interactive Custom Cursor with badge modes */}
         <CustomCursor />
 
-        {/* Premium Aurora Mesh Network Background System */}
-        <AuroraMeshBackground />
+        {/* Real Continuous Aurora Interactive Background System */}
+        <AuroraInteractiveBackground />
 
         {/* Top Scroll Indicator */}
         <ScrollProgress />
