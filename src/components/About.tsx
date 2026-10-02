@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { DEVELOPER_NAME, GITHUB_USERNAME, LIVE_DEPLOYMENTS } from '../data/portfolioData';
+import { DEVELOPER_NAME, GITHUB_USERNAME, LIVE_DEPLOYMENTS, RESUME_PDF_PATH, RESUME_FILENAME } from '../data/portfolioData';
 import { useGitHubRepos } from '../hooks/useGitHubRepos';
 import { 
   Code2, 
@@ -12,11 +12,19 @@ import {
   Compass,
   ArrowRight,
   ShieldCheck,
-  Cpu
+  Cpu,
+  FileText,
+  Download,
+  ExternalLink
 } from 'lucide-react';
 import { MagneticButton } from './MagneticButton';
+import { soundManager } from '../utils/sound';
 
-export function About() {
+interface AboutProps {
+  onOpenResume?: () => void;
+}
+
+export function About({ onOpenResume }: AboutProps) {
   const { projects } = useGitHubRepos();
   const repoCount = projects.length || 7;
 
@@ -122,19 +130,68 @@ export function About() {
 
             </div>
 
-            {/* Inspect Commits Callout */}
-            <div className="p-4 rounded-2xl bg-cyan-500/5 dark:bg-cyan-500/10 border border-cyan-500/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-              <span className="text-xs sm:text-sm font-medium text-slate-700 dark:text-slate-300">
-                Want to review verified GitHub commits?
-              </span>
-              <MagneticButton
-                href="#github"
-                dataCursor="pointer"
-                className="inline-flex items-center justify-center min-h-[44px] px-3 gap-1.5 text-xs font-semibold text-cyan-600 dark:text-cyan-400 hover:text-cyan-500 transition-colors self-start sm:self-auto"
-              >
-                <span>Inspect Activity</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </MagneticButton>
+            {/* Inspect Commits & Resume Callouts */}
+            <div className="space-y-3">
+              <div className="p-4 rounded-2xl bg-cyan-500/5 dark:bg-cyan-500/10 border border-cyan-500/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div className="space-y-0.5">
+                  <span className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white block">
+                    Curriculum Vitae / Resume
+                  </span>
+                  <span className="text-[11px] text-slate-500 dark:text-slate-400 block">
+                    Direct PDF &amp; ATS specifications
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 self-start sm:self-auto">
+                  {onOpenResume ? (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        soundManager.playClick();
+                        onOpenResume();
+                      }}
+                      aria-label="View Daniyal Hayat Resume PDF"
+                      className="inline-flex items-center justify-center min-h-[38px] px-3.5 py-1.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs shadow-xs transition-all cursor-pointer active:scale-[0.98] gap-1.5"
+                    >
+                      <FileText className="w-3.5 h-3.5" />
+                      <span>View Resume</span>
+                    </button>
+                  ) : (
+                    <a
+                      href={RESUME_PDF_PATH}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="View Daniyal Hayat Resume PDF"
+                      className="inline-flex items-center justify-center min-h-[38px] px-3.5 py-1.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs shadow-xs transition-all cursor-pointer active:scale-[0.98] gap-1.5"
+                    >
+                      <ExternalLink className="w-3.5 h-3.5" />
+                      <span>View Resume</span>
+                    </a>
+                  )}
+                  <a
+                    href={RESUME_PDF_PATH}
+                    download={RESUME_FILENAME}
+                    aria-label="Download Daniyal Hayat Resume"
+                    className="inline-flex items-center justify-center min-h-[38px] px-3 py-1.5 rounded-xl border border-slate-300/80 dark:border-slate-700 hover:border-slate-400 dark:hover:border-slate-600 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 font-medium text-xs transition-all shadow-xs active:scale-[0.98] gap-1.5"
+                  >
+                    <Download className="w-3.5 h-3.5" />
+                    <span>Download</span>
+                  </a>
+                </div>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-slate-100/70 dark:bg-slate-900/40 border border-slate-200/90 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <span className="text-xs sm:text-sm font-medium text-slate-700 dark:text-slate-300">
+                  Want to review verified GitHub commits?
+                </span>
+                <MagneticButton
+                  href="#github"
+                  dataCursor="pointer"
+                  className="inline-flex items-center justify-center min-h-[38px] px-3 gap-1.5 text-xs font-semibold text-cyan-600 dark:text-cyan-400 hover:text-cyan-500 transition-colors self-start sm:self-auto"
+                >
+                  <span>Inspect Activity</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </MagneticButton>
+              </div>
             </div>
           </motion.div>
 

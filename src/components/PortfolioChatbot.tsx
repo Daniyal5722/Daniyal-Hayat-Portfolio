@@ -180,7 +180,7 @@ export function PortfolioChatbot() {
       } else if (q.includes('mystic') || q.includes('game') || q.includes('motorcycle')) {
         fallbackText = "Daniyal has built interactive games including **Mystic Match** (a mobile-first match-3 puzzle game in Kotlin) and **Motorcycle Sprint 2D** (an arcade physics canvas runner).";
       } else if (q.includes('contact') || q.includes('email') || q.includes('hire') || q.includes('reach')) {
-        fallbackText = "You can contact Daniyal directly via email at **mdaniyalhayyat@gmail.com** or connect with him on GitHub at **github.com/Daniyal5722**.";
+        fallbackText = "You can contact Daniyal directly via email at **mdaniyalhayyat@gmail.com** or connect with him on GitHub at **github.com/DotDaniyal**.";
       } else if (q.includes('skill') || q.includes('tech') || q.includes('stack')) {
         fallbackText = "Daniyal's verified technical skills include **React**, **Next.js**, **TypeScript**, **Tailwind CSS**, **Node.js/Express**, **Kotlin/Android SDK**, and **Google AI Studio / Gemini API**.";
       } else if (q.includes('project') || q.includes('work') || q.includes('built')) {

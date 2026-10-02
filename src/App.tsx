@@ -155,7 +155,7 @@ export default function App() {
 
           {/* About Section */}
           <RevealOnScroll direction="up" distance={30} duration={600}>
-            <About />
+            <About onOpenResume={() => setIsResumeOpen(true)} />
           </RevealOnScroll>
 
           {/* Skills & Interconnected Technology Matrix */}
@@ -205,7 +205,7 @@ export default function App() {
         </main>
 
         {/* Footer */}
-        <Footer />
+        <Footer onOpenResume={() => setIsResumeOpen(true)} />
 
         {/* Floating Scroll to Top button */}
         <ScrollToTop />

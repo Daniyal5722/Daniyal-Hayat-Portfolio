@@ -19,8 +19,9 @@ import {
   Clock, 
   ExternalLink 
 } from 'lucide-react';
-import { GITHUB_PROFILE_URL, DEVELOPER_EMAIL } from '../data/portfolioData';
+import { GITHUB_PROFILE_URL, GITHUB_USERNAME, DEVELOPER_EMAIL, RESUME_PDF_PATH, RESUME_FILENAME } from '../data/portfolioData';
 import { soundManager } from '../utils/sound';
+import { Download } from 'lucide-react';
 
 interface CommandPaletteProps {
   isOpen: boolean;
@@ -116,13 +117,38 @@ export function CommandPalette({
     },
     {
       id: 'resume',
-      title: 'Open Curriculum Vitae / Resume Modal',
+      title: 'Open Curriculum Vitae / Resume Viewer',
       category: 'Actions',
       shortcut: 'R',
       icon: <FileText className="w-4 h-4 text-cyan-500" />,
       action: () => {
         onClose();
         setTimeout(onOpenResume, 150);
+      },
+    },
+    {
+      id: 'view-resume-pdf',
+      title: 'View Daniyal Hayat Resume PDF (Open in New Tab)',
+      category: 'Actions',
+      icon: <ExternalLink className="w-4 h-4 text-cyan-400" />,
+      action: () => {
+        onClose();
+        window.open(RESUME_PDF_PATH, '_blank', 'noopener,noreferrer');
+      },
+    },
+    {
+      id: 'download-resume-pdf',
+      title: 'Download Daniyal Hayat Resume PDF',
+      category: 'Actions',
+      icon: <Download className="w-4 h-4 text-emerald-400" />,
+      action: () => {
+        onClose();
+        const link = document.createElement('a');
+        link.href = RESUME_PDF_PATH;
+        link.download = RESUME_FILENAME;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
       },
     },
     {
@@ -159,7 +185,7 @@ export function CommandPalette({
     },
     {
       id: 'github',
-      title: 'Open GitHub Profile (@Daniyal5722)',
+      title: `Open GitHub Profile (@${GITHUB_USERNAME})`,
       category: 'External',
       icon: <Github className="w-4 h-4 text-slate-300" />,
       action: () => {

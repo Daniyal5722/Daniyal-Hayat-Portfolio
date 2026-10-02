@@ -5,9 +5,11 @@ export const DEVELOPER_ROLE = "Full-Stack Developer & Creative Builder";
 export const DEVELOPER_TAGLINE = "Building High-Impact Web Platforms & Resilient Digital Systems.";
 export const DEVELOPER_LOCATION = "Available Globally & Remote";
 export const DEVELOPER_EMAIL = "mdaniyalhayyat@gmail.com";
-export const GITHUB_USERNAME = "Daniyal5722";
-export const GITHUB_PROFILE_URL = "https://github.com/Daniyal5722";
+export const GITHUB_USERNAME = "DotDaniyal";
+export const GITHUB_PROFILE_URL = "https://github.com/DotDaniyal";
 export const LIVE_PORTFOLIO_URL = "https://daniyal-hayat-portfolio.vercel.app/";
+export const RESUME_PDF_PATH = "/resume/Daniyal-Hayat-Resume.pdf";
+export const RESUME_FILENAME = "Daniyal-Hayat-Resume.pdf";
 
 export const MARQUEE_TECH_STACK = [
   { name: "TypeScript", category: "Language" },
@@ -35,7 +37,7 @@ export const PROJECTS: Project[] = [
     description: "Production web platform serving community religious consultation and guidance resources with high-performance responsive web layouts.",
     technologies: ["JavaScript", "Tailwind CSS", "HTML5", "Responsive Web", "REST APIs"],
     language: "JavaScript",
-    githubUrl: "https://github.com/Daniyal5722/Offical-Darul-ifta-Irshad-us-saileen-",
+    githubUrl: "https://github.com/DotDaniyal/Offical-Darul-ifta-Irshad-us-saileen-",
     liveUrl: "https://darulifta-bkfbzf6u.manus.space/",
     category: "Web Platform",
     featured: true,
@@ -62,7 +64,7 @@ export const PROJECTS: Project[] = [
       solution: "Implemented efficient asset minification, clean CSS architectures, and streamlined DOM manipulation to eliminate redundant overhead.",
       screenshots: "Responsive inquiry portal, categorized fatwa index, searchable question archives, mobile reading mode.",
       liveDemo: "https://darulifta-bkfbzf6u.manus.space/",
-      github: "https://github.com/Daniyal5722/Offical-Darul-ifta-Irshad-us-saileen-",
+      github: "https://github.com/DotDaniyal/Offical-Darul-ifta-Irshad-us-saileen-",
       lessonsLearned: "Designing for real community accessibility taught the critical importance of keeping initial bundle footprints minimal and testing across varied network latency environments.",
       result: "Successfully launched live in production, serving queries with zero layout shift and providing community members with an authoritative digital resource."
     }
@@ -74,7 +76,7 @@ export const PROJECTS: Project[] = [
     description: "Production-ready AI computational intelligence suite featuring advanced LLM integration, reactive dashboard telemetry, and modular tool pipelines.",
     technologies: ["TypeScript", "React", "Google Gemini AI", "Tailwind CSS", "Vite", "Motion"],
     language: "TypeScript",
-    githubUrl: "https://github.com/Daniyal5722/cortexiq-by-dnyl",
+    githubUrl: "https://github.com/DotDaniyal/cortexiq-by-dnyl",
     liveUrl: "https://daniyal-hayat-portfolio.vercel.app/",
     category: "AI & Intelligence",
     featured: true,
@@ -101,7 +103,7 @@ export const PROJECTS: Project[] = [
       solution: "Implemented efficient client-state separation, memoized rendering components, and robust error boundary checks.",
       screenshots: "AI Dashboard, prompt analyzer, telemetry charts, dark mode UI.",
       liveDemo: "https://daniyal-hayat-portfolio.vercel.app/",
-      github: "https://github.com/Daniyal5722/cortexiq-by-dnyl",
+      github: "https://github.com/DotDaniyal/cortexiq-by-dnyl",
       lessonsLearned: "Top-tier AI applications demand absolute reliability in error handling and graceful loading states to ensure seamless user retention.",
       result: "Delivers an exceptional, production-deployed intelligence suite that highlights Daniyal's full-stack and AI engineering mastery."
     }
@@ -113,7 +115,7 @@ export const PROJECTS: Project[] = [
     description: "Real-time meteorological tracking application delivering live atmospheric condition metrics, precision forecasts, and intuitive visual data.",
     technologies: ["JavaScript", "Meteorological API", "DOM Manipulation", "CSS3", "Async Pipeline"],
     language: "JavaScript",
-    githubUrl: "https://github.com/Daniyal5722/Hamara-Weather",
+    githubUrl: "https://github.com/DotDaniyal/Hamara-Weather",
     liveUrl: "https://hamara-weather.vercel.app/",
     category: "Utility App",
     featured: true,
@@ -140,7 +142,7 @@ export const PROJECTS: Project[] = [
       solution: "Implemented robust try-catch wrappers, graceful input validation, and user-friendly visual alerts on invalid location queries.",
       screenshots: "Main dashboard, location search, dynamic background based on weather, mobile layout.",
       liveDemo: "https://hamara-weather.vercel.app/",
-      github: "https://github.com/Daniyal5722/Hamara-Weather",
+      github: "https://github.com/DotDaniyal/Hamara-Weather",
       lessonsLearned: "Third-party APIs require careful error state design; anticipating network failures is as important as rendering the success state.",
       result: "Deployed live on Vercel with exceptional speed metrics and a clean, dependable everyday utility experience."
     }
@@ -152,7 +154,7 @@ export const PROJECTS: Project[] = [
     description: "Second-generation native Android application featuring robust offline caching, refined Material layouts, and rapid consultation querying.",
     technologies: ["Kotlin", "Android SDK", "Offline Caching", "XML Layouts", "Mobile Architecture"],
     language: "Kotlin",
-    githubUrl: "https://github.com/Daniyal5722/Darul-Ifta-Irshad-us-Saileen-app2",
+    githubUrl: "https://github.com/DotDaniyal/Darul-Ifta-Irshad-us-Saileen-app2",
     liveUrl: "https://darulifta-bkfbzf6u.manus.space/",
     category: "Mobile App",
     featured: false,
@@ -179,7 +181,7 @@ export const PROJECTS: Project[] = [
       solution: "Implemented efficient local data structures, lazy view binding, and defensive error handling for network edge cases.",
       screenshots: "Home screen, offline fatwa reader, search interface, bilingual typography settings.",
       liveDemo: "https://darulifta-bkfbzf6u.manus.space/",
-      github: "https://github.com/Daniyal5722/Darul-Ifta-Irshad-us-Saileen-app2",
+      github: "https://github.com/DotDaniyal/Darul-Ifta-Irshad-us-Saileen-app2",
       lessonsLearned: "Mobile development for emerging markets requires relentless optimization of both memory footprints and disk I/O.",
       result: "Delivered a rock-solid native companion app that brings essential guidance directly to mobile users anywhere, anytime."
     }
@@ -191,7 +193,7 @@ export const PROJECTS: Project[] = [
     description: "Mobile-first fantasy match-3 algorithmic puzzle game engineered in Kotlin with custom game mechanics and responsive touch physics.",
     technologies: ["Kotlin", "Android", "Game Mechanics", "Mobile UI", "Algorithms"],
     language: "Kotlin",
-    githubUrl: "https://github.com/Daniyal5722/mystic-match-by-dnyl",
+    githubUrl: "https://github.com/DotDaniyal/mystic-match-by-dnyl",
     liveUrl: "https://mystic-match-rho.vercel.app/",
     category: "Mobile Game",
     featured: true,
@@ -218,7 +220,7 @@ export const PROJECTS: Project[] = [
       solution: "Implemented discrete state transitions (IDLE, SWAPPING, CHECKING, CLEARING, DROPPING) to ensure deterministic gameplay.",
       screenshots: "Game board, cascading animations, level complete overlay, high-score screen.",
       liveDemo: "https://mystic-match-rho.vercel.app/",
-      github: "https://github.com/Daniyal5722/mystic-match-by-dnyl",
+      github: "https://github.com/DotDaniyal/mystic-match-by-dnyl",
       lessonsLearned: "Game development fundamentally refines a developer's understanding of memory management, render loops, and strict state machine design.",
       result: "A captivating, glitch-free puzzle experience showcasing deep algorithmic and design competence live on Vercel."
     }
@@ -230,7 +232,7 @@ export const PROJECTS: Project[] = [
     description: "Modern sports club web platform featuring fixture schedules, squad roster management, matchday highlights, and mobile fan experience.",
     technologies: ["React", "Tailwind CSS", "JavaScript", "Responsive UI", "Vercel"],
     language: "JavaScript",
-    githubUrl: "https://github.com/Daniyal5722",
+    githubUrl: "https://github.com/DotDaniyal",
     liveUrl: "https://daniyal-hayat-portfolio.vercel.app/",
     category: "Web Platform",
     featured: true,
@@ -257,7 +259,7 @@ export const PROJECTS: Project[] = [
       solution: "Optimized SVG silhouette placeholders and CSS clamp() fluid typography for universal device support.",
       screenshots: "Club landing page, roster matrix, fixture timeline, match recap overlay.",
       liveDemo: "https://daniyal-hayat-portfolio.vercel.app/",
-      github: "https://github.com/Daniyal5722",
+      github: "https://github.com/DotDaniyal",
       lessonsLearned: "Sports platforms require clear typographic hierarchy—fans look for kickoff times and scores in under 2 seconds.",
       result: "Delivered a high-energy, production-ready web platform that elevates the club's professional digital presence."
     }
@@ -269,7 +271,7 @@ export const PROJECTS: Project[] = [
     description: "Luxury optical boutique showcase featuring high-fashion editorial layouts, curated frame catalogues, and prescription filter systems.",
     technologies: ["React", "TypeScript", "Tailwind CSS", "Motion", "E-Commerce"],
     language: "TypeScript",
-    githubUrl: "https://github.com/Daniyal5722",
+    githubUrl: "https://github.com/DotDaniyal",
     liveUrl: "https://daniyal-hayat-portfolio.vercel.app/",
     category: "E-Commerce & Brand",
     featured: true,
@@ -296,7 +298,7 @@ export const PROJECTS: Project[] = [
       solution: "Employed progressive lazy loading and responsive WebP image wrappers to ensure sub-second rendering.",
       screenshots: "Showroom hero, frame visualizer, customizer drawer, checkout flow.",
       liveDemo: "https://daniyal-hayat-portfolio.vercel.app/",
-      github: "https://github.com/Daniyal5722",
+      github: "https://github.com/DotDaniyal",
       lessonsLearned: "Micro-interactions and typography choice establish luxury perception more effectively than complex heavy animations.",
       result: "A stunning digital brand experience demonstrating Daniyal's creative art direction and frontend engineering."
     }
@@ -308,7 +310,7 @@ export const PROJECTS: Project[] = [
     description: "AI-assisted Islamic consultation platform integrating verified reference libraries, fatwa archives, and intelligent prompt querying.",
     technologies: ["TypeScript", "React", "Google Gemini AI", "Tailwind CSS", "REST APIs"],
     language: "TypeScript",
-    githubUrl: "https://github.com/Daniyal5722/Offical-Darul-ifta-Irshad-us-saileen-",
+    githubUrl: "https://github.com/DotDaniyal/Offical-Darul-ifta-Irshad-us-saileen-",
     liveUrl: "https://darulifta-bkfbzf6u.manus.space/",
     category: "AI & Intelligence",
     featured: true,
@@ -335,7 +337,7 @@ export const PROJECTS: Project[] = [
       solution: "Implemented rigorous system instructions, few-shot theological examples, and multi-tier defensive prompt guards.",
       screenshots: "Search portal, verified answer citation cards, bilingual script toggle, source drawer.",
       liveDemo: "https://darulifta-bkfbzf6u.manus.space/",
-      github: "https://github.com/Daniyal5722/Offical-Darul-ifta-Irshad-us-saileen-",
+      github: "https://github.com/DotDaniyal/Offical-Darul-ifta-Irshad-us-saileen-",
       lessonsLearned: "Domain-specific AI applications require specialized guardrails; precision is far more vital than open-ended creativity.",
       result: "An authoritative AI consultation platform bridging tradition with cutting-edge language model technology."
     }
@@ -347,7 +349,7 @@ export const PROJECTS: Project[] = [
     description: "Intelligent audio and voice processing suite featuring speech clarity enhancement, transcript generation, and low-latency audio telemetry.",
     technologies: ["TypeScript", "Audio Processing", "AI Models", "Node.js", "Tailwind CSS"],
     language: "TypeScript",
-    githubUrl: "https://github.com/Daniyal5722/cortexiq-by-dnyl",
+    githubUrl: "https://github.com/DotDaniyal/cortexiq-by-dnyl",
     liveUrl: "https://daniyal-hayat-portfolio.vercel.app/",
     category: "AI & Audio",
     featured: false,
@@ -374,7 +376,7 @@ export const PROJECTS: Project[] = [
       solution: "Decoupled audio recording and visualizer loops using requestAnimationFrame and lightweight typed arrays.",
       screenshots: "Spectrogram visualizer, transcript drawer, audio enhancement controls.",
       liveDemo: "https://daniyal-hayat-portfolio.vercel.app/",
-      github: "https://github.com/Daniyal5722/cortexiq-by-dnyl",
+      github: "https://github.com/DotDaniyal/cortexiq-by-dnyl",
       lessonsLearned: "Real-time Web Audio API requires strict memory pooling to avoid Garbage Collection pauses.",
       result: "A responsive, futuristic audio intelligence playground showcasing Daniyal's technical depth in AI and canvas physics."
     }
@@ -386,7 +388,7 @@ export const PROJECTS: Project[] = [
     description: "High-performance 2D arcade physics racing simulation with responsive touch controls, dynamic obstacle loops, and 60 FPS canvas rendering.",
     technologies: ["JavaScript", "HTML5 Canvas", "Game Physics", "Touch Ergonomics"],
     language: "JavaScript",
-    githubUrl: "https://github.com/Daniyal5722",
+    githubUrl: "https://github.com/DotDaniyal",
     liveUrl: "https://daniyal-hayat-portfolio.vercel.app/",
     category: "Interactive Game",
     featured: false,
@@ -413,7 +415,7 @@ export const PROJECTS: Project[] = [
       solution: "Implemented raycast trajectory sweeps between consecutive frames for 100% reliable collision checks.",
       screenshots: "Game highway, speed HUD, score overlay, mobile touch buttons.",
       liveDemo: "https://daniyal-hayat-portfolio.vercel.app/",
-      github: "https://github.com/Daniyal5722",
+      github: "https://github.com/DotDaniyal",
       lessonsLearned: "Writing physics from scratch reinforces core data structures, coordinate transformations, and memory efficiency.",
       result: "An addictive, instant-loading web arcade game running at a rock-solid 60 FPS on any device."
     }
@@ -425,7 +427,7 @@ export const PROJECTS: Project[] = [
     description: "Personal portfolio showcase platform featuring live GitHub synchronization, dual-theme styling, smooth page transitions, and zero-compromise UX.",
     technologies: ["React", "TypeScript", "Tailwind CSS", "Vite", "Motion"],
     language: "TypeScript",
-    githubUrl: "https://github.com/Daniyal5722/Daniyal-Hayat-Portfolio",
+    githubUrl: "https://github.com/DotDaniyal/Daniyal-Hayat-Portfolio",
     liveUrl: "https://daniyal-hayat-portfolio.vercel.app/",
     category: "Web Application",
     featured: false,
@@ -452,7 +454,7 @@ export const PROJECTS: Project[] = [
       solution: "Used hardware-accelerated CSS transforms, GPU-powered Motion animations, and defensive localStorage caching for external APIs.",
       screenshots: "Hero section, interactive skills grid, project modal, dark/light theme toggle.",
       liveDemo: "https://daniyal-hayat-portfolio.vercel.app/",
-      github: "https://github.com/Daniyal5722/Daniyal-Hayat-Portfolio",
+      github: "https://github.com/DotDaniyal/Daniyal-Hayat-Portfolio",
       lessonsLearned: "A portfolio is never truly finished; it is a living document that must evolve gracefully alongside the developer's skill set.",
       result: "A world-class personal brand platform showcasing verified capabilities and real projects to employers, collaborators, and clients worldwide."
     }
@@ -464,7 +466,7 @@ export const PROJECTS: Project[] = [
     description: "Full-stack intelligent prompt crafting workspace featuring real-time template generation, structured variables, and one-click export tools.",
     technologies: ["React", "Node.js", "Express", "Gemini AI API", "Tailwind CSS"],
     language: "TypeScript",
-    githubUrl: "https://github.com/Daniyal5722/cortexiq-by-dnyl",
+    githubUrl: "https://github.com/DotDaniyal/cortexiq-by-dnyl",
     liveUrl: "https://ais-pre-c2gas5bmz4riptqglg7i75-935024525749.asia-east1.run.app",
     category: "AI & Fullstack",
     featured: true,
@@ -491,7 +493,7 @@ export const PROJECTS: Project[] = [
       solution: "Implemented robust asynchronous proxy routes with streaming support and clear client error notifications.",
       screenshots: "Prompt editor, variable injector, live response preview, history drawer.",
       liveDemo: "https://ais-dev-gvoirokmxhudyitnlrgk6m-935024525749.asia-east1.run.app",
-      github: "https://github.com/Daniyal5722/cortexiq-by-dnyl",
+      github: "https://github.com/DotDaniyal/cortexiq-by-dnyl",
       lessonsLearned: "Routing sensitive LLM calls through a dedicated backend API route is essential for security and rate-limit control.",
       result: "Provides an ultra-smooth playground for rapid prompt iteration and AI-driven development."
     }
@@ -730,7 +732,7 @@ export const LIVE_DEPLOYMENTS = [
     title: "Mystic Match Puzzle Game",
     type: "Live Algorithmic Game",
     url: "https://mystic-match-rho.vercel.app/",
-    githubUrl: "https://github.com/Daniyal5722/mystic-match-by-dnyl",
+    githubUrl: "https://github.com/DotDaniyal/mystic-match-by-dnyl",
     badge: "Vercel Live",
     description: "Mobile-first fantasy match-3 algorithmic puzzle game with fluid touch physics."
   },
@@ -738,7 +740,7 @@ export const LIVE_DEPLOYMENTS = [
     title: "Hamara Weather",
     type: "Live Forecast App",
     url: "https://hamara-weather.vercel.app/",
-    githubUrl: "https://github.com/Daniyal5722/Hamara-Weather",
+    githubUrl: "https://github.com/DotDaniyal/Hamara-Weather",
     badge: "Vercel Live",
     description: "Real-time meteorological tracking dashboard with atmospheric metrics and forecasts."
   },
@@ -746,7 +748,7 @@ export const LIVE_DEPLOYMENTS = [
     title: "Daniyal Hayat Portfolio",
     type: "Live Showcase Platform",
     url: "https://daniyal-hayat-portfolio.vercel.app/",
-    githubUrl: "https://github.com/Daniyal5722/Daniyal-Hayat-Portfolio",
+    githubUrl: "https://github.com/DotDaniyal/Daniyal-Hayat-Portfolio",
     badge: "Vercel Live",
     description: "Personal developer showcase platform synchronizing live GitHub repository metrics."
   }

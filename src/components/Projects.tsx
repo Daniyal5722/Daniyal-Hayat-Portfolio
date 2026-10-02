@@ -24,7 +24,7 @@ import {
 } from 'lucide-react';
 import { useGitHubRepos } from '../hooks/useGitHubRepos';
 import { Project } from '../types';
-import { LIVE_DEPLOYMENTS } from '../data/portfolioData';
+import { LIVE_DEPLOYMENTS, GITHUB_PROFILE_URL } from '../data/portfolioData';
 import { getEstimatedReadingTime } from '../utils/readingTime';
 
 interface ProjectsProps {
@@ -354,7 +354,7 @@ export function Projects({ onOpenCaseStudy }: ProjectsProps) {
           </div>
 
           <a
-            href="https://github.com/Daniyal5722?tab=repositories"
+            href={`${GITHUB_PROFILE_URL}?tab=repositories`}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center min-h-[44px] gap-2 px-4 py-2.5 rounded-xl bg-white dark:bg-[#111422] border border-slate-200/90 dark:border-slate-800 text-xs font-mono text-slate-700 dark:text-slate-300 hover:text-cyan-500 transition-colors group shadow-xs shrink-0 self-start md:self-auto"

@@ -13,7 +13,7 @@ import {
   Search,
   Github
 } from 'lucide-react';
-import { GITHUB_PROFILE_URL } from '../data/portfolioData';
+import { GITHUB_PROFILE_URL, GITHUB_USERNAME } from '../data/portfolioData';
 import { soundManager } from '../utils/sound';
 
 interface NavbarProps {
@@ -236,6 +236,8 @@ export function Navbar({
               onOpenResume();
             }}
             data-cursor="pointer"
+            aria-label="View Daniyal Hayat Resume PDF"
+            title="View Daniyal Hayat Resume PDF"
             className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl dark:bg-slate-900/80 bg-slate-100 hover:dark:bg-slate-800 hover:bg-slate-200 border dark:border-slate-800 border-slate-200 text-xs font-medium dark:text-slate-200 text-slate-700 transition-colors cursor-pointer"
           >
             <FileText className="w-3.5 h-3.5 text-cyan-500" />
@@ -352,7 +354,7 @@ export function Navbar({
                 className="flex items-center justify-center gap-2 min-h-[44px] px-4 py-3 rounded-xl dark:bg-slate-900 bg-slate-100 border dark:border-slate-800 border-slate-200 text-xs font-mono dark:text-slate-300 text-slate-700 active:scale-[0.98] transition-transform"
               >
                 <Github className="w-4 h-4 text-cyan-400" />
-                <span>GitHub Profile (@Daniyal5722)</span>
+                <span>GitHub Profile (@{GITHUB_USERNAME})</span>
               </a>
             </div>
           </motion.div>

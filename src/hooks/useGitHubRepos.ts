@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Project } from '../types';
-import { PROJECTS } from '../data/portfolioData';
+import { PROJECTS, GITHUB_USERNAME } from '../data/portfolioData';
 
 export function useGitHubRepos() {
   const [projects, setProjects] = useState<Project[]>(PROJECTS);
@@ -12,7 +12,7 @@ export function useGitHubRepos() {
     setIsSyncing(true);
     setSyncError(null);
     try {
-      const response = await fetch('https://api.github.com/users/Daniyal5722/repos?per_page=100&sort=updated');
+      const response = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100&sort=updated`);
       if (!response.ok) {
         throw new Error(`GitHub API returned status ${response.status}: ${response.statusText}`);
       }

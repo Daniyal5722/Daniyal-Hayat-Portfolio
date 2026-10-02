@@ -1,6 +1,14 @@
 import express from "express";
 import path from "path";
+import fs from "fs";
 import { GoogleGenAI } from "@google/genai";
+
+import { 
+  validateContactSubmission, 
+  checkRateLimit, 
+  checkDuplicateSubmission, 
+  sendContactEmail 
+} from "./src/server/emailService";
 
 const app = express();
 const PORT = 3000;
@@ -12,20 +20,84 @@ app.get("/api/health", (req, res) => {
   res.json({ status: "ok", uptime: process.uptime(), timestamp: new Date().toISOString() });
 });
 
-// Contact message endpoint for durable persistence
-app.post("/api/contact", (req, res) => {
+// Explicit resume PDF endpoints for direct download or browser viewing
+app.get(["/resume/Daniyal-Hayat-Resume.pdf", "/Daniyal-Hayat-Resume.pdf", "/resume.pdf", "/cv.pdf"], (req, res) => {
+  const filePath1 = path.join(process.cwd(), "public", "resume", "Daniyal-Hayat-Resume.pdf");
+  const filePath2 = path.join(process.cwd(), "public", "Daniyal-Hayat-Resume.pdf");
+  const targetPath = fs.existsSync(filePath1) ? filePath1 : filePath2;
+
+  if (fs.existsSync(targetPath)) {
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader(
+      "Content-Disposition",
+      req.query.download === "true"
+        ? 'attachment; filename="Daniyal-Hayat-Resume.pdf"'
+        : 'inline; filename="Daniyal-Hayat-Resume.pdf"'
+    );
+    res.setHeader("Cache-Control", "public, max-age=86400");
+    return res.sendFile(targetPath);
+  } else {
+    return res.status(404).send("Resume PDF not found.");
+  }
+});
+
+// Contact message endpoint with validation, rate limiting, spam defense, and email dispatch
+app.post("/api/contact", async (req, res) => {
   try {
-    const { name, email, message } = req.body;
-    if (!name || !email || !message) {
-      return res.status(400).json({ error: "Name, email, and message are required." });
+    const ip = (req.headers["x-forwarded-for"] as string)?.split(",")[0]?.trim() || 
+               req.socket?.remoteAddress || 
+               "127.0.0.1";
+    const userAgent = req.headers["user-agent"] || "unknown";
+
+    // 1. Rate Limiting Check
+    if (!checkRateLimit(ip)) {
+      return res.status(429).json({ 
+        error: "Too many messages sent. Please wait a few minutes before trying again." 
+      });
     }
-    console.log(`[Contact Transmission] Received message from ${name} (${email}): ${message.slice(0, 50)}...`);
+
+    const { name, email, subject, message, honeypot } = req.body || {};
+
+    // 2. Server-Side Validation
+    const validation = validateContactSubmission({ name, email, subject, message, honeypot });
+    if (!validation.valid) {
+      return res.status(400).json({ error: validation.error || "Invalid form submission." });
+    }
+
+    // 3. Duplicate Submission Protection
+    if (checkDuplicateSubmission({ name, email, subject, message })) {
+      return res.status(200).json({ 
+        success: true, 
+        message: "Message already received. Thanks for reaching out." 
+      });
+    }
+
+    // 4. Send Email via configured provider (Resend API, SMTP, or Webhook)
+    const result = await sendContactEmail({
+      name,
+      email,
+      subject,
+      message,
+      honeypot,
+      ip,
+      userAgent,
+    });
+
+    if (!result.success) {
+      return res.status(500).json({ 
+        error: "Your message could not be sent. Please try again or reach out directly by email." 
+      });
+    }
+
     return res.status(200).json({ 
       success: true, 
-      message: "Message received successfully. Daniyal will follow up with you shortly." 
+      message: "Message sent successfully! Your message has been delivered. Thanks for reaching out." 
     });
   } catch (err: any) {
-    return res.status(500).json({ error: "Failed to process contact message." });
+    console.error("[API /contact] Server error:", err);
+    return res.status(500).json({ 
+      error: "Something went wrong while processing your request. Please try again later." 
+    });
   }
 });
 
@@ -49,7 +121,7 @@ Here is the official verified information about Daniyal Hayat:
 - Tagline: I build modern web experiences, interactive applications, AI-powered products, and creative digital experiences.
 - Location: Available Globally & Remote
 - Email: mdaniyalhayyat@gmail.com
-- GitHub: https://github.com/Daniyal5722
+- GitHub: https://github.com/DotDaniyal
 - Portfolio Live URL: https://daniyal-hayat-portfolio.vercel.app/
 
 Core Skills:
@@ -79,24 +151,24 @@ Verified Real Projects:
    - Description: Production consultation platform serving religious guidance and fatwa archives with responsive layouts and offline-cached Android companion app.
    - Tech: JavaScript, Tailwind CSS, Kotlin, Android SDK, SQLite/Room.
    - Live URL: https://darulifta-bkfbzf6u.manus.space/
-   - GitHub: https://github.com/Daniyal5722/Offical-Darul-ifta-Irshad-us-saileen-
+   - GitHub: https://github.com/DotDaniyal/Offical-Darul-ifta-Irshad-us-saileen-
 
 6. CortexIQ AI Suite
    - Description: Production-ready AI computational intelligence suite featuring advanced LLM integration, reactive dashboard telemetry, and modular tool pipelines.
    - Tech: TypeScript, React, Google Gemini AI, Tailwind CSS, Vite, Motion.
-   - GitHub: https://github.com/Daniyal5722/cortexiq-by-dnyl
+   - GitHub: https://github.com/DotDaniyal/cortexiq-by-dnyl
 
 7. Hamara Weather
    - Description: Real-time meteorological tracking application delivering live atmospheric condition metrics, precision forecasts, and intuitive visual data.
    - Tech: JavaScript, OpenWeather API, HTML5, CSS3.
    - Live URL: https://hamara-weather.vercel.app/
-   - GitHub: https://github.com/Daniyal5722/Hamara-Weather
+   - GitHub: https://github.com/DotDaniyal/Hamara-Weather
 
 8. Mystic Match Puzzle Game
    - Description: Mobile-first fantasy match-3 algorithmic puzzle game engineered in Kotlin with custom game mechanics and responsive touch physics.
    - Tech: Kotlin, Android, Canvas, Algorithms.
    - Live URL: https://mystic-match-rho.vercel.app/
-   - GitHub: https://github.com/Daniyal5722/mystic-match-by-dnyl
+   - GitHub: https://github.com/DotDaniyal/mystic-match-by-dnyl
 
 9. Motorcycle Sprint 2D
    - Description: High-performance 2D arcade physics racing simulation with responsive touch controls and lightweight canvas loop.

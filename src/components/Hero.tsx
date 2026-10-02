@@ -219,6 +219,8 @@ export function Hero({ onOpenResume, isLoaded = true }: HeroProps) {
                   <MagneticButton
                     onClick={onOpenResume}
                     dataCursor="pointer"
+                    aria-label="Download Daniyal Hayat Resume"
+                    title="Download Daniyal Hayat Resume"
                     className="flex-1 sm:flex-none min-h-[44px] px-5 py-3.5 rounded-xl bg-white dark:bg-slate-900/60 hover:bg-slate-50 dark:hover:bg-slate-800 border border-slate-300/80 dark:border-slate-800 text-slate-700 dark:text-slate-300 text-sm font-mono transition-all duration-200 cursor-pointer flex items-center justify-center gap-2 active:scale-[0.98] hover:border-cyan-500/40 shadow-xs"
                   >
                     <FileText className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />

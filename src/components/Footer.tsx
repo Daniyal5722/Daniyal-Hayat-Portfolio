@@ -1,9 +1,13 @@
 import { useState, useEffect } from 'react';
-import { DEVELOPER_NAME, DEVELOPER_ROLE, DEVELOPER_EMAIL, GITHUB_PROFILE_URL, LIVE_DEPLOYMENTS } from '../data/portfolioData';
-import { Github, ExternalLink, ArrowUp, Clock, Globe, Mail } from 'lucide-react';
+import { DEVELOPER_NAME, DEVELOPER_ROLE, DEVELOPER_EMAIL, GITHUB_PROFILE_URL, LIVE_DEPLOYMENTS, RESUME_PDF_PATH, RESUME_FILENAME } from '../data/portfolioData';
+import { Github, ExternalLink, ArrowUp, Clock, Globe, Mail, FileText, Download } from 'lucide-react';
 import { MagneticButton } from './MagneticButton';
 
-export function Footer() {
+interface FooterProps {
+  onOpenResume?: () => void;
+}
+
+export function Footer({ onOpenResume }: FooterProps) {
   const currentYear = new Date().getFullYear();
   const [timeString, setTimeString] = useState('');
 
@@ -130,6 +134,28 @@ export function Footer() {
               <Github className="w-3.5 h-3.5" />
               <span>GitHub</span>
             </a>
+            {onOpenResume ? (
+              <button
+                type="button"
+                onClick={onOpenResume}
+                aria-label="View Daniyal Hayat Resume PDF"
+                className="min-h-[44px] inline-flex items-center gap-1 hover:text-cyan-400 transition-colors cursor-pointer"
+              >
+                <FileText className="w-3.5 h-3.5 text-cyan-500" />
+                <span>Resume / CV</span>
+              </button>
+            ) : (
+              <a
+                href={RESUME_PDF_PATH}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="View Daniyal Hayat Resume PDF"
+                className="min-h-[44px] inline-flex items-center gap-1 hover:text-cyan-400 transition-colors"
+              >
+                <FileText className="w-3.5 h-3.5 text-cyan-500" />
+                <span>Resume PDF</span>
+              </a>
+            )}
             <a href="#projects" className="min-h-[44px] inline-flex items-center hover:text-cyan-400 transition-colors">
               Projects
             </a>

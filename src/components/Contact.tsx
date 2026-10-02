@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import { 
   Send, 
   CheckCircle2, 
@@ -10,76 +10,195 @@ import {
   Check, 
   MessageSquare,
   Clock,
-  Sparkles
+  Sparkles,
+  RefreshCw,
+  User,
+  AtSign,
+  Tag
 } from 'lucide-react';
 import { DEVELOPER_EMAIL, GITHUB_PROFILE_URL, GITHUB_USERNAME } from '../data/portfolioData';
 import { ContactFormState } from '../types';
+import { soundManager } from '../utils/sound';
+
+interface FormErrors {
+  name?: string;
+  email?: string;
+  subject?: string;
+  message?: string;
+}
 
 export function Contact() {
   const [formData, setFormData] = useState<ContactFormState>({
     name: '',
     email: '',
-    message: ''
+    subject: '',
+    message: '',
+    honeypot: '',
   });
+
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [touched, setTouched] = useState<{ [key: string]: boolean }>({});
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [serverErrorMessage, setServerErrorMessage] = useState<string>('');
   const [copied, setCopied] = useState(false);
 
   const handleCopyEmail = () => {
+    soundManager.playClick();
     navigator.clipboard.writeText(DEVELOPER_EMAIL);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setErrorMessage('');
+  const validateField = (fieldName: keyof ContactFormState, value: string): string | undefined => {
+    const trimmed = (value || '').trim();
 
-    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
-      setStatus('error');
-      setErrorMessage('Please fill in your name, email, and message.');
-      return;
+    if (fieldName === 'name') {
+      if (!trimmed) return 'Name cannot be empty.';
+      if (trimmed.length < 2) return 'Name must be at least 2 characters.';
+      if (trimmed.length > 100) return 'Name cannot exceed 100 characters.';
     }
 
-    if (!formData.email.includes('@') || !formData.email.includes('.')) {
+    if (fieldName === 'email') {
+      if (!trimmed) return 'Email cannot be empty.';
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      if (!emailRegex.test(trimmed)) return 'Please enter a valid email address.';
+      if (trimmed.length > 150) return 'Email cannot exceed 150 characters.';
+    }
+
+    if (fieldName === 'subject') {
+      if (!trimmed) return 'Subject cannot be empty.';
+      if (trimmed.length < 2) return 'Subject must be at least 2 characters.';
+      if (trimmed.length > 200) return 'Subject cannot exceed 200 characters.';
+    }
+
+    if (fieldName === 'message') {
+      if (!trimmed) return 'Message cannot be empty.';
+      if (trimmed.length < 10) return 'Message must be at least 10 characters.';
+      if (trimmed.length > 5000) return 'Message cannot exceed 5000 characters.';
+    }
+
+    return undefined;
+  };
+
+  const validateForm = (): boolean => {
+    const newErrors: FormErrors = {};
+
+    const nameErr = validateField('name', formData.name);
+    if (nameErr) newErrors.name = nameErr;
+
+    const emailErr = validateField('email', formData.email);
+    if (emailErr) newErrors.email = emailErr;
+
+    const subjectErr = validateField('subject', formData.subject);
+    if (subjectErr) newErrors.subject = subjectErr;
+
+    const messageErr = validateField('message', formData.message);
+    if (messageErr) newErrors.message = messageErr;
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleBlur = (field: keyof ContactFormState) => {
+    setTouched(prev => ({ ...prev, [field]: true }));
+    const error = validateField(field, formData[field] || '');
+    setErrors(prev => ({ ...prev, [field]: error }));
+  };
+
+  const handleChange = (field: keyof ContactFormState, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+    if (status === 'error') {
+      setStatus('idle');
+      setServerErrorMessage('');
+    }
+    if (touched[field]) {
+      const error = validateField(field, value);
+      setErrors(prev => ({ ...prev, [field]: error }));
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    soundManager.playClick();
+
+    // Mark all fields as touched for inline validation feedback
+    setTouched({
+      name: true,
+      email: true,
+      subject: true,
+      message: true,
+    });
+
+    // Run full validation
+    const isValid = validateForm();
+    if (!isValid) {
+      soundManager.playError();
       setStatus('error');
-      setErrorMessage('Please enter a valid email address.');
+      setServerErrorMessage('Please correct the highlighted fields before submitting.');
+      
+      // Auto-focus first invalid field
+      const firstErrorKey = Object.keys(errors)[0] || 'name';
+      const el = document.getElementById(`contact-${firstErrorKey}`);
+      if (el) el.focus();
       return;
     }
 
     setStatus('loading');
+    setServerErrorMessage('');
 
     try {
-      // Save locally first for offline resilience
-      try {
-        const existingMessages = JSON.parse(localStorage.getItem('daniyal_portfolio_messages') || '[]');
-        localStorage.setItem('daniyal_portfolio_messages', JSON.stringify([
-          ...existingMessages,
-          { ...formData, timestamp: new Date().toISOString() }
-        ]));
-      } catch {
-        // Safe localStorage fallback
-      }
-
-      // Send to server API
-      const res = await fetch('/api/contact', {
+      // Send real API request to server endpoint
+      const response = await fetch('/api/contact', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          subject: formData.subject.trim(),
+          message: formData.message.trim(),
+          honeypot: formData.honeypot || '',
+        }),
       });
 
-      if (!res.ok) {
-        // Fallback: still treat as success since local backup saved
-        console.warn('Server contact route responded with non-200, local record preserved.');
-      }
+      const data = await response.json().catch(() => ({}));
 
-      setStatus('success');
-      setFormData({ name: '', email: '', message: '' });
-    } catch (err) {
-      // Offline fallback: still consider it sent locally
-      setStatus('success');
-      setFormData({ name: '', email: '', message: '' });
+      if (response.ok && data.success) {
+        soundManager.playSuccess();
+        setStatus('success');
+        // Reset form on verified success
+        setFormData({
+          name: '',
+          email: '',
+          subject: '',
+          message: '',
+          honeypot: '',
+        });
+        setErrors({});
+        setTouched({});
+      } else {
+        soundManager.playError();
+        setStatus('error');
+        setServerErrorMessage(data.error || 'Your message could not be sent. Please try again.');
+        // Note: formData is PRESERVED so user doesn't re-type
+      }
+    } catch (err: any) {
+      console.error('Contact submission error:', err);
+      soundManager.playError();
+      setStatus('error');
+      setServerErrorMessage('Your message could not be sent. Please try again.');
+      // Note: formData is PRESERVED
     }
+  };
+
+  const handleResetForm = () => {
+    soundManager.playClick();
+    setStatus('idle');
+    setServerErrorMessage('');
+    setErrors({});
+    setTouched({});
   };
 
   return (
@@ -92,7 +211,7 @@ export function Contact() {
             <span className="px-2.5 py-1 rounded-md bg-cyan-500/10 border border-cyan-500/30 text-cyan-600 dark:text-cyan-400 font-mono text-xs font-bold uppercase tracking-widest">
               CONTACT // 04
             </span>
-            <span className="text-xs font-mono text-slate-400 uppercase tracking-widest">
+            <span className="text-xs font-mono text-slate-500 dark:text-slate-400 uppercase tracking-widest">
               Initiate Transmission
             </span>
           </div>
@@ -100,7 +219,7 @@ export function Contact() {
             LET'S BUILD SOMETHING.
           </h2>
           <p className="text-sm sm:text-base lg:text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
-            Have a web platform, native Android mobile app, or AI integration in mind? Let's turn ideas into high-performance reality.
+            Have a web platform, native Android mobile app, or AI integration in mind? Send a direct transmission and let's turn ideas into reality.
           </p>
         </div>
 
@@ -168,7 +287,7 @@ export function Contact() {
                   <Sparkles className="w-4 h-4 text-cyan-500 shrink-0 mt-0.5" />
                   <div>
                     <strong className="text-slate-900 dark:text-white block font-medium">Project Scope</strong>
-                    Open for high-impact web apps, native Android projects, and technical collaborations.
+                    Open for modern web platforms, native Android apps, and intelligent AI integrations.
                   </div>
                 </div>
               </div>
@@ -184,104 +303,252 @@ export function Contact() {
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-7 rounded-2xl sm:rounded-3xl bg-white dark:bg-[#111422] border border-slate-200 dark:border-slate-800 p-5 sm:p-8 md:p-10 shadow-sm relative overflow-hidden"
           >
-            {status === 'success' ? (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-                className="py-8 sm:py-10 text-center space-y-4"
-              >
-                <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center mx-auto text-emerald-500">
-                  <CheckCircle2 className="w-7 h-7 sm:w-8 sm:h-8" />
-                </div>
-                <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">Message Transmitted!</h3>
-                <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 max-w-md mx-auto leading-relaxed">
-                  Thank you for reaching out. Your inquiry has been safely recorded. Daniyal will follow up with you promptly.
-                </p>
-                <button
-                  type="button"
-                  onClick={() => setStatus('idle')}
-                  className="min-h-[44px] mt-4 px-6 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-mono text-cyan-600 dark:text-cyan-400 border border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors cursor-pointer"
+            <AnimatePresence mode="wait">
+              {status === 'success' ? (
+                /* SUCCESS STATE */
+                <motion.div
+                  key="success-state"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                  className="py-8 sm:py-10 text-center space-y-4"
+                  role="status"
+                  aria-live="polite"
                 >
-                  Send Another Inquiry
-                </button>
-              </motion.div>
-            ) : (
-              <form id="contact-form" onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
-                {status === 'error' && (
-                  <div className="p-3.5 sm:p-4 rounded-xl bg-red-500/10 border border-red-500/30 flex items-center gap-3 text-red-600 dark:text-red-400 text-xs font-mono">
-                    <AlertCircle className="w-4 h-4 shrink-0" />
-                    <span>{errorMessage}</span>
+                  <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center mx-auto text-emerald-500">
+                    <CheckCircle2 className="w-7 h-7 sm:w-8 sm:h-8" />
                   </div>
-                )}
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
-                  <div className="space-y-1.5 sm:space-y-2">
-                    <label htmlFor="contact-name" className="text-xs font-mono uppercase tracking-wider text-slate-600 dark:text-slate-400 block">
-                      Full Name *
-                    </label>
-                    <input
-                      id="contact-name"
-                      type="text"
-                      required
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      placeholder="e.g. Alex Chen"
-                      className="w-full min-h-[44px] px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 text-slate-900 dark:text-white text-base sm:text-sm outline-none transition-all placeholder:text-slate-400"
-                    />
+                  <div className="space-y-2 max-w-md mx-auto">
+                    <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
+                      Message sent successfully!
+                    </h3>
+                    <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                      Your message has been delivered. Thanks for reaching out.
+                    </p>
                   </div>
-
-                  <div className="space-y-1.5 sm:space-y-2">
-                    <label htmlFor="contact-email" className="text-xs font-mono uppercase tracking-wider text-slate-600 dark:text-slate-400 block">
-                      Email Address *
-                    </label>
-                    <input
-                      id="contact-email"
-                      type="email"
-                      required
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      placeholder="e.g. alex@company.com"
-                      className="w-full min-h-[44px] px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 text-slate-900 dark:text-white text-base sm:text-sm outline-none transition-all placeholder:text-slate-400"
-                    />
+                  <div className="pt-3">
+                    <button
+                      type="button"
+                      onClick={handleResetForm}
+                      className="min-h-[44px] px-6 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-xs font-mono font-semibold text-slate-800 dark:text-slate-200 border border-slate-300/80 dark:border-slate-700 transition-colors cursor-pointer inline-flex items-center gap-2"
+                    >
+                      <RefreshCw className="w-3.5 h-3.5 text-cyan-500" />
+                      <span>Send Another Message</span>
+                    </button>
                   </div>
-                </div>
-
-                <div className="space-y-1.5 sm:space-y-2">
-                  <label htmlFor="contact-message" className="text-xs font-mono uppercase tracking-wider text-slate-600 dark:text-slate-400 block">
-                    Message Details *
-                  </label>
-                  <textarea
-                    id="contact-message"
-                    rows={4}
-                    required
-                    value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    placeholder="Describe your project, timeline, or engineering opportunity..."
-                    className="w-full px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 text-slate-900 dark:text-white text-base sm:text-sm outline-none transition-all placeholder:text-slate-400 resize-none"
-                  />
-                </div>
-
-                <button
-                  id="contact-submit-btn"
-                  type="submit"
-                  disabled={status === 'loading'}
-                  className="w-full min-h-[48px] flex items-center justify-center gap-2 py-3.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-sm shadow-md shadow-cyan-500/20 transition-all disabled:opacity-50 hover:scale-[1.01] active:scale-[0.99] cursor-pointer"
+                </motion.div>
+              ) : (
+                /* FORM VIEW */
+                <form 
+                  key="contact-form-view"
+                  id="contact-form" 
+                  onSubmit={handleSubmit} 
+                  noValidate
+                  className="space-y-4 sm:space-y-5"
                 >
-                  {status === 'loading' ? (
-                    <>
-                      <Loader2 className="w-4 h-4 animate-spin" />
-                      <span>Sending Message...</span>
-                    </>
-                  ) : (
-                    <>
-                      <Send className="w-4 h-4" />
-                      <span>Dispatch Inquiry</span>
-                    </>
+                  {/* Global Error Banner */}
+                  {status === 'error' && (
+                    <div 
+                      className="p-3.5 sm:p-4 rounded-xl bg-red-500/10 border border-red-500/30 flex items-start gap-3 text-red-700 dark:text-red-400 text-xs font-mono"
+                      role="alert"
+                      aria-live="assertive"
+                    >
+                      <AlertCircle className="w-4 h-4 shrink-0 mt-0.5 text-red-500" />
+                      <div className="space-y-0.5">
+                        <strong className="block font-bold">Something went wrong</strong>
+                        <p>{serverErrorMessage || 'Your message could not be sent. Please try again.'}</p>
+                      </div>
+                    </div>
                   )}
-                </button>
-              </form>
-            )}
+
+                  {/* Honeypot Spam Field (Hidden from real visitors) */}
+                  <div className="hidden" aria-hidden="true">
+                    <label htmlFor="contact-company">Company</label>
+                    <input
+                      id="contact-company"
+                      type="text"
+                      name="company"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      value={formData.honeypot || ''}
+                      onChange={(e) => setFormData(prev => ({ ...prev, honeypot: e.target.value }))}
+                    />
+                  </div>
+
+                  {/* Row 1: Name and Email */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+                    {/* Name Field */}
+                    <div className="space-y-1.5">
+                      <label 
+                        htmlFor="contact-name" 
+                        className="text-xs font-mono uppercase tracking-wider text-slate-700 dark:text-slate-300 font-semibold flex items-center justify-between"
+                      >
+                        <span>Full Name <span className="text-cyan-500" aria-hidden="true">*</span></span>
+                      </label>
+                      <div className="relative">
+                        <input
+                          id="contact-name"
+                          name="name"
+                          type="text"
+                          required
+                          disabled={status === 'loading'}
+                          value={formData.name}
+                          onChange={(e) => handleChange('name', e.target.value)}
+                          onBlur={() => handleBlur('name')}
+                          placeholder="e.g. Alex Chen"
+                          aria-invalid={errors.name ? 'true' : 'false'}
+                          aria-describedby={errors.name ? 'name-error' : undefined}
+                          className={`w-full min-h-[44px] px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl bg-slate-50 dark:bg-slate-950 border text-slate-900 dark:text-white text-base sm:text-sm outline-none transition-all placeholder:text-slate-400 focus:ring-2 disabled:opacity-50 disabled:cursor-not-allowed ${
+                            errors.name 
+                              ? 'border-red-500/80 focus:border-red-500 focus:ring-red-500/20' 
+                              : 'border-slate-200 dark:border-slate-800 focus:border-cyan-500 focus:ring-cyan-500/20'
+                          }`}
+                        />
+                      </div>
+                      {errors.name && (
+                        <p id="name-error" className="text-[11px] font-mono text-red-600 dark:text-red-400 flex items-center gap-1 pt-0.5">
+                          <AlertCircle className="w-3 h-3 shrink-0" />
+                          <span>{errors.name}</span>
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Email Field */}
+                    <div className="space-y-1.5">
+                      <label 
+                        htmlFor="contact-email" 
+                        className="text-xs font-mono uppercase tracking-wider text-slate-700 dark:text-slate-300 font-semibold flex items-center justify-between"
+                      >
+                        <span>Email Address <span className="text-cyan-500" aria-hidden="true">*</span></span>
+                      </label>
+                      <div className="relative">
+                        <input
+                          id="contact-email"
+                          name="email"
+                          type="email"
+                          required
+                          disabled={status === 'loading'}
+                          value={formData.email}
+                          onChange={(e) => handleChange('email', e.target.value)}
+                          onBlur={() => handleBlur('email')}
+                          placeholder="e.g. alex@company.com"
+                          aria-invalid={errors.email ? 'true' : 'false'}
+                          aria-describedby={errors.email ? 'email-error' : undefined}
+                          className={`w-full min-h-[44px] px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl bg-slate-50 dark:bg-slate-950 border text-slate-900 dark:text-white text-base sm:text-sm outline-none transition-all placeholder:text-slate-400 focus:ring-2 disabled:opacity-50 disabled:cursor-not-allowed ${
+                            errors.email 
+                              ? 'border-red-500/80 focus:border-red-500 focus:ring-red-500/20' 
+                              : 'border-slate-200 dark:border-slate-800 focus:border-cyan-500 focus:ring-cyan-500/20'
+                          }`}
+                        />
+                      </div>
+                      {errors.email && (
+                        <p id="email-error" className="text-[11px] font-mono text-red-600 dark:text-red-400 flex items-center gap-1 pt-0.5">
+                          <AlertCircle className="w-3 h-3 shrink-0" />
+                          <span>{errors.email}</span>
+                        </p>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Row 2: Subject */}
+                  <div className="space-y-1.5">
+                    <label 
+                      htmlFor="contact-subject" 
+                      className="text-xs font-mono uppercase tracking-wider text-slate-700 dark:text-slate-300 font-semibold flex items-center justify-between"
+                    >
+                      <span>Subject <span className="text-cyan-500" aria-hidden="true">*</span></span>
+                    </label>
+                    <div className="relative">
+                      <input
+                        id="contact-subject"
+                        name="subject"
+                        type="text"
+                        required
+                        disabled={status === 'loading'}
+                        value={formData.subject}
+                        onChange={(e) => handleChange('subject', e.target.value)}
+                        onBlur={() => handleBlur('subject')}
+                        placeholder="e.g. Web Platform &amp; Android App Collaboration"
+                        aria-invalid={errors.subject ? 'true' : 'false'}
+                        aria-describedby={errors.subject ? 'subject-error' : undefined}
+                        className={`w-full min-h-[44px] px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl bg-slate-50 dark:bg-slate-950 border text-slate-900 dark:text-white text-base sm:text-sm outline-none transition-all placeholder:text-slate-400 focus:ring-2 disabled:opacity-50 disabled:cursor-not-allowed ${
+                          errors.subject 
+                            ? 'border-red-500/80 focus:border-red-500 focus:ring-red-500/20' 
+                            : 'border-slate-200 dark:border-slate-800 focus:border-cyan-500 focus:ring-cyan-500/20'
+                        }`}
+                      />
+                    </div>
+                    {errors.subject && (
+                      <p id="subject-error" className="text-[11px] font-mono text-red-600 dark:text-red-400 flex items-center gap-1 pt-0.5">
+                        <AlertCircle className="w-3 h-3 shrink-0" />
+                        <span>{errors.subject}</span>
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Row 3: Message Details */}
+                  <div className="space-y-1.5">
+                    <label 
+                      htmlFor="contact-message" 
+                      className="text-xs font-mono uppercase tracking-wider text-slate-700 dark:text-slate-300 font-semibold flex items-center justify-between"
+                    >
+                      <span>Message <span className="text-cyan-500" aria-hidden="true">*</span></span>
+                      <span className="text-[10px] font-normal text-slate-400">
+                        {formData.message.length}/5000
+                      </span>
+                    </label>
+                    <div className="relative">
+                      <textarea
+                        id="contact-message"
+                        name="message"
+                        rows={4}
+                        required
+                        maxLength={5000}
+                        disabled={status === 'loading'}
+                        value={formData.message}
+                        onChange={(e) => handleChange('message', e.target.value)}
+                        onBlur={() => handleBlur('message')}
+                        placeholder="Describe your project, timeline, engineering requirements, or opportunity..."
+                        aria-invalid={errors.message ? 'true' : 'false'}
+                        aria-describedby={errors.message ? 'message-error' : undefined}
+                        className={`w-full px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl bg-slate-50 dark:bg-slate-950 border text-slate-900 dark:text-white text-base sm:text-sm outline-none transition-all placeholder:text-slate-400 focus:ring-2 resize-none disabled:opacity-50 disabled:cursor-not-allowed ${
+                          errors.message 
+                            ? 'border-red-500/80 focus:border-red-500 focus:ring-red-500/20' 
+                            : 'border-slate-200 dark:border-slate-800 focus:border-cyan-500 focus:ring-cyan-500/20'
+                        }`}
+                      />
+                    </div>
+                    {errors.message && (
+                      <p id="message-error" className="text-[11px] font-mono text-red-600 dark:text-red-400 flex items-center gap-1 pt-0.5">
+                        <AlertCircle className="w-3 h-3 shrink-0" />
+                        <span>{errors.message}</span>
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Submit Button */}
+                  <button
+                    id="contact-submit-btn"
+                    type="submit"
+                    disabled={status === 'loading'}
+                    className="w-full min-h-[48px] flex items-center justify-center gap-2 py-3.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-sm shadow-md shadow-cyan-500/20 transition-all disabled:opacity-50 active:scale-[0.99] cursor-pointer"
+                  >
+                    {status === 'loading' ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        <span>Sending...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Send className="w-4 h-4" />
+                        <span>Dispatch Inquiry</span>
+                      </>
+                    )}
+                  </button>
+                </form>
+              )}
+            </AnimatePresence>
           </motion.div>
 
         </div>

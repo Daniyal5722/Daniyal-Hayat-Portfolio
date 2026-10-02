@@ -120,6 +120,35 @@ class SoundSystem {
       // Audio playback failed silently
     }
   }
+
+  public playError() {
+    if (!this.enabled) return;
+    try {
+      this.initCtx();
+      if (!this.ctx) return;
+      const now = this.ctx.currentTime;
+      
+      [330, 260].forEach((freq, idx) => {
+        if (!this.ctx) return;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(freq, now + idx * 0.08);
+
+        gain.gain.setValueAtTime(0.02, now + idx * 0.08);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.08 + 0.12);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+
+        osc.start(now + idx * 0.08);
+        osc.stop(now + idx * 0.08 + 0.12);
+      });
+    } catch {
+      // Audio playback failed silently
+    }
+  }
 }
 
 export const soundManager = new SoundSystem();
