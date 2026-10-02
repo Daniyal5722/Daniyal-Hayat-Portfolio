@@ -1,7 +1,7 @@
 import { Project, SkillGroup, ExperienceItem, EducationItem, ServiceItem, AICertificationItem } from '../types';
 
 export const DEVELOPER_NAME = "Daniyal Hayat";
-export const DEVELOPER_ROLE = "Full-Stack Web Developer";
+export const DEVELOPER_ROLE = "Full-Stack Developer & Creative Builder";
 export const DEVELOPER_TAGLINE = "Building High-Impact Web Platforms & Resilient Digital Systems.";
 export const DEVELOPER_LOCATION = "Available Globally & Remote";
 export const DEVELOPER_EMAIL = "mdaniyalhayyat@gmail.com";

@@ -16,7 +16,10 @@ export function CustomCursor() {
 
   useEffect(() => {
     const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    if (isMobileDevice) {
+    const isCoarsePointer = window.matchMedia('(pointer: coarse)').matches;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (isMobileDevice || isCoarsePointer || prefersReducedMotion) {
       setIsTouchDevice(true);
       return;
     }

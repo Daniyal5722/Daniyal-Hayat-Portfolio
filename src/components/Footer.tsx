@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { DEVELOPER_NAME, GITHUB_PROFILE_URL, LIVE_DEPLOYMENTS } from '../data/portfolioData';
-import { Github, ExternalLink, ArrowUp, Clock, Globe } from 'lucide-react';
+import { DEVELOPER_NAME, DEVELOPER_ROLE, DEVELOPER_EMAIL, GITHUB_PROFILE_URL, LIVE_DEPLOYMENTS } from '../data/portfolioData';
+import { Github, ExternalLink, ArrowUp, Clock, Globe, Mail } from 'lucide-react';
 import { MagneticButton } from './MagneticButton';
 
 export function Footer() {
@@ -106,10 +106,20 @@ export function Footer() {
         {/* Bottom Bar: Copyright & Attribution */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-slate-500 pt-6 border-t border-slate-900/60 text-[11px]">
           <div>
-            © {currentYear} {DEVELOPER_NAME}. Built with React 18, TypeScript &amp; Tailwind CSS.
+            <span className="font-semibold text-slate-300">{DEVELOPER_NAME}</span> — <span className="text-slate-400">{DEVELOPER_ROLE}</span>
+            <div className="text-slate-500 text-[10px] mt-0.5">
+              © {currentYear} {DEVELOPER_NAME}. All rights reserved.
+            </div>
           </div>
 
           <div className="flex flex-wrap items-center gap-4 sm:gap-6">
+            <a
+              href={`mailto:${DEVELOPER_EMAIL}`}
+              className="min-h-[44px] inline-flex items-center gap-1 hover:text-cyan-400 transition-colors"
+            >
+              <Mail className="w-3.5 h-3.5" />
+              <span>{DEVELOPER_EMAIL}</span>
+            </a>
             <a
               href={GITHUB_PROFILE_URL}
               target="_blank"
@@ -123,11 +133,11 @@ export function Footer() {
             <a href="#projects" className="min-h-[44px] inline-flex items-center hover:text-cyan-400 transition-colors">
               Projects
             </a>
-            <a href="#skills" className="min-h-[44px] inline-flex items-center hover:text-cyan-400 transition-colors">
-              Matrix
+            <a href="#creative-lab" className="min-h-[44px] inline-flex items-center hover:text-cyan-400 transition-colors">
+              Creative Lab
             </a>
             <a href="#contact" className="min-h-[44px] inline-flex items-center hover:text-cyan-400 transition-colors">
-              Transmission
+              Contact
             </a>
           </div>
         </div>

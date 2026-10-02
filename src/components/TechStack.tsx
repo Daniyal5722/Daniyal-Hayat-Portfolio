@@ -52,17 +52,17 @@ export function TechStack() {
       <div className="absolute left-0 top-0 bottom-0 w-12 sm:w-36 z-20 pointer-events-none bg-gradient-to-r from-slate-50 dark:from-[#090a0f] to-transparent" />
       <div className="absolute right-0 top-0 bottom-0 w-12 sm:w-36 z-20 pointer-events-none bg-gradient-to-l from-slate-50 dark:from-[#090a0f] to-transparent" />
 
-      {/* Row 1: High-impact editorial typographic marquee (Desktop/Tablet only) */}
-      <div className="overflow-hidden mb-5 hidden sm:block">
+      {/* Row 1: High-impact editorial typographic marquee */}
+      <div className="overflow-hidden mb-4 sm:mb-5">
         <div className="animate-marquee-reverse">
           {[1, 2].map((trackKey) => (
-            <div key={trackKey} className="flex items-center gap-8 shrink-0 pr-8">
+            <div key={trackKey} className="flex items-center gap-6 sm:gap-8 shrink-0 pr-6 sm:pr-8">
               {typographicPhrases.map((word, i) => (
-                <div key={i} className="flex items-center gap-8 shrink-0">
-                  <span className="text-2xl sm:text-4xl font-extrabold font-mono tracking-tighter text-slate-300/40 dark:text-slate-800/80 uppercase">
+                <div key={i} className="flex items-center gap-6 sm:gap-8 shrink-0">
+                  <span className="text-lg sm:text-3xl md:text-4xl font-extrabold font-mono tracking-tighter text-slate-300/50 dark:text-slate-800/90 uppercase">
                     {word}
                   </span>
-                  <span className="w-2 h-2 rounded-full bg-cyan-500/40 shrink-0" />
+                  <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-cyan-500/40 shrink-0" />
                 </div>
               ))}
             </div>

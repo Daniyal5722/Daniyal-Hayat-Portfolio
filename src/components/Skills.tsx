@@ -48,10 +48,17 @@ function OrbitVisualizer({
 
   if (!mounted) return null;
 
-  // Split into 3 orbits based on category
-  const orbit1 = skills.filter(s => s.category === 'Frontend');
-  const orbit2 = skills.filter(s => s.category === 'Backend / Data' || s.category === 'AI');
-  const orbit3 = skills.filter(s => s.category === 'Tools / Platforms');
+  // Distribute skills across orbits: by domain when viewing All, or balanced across rings when filtered
+  const isFiltered = skills.length < 10;
+  const orbit1 = !isFiltered
+    ? skills.filter(s => s.category === 'Frontend')
+    : skills.slice(0, Math.ceil(skills.length / 2));
+  const orbit2 = !isFiltered
+    ? skills.filter(s => s.category === 'Backend / Data' || s.category.includes('AI'))
+    : skills.slice(Math.ceil(skills.length / 2));
+  const orbit3 = !isFiltered
+    ? skills.filter(s => s.category === 'Tools / Platforms')
+    : [];
 
   const radii = [140, 240, 340];
 
