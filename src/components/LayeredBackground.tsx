@@ -4,7 +4,6 @@ import { BackgroundBeams } from './BackgroundBeams';
 
 export function LayeredBackground() {
   const [isTouch, setIsTouch] = useState(false);
-  const [isReducedMotion, setIsReducedMotion] = useState(false);
 
   // Mouse spring coordinates for subtle light & parallax
   const mouseX = useMotionValue(-500);
@@ -21,24 +20,13 @@ export function LayeredBackground() {
   const smoothGridY = useSpring(gridY, { damping: 40, stiffness: 120 });
 
   useEffect(() => {
-    const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const updateMotionPref = () => {
-      setIsReducedMotion(reducedMotionQuery.matches);
-    };
-    updateMotionPref();
-    reducedMotionQuery.addEventListener('change', updateMotionPref);
-
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const checkTouch = () => {
-      setIsTouch(reducedMotionQuery.matches || window.matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window);
+      setIsTouch(prefersReducedMotion || window.matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window);
     };
     checkTouch();
 
-    if (reducedMotionQuery.matches) {
-      return () => {
-        reducedMotionQuery.removeEventListener('change', updateMotionPref);
-        window.removeEventListener('resize', checkTouch);
-      };
-    }
+    if (prefersReducedMotion) return;
 
     const handleMouseMove = (e: MouseEvent) => {
       if (isTouch) return;
@@ -56,7 +44,6 @@ export function LayeredBackground() {
     window.addEventListener('resize', checkTouch);
 
     return () => {
-      reducedMotionQuery.removeEventListener('change', updateMotionPref);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('resize', checkTouch);
     };
@@ -64,47 +51,49 @@ export function LayeredBackground() {
 
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden z-0 select-none">
-      {/* Layer 1: Hardware-Accelerated CSS Aurora Gradient Flow Fields */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none transition-opacity duration-1000">
-        {/* Aurora Mesh 1: Primary Cyan/Teal Wave (Top/Center) */}
-        <div 
-          className="absolute -top-[15%] left-[10%] sm:left-[25%] w-[550px] sm:w-[750px] h-[450px] sm:h-[600px] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(6,182,212,0.18)_0%,rgba(14,165,233,0.08)_45%,transparent_75%)] dark:bg-[radial-gradient(ellipse_at_center,rgba(6,182,212,0.16)_0%,rgba(14,165,233,0.06)_45%,transparent_75%)] blur-[90px] sm:blur-[130px] animate-aurora-1"
-          style={{ willChange: 'transform, opacity' }}
-        />
+      {/* Layer 1: Ambient Gradient Mesh with subtle breathing pulsation */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-10%,rgba(6,182,212,0.12),transparent_70%)] dark:bg-[radial-gradient(ellipse_80%_60%_at_50%_-10%,rgba(6,182,212,0.14),transparent_70%)] transition-opacity duration-1000" />
+      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-gradient-to-tl from-indigo-500/10 via-cyan-500/5 to-transparent blur-[140px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/3 left-0 w-[450px] h-[450px] bg-gradient-to-tr from-cyan-500/10 via-violet-500/5 to-transparent blur-[130px] rounded-full pointer-events-none" />
 
-        {/* Aurora Mesh 2: Deep Indigo / Electric Blue Field (Bottom/Right) */}
-        <div 
-          className="absolute -bottom-[20%] -right-[10%] w-[500px] sm:w-[700px] h-[500px] sm:h-[650px] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(99,102,241,0.16)_0%,rgba(59,130,246,0.07)_50%,transparent_75%)] dark:bg-[radial-gradient(ellipse_at_center,rgba(99,102,241,0.14)_0%,rgba(59,130,246,0.05)_50%,transparent_75%)] blur-[100px] sm:blur-[140px] animate-aurora-2"
-          style={{ willChange: 'transform, opacity' }}
-        />
-
-        {/* Aurora Mesh 3: Soft Violet / Purple Accent Wave (Mid-Left) */}
-        <div 
-          className="absolute top-[30%] -left-[15%] w-[450px] sm:w-[600px] h-[450px] sm:h-[600px] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(168,85,247,0.14)_0%,rgba(139,92,246,0.06)_50%,transparent_75%)] dark:bg-[radial-gradient(ellipse_at_center,rgba(168,85,247,0.11)_0%,rgba(139,92,246,0.04)_50%,transparent_75%)] blur-[95px] sm:blur-[135px] animate-aurora-3"
-          style={{ willChange: 'transform, opacity' }}
-        />
-
-        {/* Aurora Mesh 4: Deep Ambient Emerald/Cyan Underglow (Center-Base) */}
-        <div 
-          className="absolute top-[55%] left-[20%] sm:left-[35%] w-[400px] sm:w-[600px] h-[350px] sm:h-[500px] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(20,184,166,0.10)_0%,rgba(6,182,212,0.04)_50%,transparent_75%)] dark:bg-[radial-gradient(ellipse_at_center,rgba(20,184,166,0.08)_0%,rgba(6,182,212,0.03)_50%,transparent_75%)] blur-[90px] sm:blur-[120px] animate-aurora-4"
-          style={{ willChange: 'transform, opacity' }}
-        />
-      </div>
-
-      {/* Layer 2: Deep space vignette gradient base */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_100%_80%_at_50%_0%,transparent_40%,rgba(0,0,0,0.35)_100%)] dark:bg-[radial-gradient(ellipse_100%_80%_at_50%_0%,transparent_40%,rgba(0,0,0,0.65)_100%)] pointer-events-none" />
-
-      {/* Layer 3: Technical Grid with Subtle Mouse Parallax */}
+      {/* Layer 2: Technical Grid with Subtle Mouse Parallax */}
       <motion.div
         style={{ x: smoothGridX, y: smoothGridY }}
-        className="absolute -inset-10 opacity-30 dark:opacity-20 bg-[linear-gradient(to_right,#0ea5e918_1px,transparent_1px),linear-gradient(to_bottom,#0ea5e918_1px,transparent_1px)] bg-[size:3.5rem_3.5rem] [mask-image:radial-gradient(ellipse_75%_65%_at_50%_40%,#000_60%,transparent_100%)]"
+        className="absolute -inset-10 opacity-35 dark:opacity-25 bg-[linear-gradient(to_right,#0ea5e918_1px,transparent_1px),linear-gradient(to_bottom,#0ea5e918_1px,transparent_1px)] bg-[size:3.5rem_3.5rem] [mask-image:radial-gradient(ellipse_75%_65%_at_50%_40%,#000_60%,transparent_100%)]"
       />
 
-      {/* Layer 3.5: Animated Beams */}
+      {/* Layer 2.5: Animated Beams */}
       <BackgroundBeams />
 
+      {/* Layer 3.5: Floating Glass Orbs */}
+      <div className="absolute inset-0 overflow-hidden">
+        {[...Array(3)].map((_, i) => (
+          <motion.div
+            key={`orb-${i}`}
+            initial={{ 
+              x: Math.random() * 100 + '%', 
+              y: Math.random() * 100 + '%',
+              scale: 0.8,
+              opacity: 0.2
+            }}
+            animate={{ 
+              x: [null, Math.random() * 100 + '%', Math.random() * 100 + '%'],
+              y: [null, Math.random() * 100 + '%', Math.random() * 100 + '%'],
+              scale: [0.8, 1.2, 0.8],
+              opacity: [0.2, 0.4, 0.2]
+            }}
+            transition={{
+              duration: 25 + i * 10,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+            className="absolute w-64 h-64 rounded-full bg-gradient-to-br from-cyan-500/5 to-blue-500/5 blur-3xl pointer-events-none"
+          />
+        ))}
+      </div>
+
       {/* Layer 4: Soft Mouse-Reactive Ambient Torch Light */}
-      {!isTouch && !isReducedMotion && (
+      {!isTouch && (
         <motion.div
           style={{
             x: smoothX,
@@ -116,22 +105,21 @@ export function LayeredBackground() {
         />
       )}
 
+
       {/* Layer 5: Subtle Noise / Editorial Grain Texture */}
       <div
-        className="absolute inset-0 opacity-[0.02] dark:opacity-[0.03] pointer-events-none z-[4]"
+        className="absolute inset-0 opacity-[0.022] dark:opacity-[0.035] pointer-events-none z-[4]"
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
         }}
       />
 
-      {/* Layer 5.5: Scanning Pulse Line (suppressed if reduced motion) */}
-      {!isReducedMotion ? (
-        <motion.div
-          animate={{ y: ['-100%', '200%'] }}
-          transition={{ duration: 18, repeat: Infinity, ease: 'linear' }}
-          className="absolute inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-cyan-500/10 to-transparent z-[5] pointer-events-none"
-        />
-      ) : null}
+      {/* Layer 5.5: Scanning Pulse Line */}
+      <motion.div
+        animate={{ y: ['-100%', '200%'] }}
+        transition={{ duration: 15, repeat: Infinity, ease: 'linear' }}
+        className="absolute inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-cyan-500/10 to-transparent z-[5] pointer-events-none"
+      />
 
       {/* Layer 6: Floating Architectural Geometric Elements */}
       <motion.div

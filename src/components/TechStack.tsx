@@ -55,7 +55,7 @@ export function TechStack() {
       {/* Row 1: High-impact editorial typographic marquee */}
       <div className="overflow-hidden mb-4 sm:mb-5">
         <div className="animate-marquee-reverse">
-          {[1, 2, 3, 4].map((trackKey) => (
+          {[1, 2].map((trackKey) => (
             <div key={trackKey} className="flex items-center gap-6 sm:gap-8 shrink-0 pr-6 sm:pr-8">
               {typographicPhrases.map((word, i) => (
                 <div key={i} className="flex items-center gap-6 sm:gap-8 shrink-0">
@@ -73,7 +73,7 @@ export function TechStack() {
       {/* Row 2: Verified Technologies & Tooling */}
       <div className="overflow-hidden">
         <div className="animate-marquee py-1">
-          {[1, 2, 3, 4].map((trackKey) => (
+          {[1, 2].map((trackKey) => (
             <div key={trackKey} className="flex items-center gap-4 shrink-0 pr-4">
               {MARQUEE_TECH_STACK.map((tech, idx) => (
                 <div
