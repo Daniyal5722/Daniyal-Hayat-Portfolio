@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   X, 
@@ -16,7 +16,10 @@ import {
   Eye, 
   Layers, 
   AlertCircle,
-  Sparkles
+  Sparkles,
+  Globe,
+  CheckCircle2,
+  ArrowDownToLine
 } from 'lucide-react';
 import { 
   DEVELOPER_NAME, 
@@ -39,20 +42,11 @@ interface ResumeModalProps {
 }
 
 export function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
-  const [viewMode, setViewMode] = useState<'pdf' | 'ats'>('pdf');
+  const [viewMode, setViewMode] = useState<'document' | 'raw_pdf' | 'ats'>('document');
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [copiedText, setCopiedText] = useState(false);
   const [pdfLoadError, setPdfLoadError] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
+  const [isDownloading, setIsDownloading] = useState(false);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -72,6 +66,29 @@ export function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [isOpen, onClose]);
+
+  const handleDownloadResume = (e?: React.MouseEvent) => {
+    if (e) {
+      // Allow default or programmatic trigger
+    }
+    soundManager.playClick();
+    setIsDownloading(true);
+
+    try {
+      const link = document.createElement('a');
+      link.href = RESUME_PDF_PATH;
+      link.download = RESUME_FILENAME;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (err) {
+      console.error('Download error:', err);
+    }
+
+    setTimeout(() => {
+      setIsDownloading(false);
+    }, 1500);
+  };
 
   const copyEmail = () => {
     soundManager.playClick();
@@ -98,20 +115,21 @@ ${SKILL_GROUPS.map(g => `${g.category.toUpperCase()}: ${g.skills.map(s => s.name
 SELECTED PRODUCTION PROJECTS
 ${PROJECTS.slice(0, 6).map(p => `• ${p.displayName} (${p.category})\n  ${p.description}\n  Tech: ${p.technologies.join(', ')}\n  GitHub: ${p.githubUrl}${p.liveUrl ? `\n  Live: ${p.liveUrl}` : ''}`).join('\n\n')}
 
-EXPERIENCE & MILESTONES
-• 2025 — Present: Full-Stack Web & Native Android Developer (Independent Software Engineer)
-  Architecting production web platforms and native mobile apps with performance, type safety, and accessibility.
-• 2024 — 2025: Mobile Application Developer (Native Android & Algorithmic Systems Focus)
-  Mastered Kotlin Android architecture, Room database, offline synchronization routines, and touch-optimized canvas engines.
-• 2023 — 2024: Frontend Developer (Modern Web Engineering & React Foundations)
-  Built responsive web platforms, async REST API integrations, and component-driven design systems.
+EXPERIENCE & ENGINEERING MILESTONES
+• Full-Stack Web & Native Android Developer (2025 — Present)
+  Independent Software Engineer & Product Builder
+• Mobile Application Developer (2024 — 2025)
+  Native Android & Algorithmic Systems Focus
+• Frontend Developer (2023 — 2024)
+  Modern Web Engineering & React Foundations
 
-EDUCATION & CONTINUOUS LEARNING
-${EDUCATION_DATA.map(e => `• ${e.program} — ${e.institution} (${e.timeline})\n  ${e.description}`).join('\n')}
+EDUCATION & CONTINUOUS SPECIALIZATIONS
+• Core Computer Science, Algorithms & Software Architecture — Continuous Academic & Applied Engineering Studies
+• Google AI Studio & Gemini API SDK Specialization — Advanced AI Systems & Applied Verification (Google Developers & DeepMind)
 `;
     navigator.clipboard.writeText(text);
     setCopiedText(true);
-    setTimeout(() => setCopiedText(false), 2500);
+    setTimeout(() => setCopiedText(false), 2000);
   };
 
   const handlePrint = () => {
@@ -119,11 +137,71 @@ ${EDUCATION_DATA.map(e => `• ${e.program} — ${e.institution} (${e.timeline})
     window.print();
   };
 
+  const productionProjects = [
+    {
+      title: 'Official Darul Ifta Irshad us Saileen & Islamic AI',
+      role: 'Lead Architect & Full-Stack Developer',
+      tech: ['JavaScript', 'Tailwind CSS', 'Kotlin', 'Android SDK', 'Gemini AI', 'REST APIs'],
+      liveUrl: 'https://darulifta-bkfbzf6u.manus.space/',
+      githubUrl: 'https://github.com/DotDaniyal/Offical-Darul-ifta-Irshad-us-saileen-',
+      bullets: [
+        'Architected high-throughput responsive web platform and native Android mobile apps serving community religious consultation and fatwa archives.',
+        'Engineered offline-first local caching in Kotlin to ensure reliable, uninterrupted guidance access in remote low-connectivity regions.',
+        'Integrated Google Gemini AI intelligence pipeline for cited theology research grounded in authoritative archives.'
+      ]
+    },
+    {
+      title: 'CortexIQ AI Suite & AI Prompt Studio',
+      role: 'Creator & Full-Stack Engineer',
+      tech: ['TypeScript', 'React 19', 'Google Gemini SDK', 'Node.js', 'Express', 'Vite', 'Motion'],
+      liveUrl: 'https://daniyal-hayat-portfolio.vercel.app/',
+      githubUrl: 'https://github.com/DotDaniyal/cortexiq-by-dnyl',
+      bullets: [
+        'Built full-stack computational intelligence dashboard pairing natural language queries with real-time reactive telemetry and token streaming.',
+        'Implemented secure server-side Node.js proxy routes to isolate sensitive model credentials from client-side runtime environments.',
+        'Achieved sub-100ms UI responsiveness while rendering live asynchronous token streams and analytical metrics.'
+      ]
+    },
+    {
+      title: 'Hamara Weather — Real-Time Meteorological Tracking',
+      role: 'Frontend Engineer',
+      tech: ['JavaScript (ES6+)', 'OpenWeather API', 'HTML5', 'CSS3', 'Vercel'],
+      liveUrl: 'https://hamara-weather.vercel.app/',
+      githubUrl: 'https://github.com/DotDaniyal/Hamara-Weather',
+      bullets: [
+        'Developed ad-free live atmospheric conditions tracking dashboard with precision humidity, wind speed, and meteorological telemetry.',
+        'Designed lightweight asynchronous pipeline with defensive error handling for edge cases and location network interruptions.'
+      ]
+    },
+    {
+      title: 'Mystic Match — Algorithmic Mobile & Web Puzzle Game',
+      role: 'Game & Mobile Engineer',
+      tech: ['Kotlin', 'Android Canvas', '2D Matrix Algorithms', 'State Machines'],
+      liveUrl: 'https://mystic-match-rho.vercel.app/',
+      githubUrl: 'https://github.com/DotDaniyal/mystic-match-by-dnyl',
+      bullets: [
+        'Engineered bespoke match-3 algorithmic engine in Kotlin with cascading matrix replenishment and fluid touch ergonomics.',
+        'Implemented deterministic state machines to eliminate infinite cascade loops and memory leaks on mobile viewports.'
+      ]
+    },
+    {
+      title: 'Faryal FC Digital Headquarters & DNYL Eyewear Showcase',
+      role: 'Product & UI/UX Developer',
+      tech: ['React', 'TypeScript', 'Tailwind CSS', 'Motion', 'Responsive Design'],
+      liveUrl: 'https://daniyal-hayat-portfolio.vercel.app/',
+      githubUrl: 'https://github.com/DotDaniyal',
+      bullets: [
+        'Crafted modern athletic sports platform with interactive rosters, matchday fixture schedules, and responsive fan drawer.',
+        'Created luxury digital boutique showroom featuring 60 FPS motion transitions, fluid typography, and sub-second asset rendering.'
+      ]
+    }
+  ];
+
   return (
     <AnimatePresence>
       {isOpen && (
         <div 
-          className="fixed inset-0 z-[9999] flex items-center justify-center p-2 sm:p-4 md:p-6 overflow-y-auto print:p-0"
+          className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6"
           role="dialog"
           aria-modal="true"
           aria-labelledby="resume-dialog-title"
@@ -142,46 +220,46 @@ ${EDUCATION_DATA.map(e => `• ${e.program} — ${e.institution} (${e.timeline})
 
           {/* Modal Container */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 15 }}
+            initial={{ opacity: 0, scale: 0.96, y: 12 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 15 }}
-            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="relative w-full max-w-5xl h-[92vh] max-h-[920px] flex flex-col rounded-2xl bg-white dark:bg-[#0c0d14] border border-slate-200/90 dark:border-slate-800 shadow-2xl overflow-hidden z-10 print:max-h-none print:h-auto print:shadow-none print:border-none print:m-0"
+            exit={{ opacity: 0, scale: 0.96, y: 12 }}
+            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            className="relative w-full max-w-5xl h-[94vh] max-h-[960px] flex flex-col rounded-2xl bg-slate-900 border border-slate-700/80 shadow-2xl overflow-hidden z-10 print:max-h-none print:h-auto print:shadow-none print:border-none print:m-0 print:bg-white"
           >
             {/* Top Control Bar */}
-            <div className="flex items-center justify-between px-3.5 py-3 sm:px-6 sm:py-3.5 border-b border-slate-200/90 dark:border-slate-800 bg-slate-50/90 dark:bg-[#11131f]/90 backdrop-blur-md shrink-0 z-20 print:hidden gap-2">
+            <div className="flex items-center justify-between px-3.5 py-2.5 sm:px-6 sm:py-3 border-b border-slate-800 bg-[#0f121d] shrink-0 z-20 print:hidden gap-2">
               
               {/* Left Zone: Title & View Switcher */}
               <div className="flex items-center gap-2 sm:gap-4 min-w-0">
                 <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-xl bg-cyan-500/10 border border-cyan-500/25 flex items-center justify-center text-cyan-600 dark:text-cyan-400 shrink-0">
+                  <div className="w-8 h-8 rounded-xl bg-cyan-500/10 border border-cyan-500/25 flex items-center justify-center text-cyan-400 shrink-0">
                     <FileText className="w-4 h-4" />
                   </div>
                   <div className="hidden sm:block">
-                    <h2 id="resume-dialog-title" className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white leading-tight truncate">
+                    <h2 id="resume-dialog-title" className="text-xs sm:text-sm font-bold text-white leading-tight truncate">
                       {DEVELOPER_NAME} — Curriculum Vitae
                     </h2>
-                    <span className="text-[10px] font-mono text-cyan-600 dark:text-cyan-400 block">
-                      Verified PDF &amp; ATS Version
+                    <span className="text-[10px] font-mono text-cyan-400 block">
+                      Executive Portfolio Edition
                     </span>
                   </div>
                 </div>
 
                 {/* View Mode Switcher */}
-                <div className="flex items-center p-0.5 rounded-lg bg-slate-200/70 dark:bg-slate-900 border border-slate-300/70 dark:border-slate-800 text-[11px] font-mono">
+                <div className="flex items-center p-0.5 rounded-lg bg-slate-950 border border-slate-800 text-[11px] font-mono">
                   <button
                     type="button"
                     onClick={() => {
                       soundManager.playClick();
-                      setViewMode('pdf');
+                      setViewMode('document');
                     }}
                     className={`px-2.5 py-1 rounded-md transition-all cursor-pointer font-medium ${
-                      viewMode === 'pdf'
-                        ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-xs'
-                        : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                      viewMode === 'document'
+                        ? 'bg-cyan-500 text-slate-950 font-bold shadow-xs'
+                        : 'text-slate-400 hover:text-white'
                     }`}
                   >
-                    PDF Document
+                    Resume View
                   </button>
                   <button
                     type="button"
@@ -191,17 +269,31 @@ ${EDUCATION_DATA.map(e => `• ${e.program} — ${e.institution} (${e.timeline})
                     }}
                     className={`px-2.5 py-1 rounded-md transition-all cursor-pointer font-medium ${
                       viewMode === 'ats'
-                        ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-xs'
-                        : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                        ? 'bg-cyan-500 text-slate-950 font-bold shadow-xs'
+                        : 'text-slate-400 hover:text-white'
                     }`}
                   >
-                    ATS Reader
+                    ATS Plain
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      soundManager.playClick();
+                      setViewMode('raw_pdf');
+                    }}
+                    className={`hidden md:inline-flex px-2 py-1 rounded-md transition-all cursor-pointer font-medium ${
+                      viewMode === 'raw_pdf'
+                        ? 'bg-cyan-500 text-slate-950 font-bold shadow-xs'
+                        : 'text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    PDF Embed
                   </button>
                 </div>
               </div>
 
-              {/* Right Zone: Primary Actions (Download, Open Tab, Copy, Close) */}
-              <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+              {/* Right Zone: Primary Download Resume CTA + Tools */}
+              <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
                 
                 {/* Direct Open in New Tab Button */}
                 <a
@@ -209,37 +301,35 @@ ${EDUCATION_DATA.map(e => `• ${e.program} — ${e.institution} (${e.timeline})
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => soundManager.playClick()}
-                  className="min-h-[36px] inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl border border-slate-300/80 dark:border-slate-700 hover:border-cyan-500/50 dark:hover:border-cyan-500/50 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 text-xs font-medium transition-all shadow-xs active:scale-[0.98]"
-                  title="View Daniyal Hayat Resume PDF in new browser tab"
-                  aria-label="View Daniyal Hayat Resume PDF"
+                  className="hidden sm:inline-flex min-h-[36px] items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-700 hover:border-cyan-500/60 bg-slate-800/90 text-slate-200 text-xs font-medium transition-all shadow-xs active:scale-[0.98]"
+                  title="Open original vector PDF in new tab"
                 >
-                  <ExternalLink className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />
-                  <span className="hidden md:inline">Open in Tab</span>
+                  <ExternalLink className="w-3.5 h-3.5 text-cyan-400" />
+                  <span>Open Tab</span>
                 </a>
 
-                {/* Direct Download PDF Button */}
+                {/* Primary 'Download Resume' CTA Button (Prominent) */}
                 <a
                   href={RESUME_PDF_PATH}
                   download={RESUME_FILENAME}
-                  onClick={() => soundManager.playClick()}
-                  className="min-h-[36px] inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 text-xs font-bold transition-all shadow-xs active:scale-[0.98]"
-                  title="Download Daniyal Hayat Resume PDF directly"
+                  onClick={handleDownloadResume}
+                  className="min-h-[36px] inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-xl bg-gradient-to-r from-cyan-500 to-sky-400 hover:from-cyan-400 hover:to-sky-300 text-slate-950 text-xs font-bold transition-all shadow-lg shadow-cyan-500/20 active:scale-[0.98] cursor-pointer"
+                  title="Download Daniyal Hayat Official Resume PDF directly"
                   aria-label="Download Daniyal Hayat Resume PDF"
                 >
-                  <Download className="w-3.5 h-3.5" />
-                  <span className="hidden xs:inline">Download</span>
+                  <ArrowDownToLine className={`w-4 h-4 ${isDownloading ? 'animate-bounce text-slate-950' : ''}`} />
+                  <span>{isDownloading ? 'Downloading...' : 'Download Resume'}</span>
                 </a>
 
                 {/* Copy Plain Text */}
                 <button
                   type="button"
                   onClick={copyFullTextResume}
-                  className="hidden lg:inline-flex min-h-[36px] items-center gap-1.5 px-2.5 py-1.5 rounded-xl border border-slate-300/80 dark:border-slate-700 hover:border-slate-400 dark:hover:border-slate-600 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 text-xs font-medium transition-all shadow-xs cursor-pointer"
+                  className="hidden lg:inline-flex min-h-[36px] items-center gap-1.5 px-2.5 py-1.5 rounded-xl border border-slate-700 hover:border-slate-600 bg-slate-800 text-slate-300 text-xs font-medium transition-all shadow-xs cursor-pointer"
                   title="Copy ATS formatted text to clipboard"
-                  aria-label="Copy ATS plain text resume"
                 >
-                  {copiedText ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5 text-slate-500" />}
-                  <span>{copiedText ? 'Copied' : 'Copy Text'}</span>
+                  {copiedText ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5 text-slate-400" />}
+                  <span>{copiedText ? 'Copied' : 'Copy'}</span>
                 </button>
 
                 {/* Close Button */}
@@ -249,7 +339,7 @@ ${EDUCATION_DATA.map(e => `• ${e.program} — ${e.institution} (${e.timeline})
                     soundManager.playClick();
                     onClose();
                   }}
-                  className="min-w-[36px] min-h-[36px] flex items-center justify-center rounded-xl text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-200/60 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+                  className="min-w-[36px] min-h-[36px] flex items-center justify-center rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer"
                   aria-label="Close resume viewer"
                 >
                   <X className="w-5 h-5" />
@@ -259,275 +349,388 @@ ${EDUCATION_DATA.map(e => `• ${e.program} — ${e.institution} (${e.timeline})
             </div>
 
             {/* Main Content Area */}
-            <div className="flex-1 overflow-hidden relative flex flex-col bg-slate-100/60 dark:bg-[#07090e]">
+            <div className="flex-1 overflow-y-auto relative bg-[#07090e] p-3 sm:p-6 lg:p-8 flex flex-col items-center print:p-0 print:bg-white print:overflow-visible">
               
-              {/* TAB 1: PDF Viewer */}
-              {viewMode === 'pdf' && (
-                <div className="w-full h-full flex flex-col relative overflow-hidden">
+              {/* VIEW 1: Aesthetic Executive Paper Document (Guaranteed 100% Rendering Everywhere) */}
+              {viewMode === 'document' && (
+                <div className="w-full max-w-3xl space-y-4">
                   
-                  {/* Mobile Helper Callout */}
-                  {isMobile && (
-                    <div className="p-3 bg-cyan-500/10 border-b border-cyan-500/20 text-xs flex items-center justify-between gap-2 shrink-0">
-                      <span className="text-slate-700 dark:text-slate-300 font-medium">
-                        Viewing real vector PDF document.
-                      </span>
-                      <a
-                        href={RESUME_PDF_PATH}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="px-2.5 py-1 rounded-lg bg-cyan-500 text-slate-950 font-bold text-[11px] shrink-0"
-                      >
-                        Full Screen ↗
-                      </a>
-                    </div>
-                  )}
-
-                  {/* Embedded PDF Viewer or Fallback */}
-                  {!pdfLoadError ? (
-                    <div className="w-full h-full relative flex-1 bg-slate-200/50 dark:bg-slate-950">
-                      <object
-                        data={`${RESUME_PDF_PATH}#toolbar=0&navpanes=0&scrollbar=1`}
-                        type="application/pdf"
-                        className="w-full h-full border-0 block"
-                        title="Daniyal Hayat Official Resume PDF"
-                        onError={() => setPdfLoadError(true)}
-                      >
-                        <iframe
-                          src={`${RESUME_PDF_PATH}#toolbar=0&navpanes=0&scrollbar=1`}
-                          className="w-full h-full border-0"
-                          title="Daniyal Hayat Official Resume PDF Viewer"
-                          onError={() => setPdfLoadError(true)}
-                        />
-                      </object>
-                    </div>
-                  ) : (
-                    /* Clean Fallback if PDF fails or cannot load */
-                    <div className="w-full h-full flex flex-col items-center justify-center p-6 text-center space-y-4">
-                      <div className="w-14 h-14 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-600 dark:text-amber-400">
-                        <AlertCircle className="w-7 h-7" />
+                  {/* Primary Download Resume Call-to-Action Card */}
+                  <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-slate-900 via-slate-850 to-slate-900 border border-cyan-500/30 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-4 print:hidden">
+                    <div className="flex items-center gap-3.5 min-w-0 text-center sm:text-left">
+                      <div className="w-11 h-11 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 shrink-0">
+                        <FileText className="w-6 h-6" />
                       </div>
-                      <div className="space-y-1.5 max-w-md">
-                        <h3 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">
-                          Resume PDF unavailable
-                        </h3>
-                        <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                          Your browser may block embedded PDF previews. You can view or download the original resume PDF directly below.
+                      <div>
+                        <div className="flex items-center gap-2 justify-center sm:justify-start">
+                          <h3 className="text-sm sm:text-base font-bold text-white leading-tight">
+                            Daniyal Hayat — Executive Resume
+                          </h3>
+                          <span className="hidden xs:inline-flex text-[10px] font-mono px-2 py-0.5 rounded-full bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 font-semibold">
+                            Vector PDF
+                          </span>
+                        </div>
+                        <p className="text-xs text-slate-400 mt-0.5">
+                          Polished, ATS-optimized 1-page curriculum vitae ready for hiring teams.
                         </p>
                       </div>
-                      <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
-                        <a
-                          href={RESUME_PDF_PATH}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label="View Daniyal Hayat Resume PDF"
-                          className="min-h-[44px] px-6 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-sm shadow-md transition-all inline-flex items-center gap-2 active:scale-[0.98]"
+                    </div>
+
+                    <div className="flex items-center gap-2.5 shrink-0 w-full sm:w-auto justify-center">
+                      <a
+                        href={RESUME_PDF_PATH}
+                        download={RESUME_FILENAME}
+                        onClick={handleDownloadResume}
+                        className="min-h-[42px] px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-sky-400 hover:from-cyan-400 hover:to-sky-300 text-slate-950 font-extrabold text-xs sm:text-sm shadow-md shadow-cyan-500/20 active:scale-[0.98] transition-all inline-flex items-center justify-center gap-2 cursor-pointer w-full sm:w-auto"
+                      >
+                        <Download className="w-4 h-4" />
+                        <span>Download Resume PDF</span>
+                      </a>
+                    </div>
+                  </div>
+
+                  {/* Document Page Canvas */}
+                  <div 
+                    id="printable-resume-content"
+                    className="w-full bg-white text-slate-900 rounded-xl shadow-2xl p-6 sm:p-10 md:p-12 space-y-6 sm:space-y-8 font-sans border border-slate-200 select-text print:shadow-none print:border-none print:p-0 print:rounded-none"
+                  >
+                    {/* Document Header */}
+                    <div className="border-b border-slate-200 pb-5 space-y-2.5">
+                      <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
+                        <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-950 uppercase font-sans">
+                          {DEVELOPER_NAME}
+                        </h1>
+                        <span className="text-xs sm:text-sm font-mono font-bold text-sky-700 uppercase tracking-wide">
+                          {DEVELOPER_ROLE}
+                        </span>
+                      </div>
+
+                      {/* Contact & Active Links Row */}
+                      <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs text-slate-600 font-mono pt-1">
+                        <a 
+                          href={`mailto:${DEVELOPER_EMAIL}`} 
+                          className="text-sky-700 hover:underline flex items-center gap-1 font-semibold"
                         >
-                          <ExternalLink className="w-4 h-4" />
-                          <span>Open Resume</span>
+                          <Mail className="w-3 h-3 text-sky-600 shrink-0" />
+                          <span>{DEVELOPER_EMAIL}</span>
                         </a>
-                        <a
-                          href={RESUME_PDF_PATH}
-                          download={RESUME_FILENAME}
-                          aria-label="Download Daniyal Hayat Resume"
-                          className="min-h-[44px] px-6 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 hover:border-slate-400 dark:hover:border-slate-600 text-slate-800 dark:text-slate-200 font-semibold text-sm transition-all inline-flex items-center gap-2 active:scale-[0.98]"
+                        <span className="text-slate-300 hidden sm:inline">•</span>
+                        <a 
+                          href={GITHUB_PROFILE_URL} 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          className="text-sky-700 hover:underline flex items-center gap-1 font-semibold"
                         >
-                          <Download className="w-4 h-4" />
-                          <span>Download Resume</span>
+                          <Github className="w-3 h-3 text-sky-600 shrink-0" />
+                          <span>github.com/{GITHUB_USERNAME}</span>
                         </a>
+                        <span className="text-slate-300 hidden sm:inline">•</span>
+                        <a 
+                          href={LIVE_PORTFOLIO_URL} 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          className="text-sky-700 hover:underline flex items-center gap-1 font-semibold"
+                        >
+                          <Globe className="w-3 h-3 text-sky-600 shrink-0" />
+                          <span>Live Portfolio</span>
+                        </a>
+                        <span className="text-slate-300 hidden sm:inline">•</span>
+                        <span className="text-slate-500">Available Globally / Remote</span>
                       </div>
                     </div>
-                  )}
 
+                    {/* Section 1: Executive Summary */}
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between border-b border-slate-200 pb-1">
+                        <h2 className="text-xs font-bold font-mono tracking-wider text-slate-950 uppercase">
+                          Executive Summary
+                        </h2>
+                      </div>
+                      <p className="text-xs sm:text-[13px] text-slate-700 leading-relaxed">
+                        Full-Stack Developer and Native Android Engineer specializing in architecting modern, high-throughput web applications (React 19, Next.js, TypeScript), cross-platform mobile solutions in Kotlin, and intelligent generative AI systems with Google AI Studio and Gemini models. Dedicated to clean modular architecture, zero-bloat performance, accessible UX craft, and resilient offline capabilities.
+                      </p>
+                    </div>
+
+                    {/* Section 2: Technical Core Proficiencies */}
+                    <div className="space-y-2.5">
+                      <div className="border-b border-slate-200 pb-1">
+                        <h2 className="text-xs font-bold font-mono tracking-wider text-slate-950 uppercase">
+                          Technical Core Proficiencies
+                        </h2>
+                      </div>
+                      <div className="space-y-1.5 text-xs text-slate-700">
+                        <div>
+                          <strong className="text-slate-950 font-semibold">• Languages &amp; Runtimes: </strong>
+                          <span>TypeScript, JavaScript (ES6+), Kotlin, Node.js, SQL, HTML5, CSS3</span>
+                        </div>
+                        <div>
+                          <strong className="text-slate-950 font-semibold">• Frontend &amp; UI Craft: </strong>
+                          <span>React 19, Next.js, Tailwind CSS v4, Motion (Framer), Vite, Responsive UI, Component Systems</span>
+                        </div>
+                        <div>
+                          <strong className="text-slate-950 font-semibold">• Mobile &amp; Storage: </strong>
+                          <span>Native Android SDK, Room/SQLite, Offline Caching, RESTful APIs, JSON Data Handling</span>
+                        </div>
+                        <div>
+                          <strong className="text-slate-950 font-semibold">• AI Engineering &amp; Cloud: </strong>
+                          <span>Google AI Studio, Gemini API SDK (@google/genai), Prompt Architecture, Multimodal Grounding, Vercel</span>
+                        </div>
+                        <div>
+                          <strong className="text-slate-950 font-semibold">• Tooling &amp; DevOps: </strong>
+                          <span>Git &amp; GitHub, Linux/Bash, Figma, Lighthouse Optimization, PWA Standards</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Section 3: Selected Production Projects */}
+                    <div className="space-y-3">
+                      <div className="border-b border-slate-200 pb-1">
+                        <h2 className="text-xs font-bold font-mono tracking-wider text-slate-950 uppercase">
+                          Selected Production Projects &amp; Open Source
+                        </h2>
+                      </div>
+
+                      <div className="space-y-4">
+                        {productionProjects.map((p, idx) => (
+                          <div key={idx} className="space-y-1.5">
+                            <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
+                              <h3 className="text-xs sm:text-[13px] font-bold text-slate-950">
+                                {p.title} <span className="font-normal text-slate-500">| {p.role}</span>
+                              </h3>
+                              <div className="text-[11px] font-mono text-slate-600 flex items-center gap-2">
+                                <a href={p.liveUrl} target="_blank" rel="noopener noreferrer" className="text-sky-700 hover:underline font-semibold">Live Demo ↗</a>
+                                <span>|</span>
+                                <a href={p.githubUrl} target="_blank" rel="noopener noreferrer" className="text-sky-700 hover:underline font-semibold">GitHub ↗</a>
+                              </div>
+                            </div>
+
+                            <div className="flex flex-wrap gap-1 text-[10px] font-mono">
+                              <span className="font-semibold text-slate-500 mr-1">Stack:</span>
+                              {p.tech.map((t, tIdx) => (
+                                <span key={tIdx} className="px-1.5 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200">
+                                  {t}
+                                </span>
+                              ))}
+                            </div>
+
+                            <ul className="list-disc list-outside pl-4 space-y-1 text-xs text-slate-700">
+                              {p.bullets.map((bullet, bIdx) => (
+                                <li key={bIdx} className="leading-relaxed">
+                                  {bullet}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Section 4: Experience & Engineering Milestones */}
+                    <div className="space-y-2.5">
+                      <div className="border-b border-slate-200 pb-1">
+                        <h2 className="text-xs font-bold font-mono tracking-wider text-slate-950 uppercase">
+                          Experience &amp; Engineering Milestones
+                        </h2>
+                      </div>
+
+                      <div className="space-y-3 text-xs">
+                        <div className="space-y-1">
+                          <div className="flex justify-between items-baseline font-semibold text-slate-950">
+                            <span>Full-Stack Web &amp; Native Android Developer — Independent Software Engineer</span>
+                            <span className="font-mono text-slate-500 text-[11px]">2025 — Present</span>
+                          </div>
+                          <p className="text-slate-700 leading-relaxed">
+                            Architecting end-to-end production web platforms and native mobile apps with strict emphasis on performance, type safety, accessibility, and modern UI craft.
+                          </p>
+                        </div>
+
+                        <div className="space-y-1">
+                          <div className="flex justify-between items-baseline font-semibold text-slate-950">
+                            <span>Mobile Application Developer — Native Android &amp; Algorithmic Systems Focus</span>
+                            <span className="font-mono text-slate-500 text-[11px]">2024 — 2025</span>
+                          </div>
+                          <p className="text-slate-700 leading-relaxed">
+                            Mastered Kotlin Android architecture, Room database, offline synchronization routines, and touch-optimized canvas engines.
+                          </p>
+                        </div>
+
+                        <div className="space-y-1">
+                          <div className="flex justify-between items-baseline font-semibold text-slate-950">
+                            <span>Frontend Developer — Modern Web Engineering &amp; React Foundations</span>
+                            <span className="font-mono text-slate-500 text-[11px]">2023 — 2024</span>
+                          </div>
+                          <p className="text-slate-700 leading-relaxed">
+                            Built responsive web platforms, async RESTful API integrations, and component-driven design systems with strict Git version control.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Section 5: Education & Specializations */}
+                    <div className="space-y-2.5">
+                      <div className="border-b border-slate-200 pb-1">
+                        <h2 className="text-xs font-bold font-mono tracking-wider text-slate-950 uppercase">
+                          Education &amp; Continuous Specializations
+                        </h2>
+                      </div>
+
+                      <div className="space-y-2 text-xs text-slate-700">
+                        <div>
+                          <strong className="text-slate-950 font-semibold">• Core Computer Science, Algorithms &amp; Software Architecture</strong>
+                          <span className="text-slate-500 font-mono text-[11px]"> — Continuous Academic Studies</span>
+                          <p className="text-slate-600 mt-0.5">Data Structures, Algorithm Complexity, OOP in Kotlin/TypeScript, System Design, and Caching.</p>
+                        </div>
+                        <div>
+                          <strong className="text-slate-950 font-semibold">• Google AI Studio &amp; Gemini API SDK Specialization</strong>
+                          <span className="text-slate-500 font-mono text-[11px]"> — Applied Verification (Google Developers &amp; DeepMind)</span>
+                          <p className="text-slate-600 mt-0.5">System instructions, structured JSON schemas, multimodal prompting, function calling, and server-side SDK proxying.</p>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
                 </div>
               )}
 
-              {/* TAB 2: Structured ATS View */}
+              {/* VIEW 2: Raw PDF Embed (For browsers that support embedded native plugins) */}
+              {viewMode === 'raw_pdf' && (
+                <div className="w-full h-full flex flex-col items-center justify-center min-h-[600px] relative">
+                  {!pdfLoadError ? (
+                    <object
+                      data={`${RESUME_PDF_PATH}#toolbar=0&navpanes=0`}
+                      type="application/pdf"
+                      className="w-full h-full min-h-[700px] rounded-xl border border-slate-800"
+                      title="Daniyal Hayat PDF Document"
+                      onError={() => setPdfLoadError(true)}
+                    >
+                      <iframe
+                        src={`${RESUME_PDF_PATH}#toolbar=0&navpanes=0`}
+                        className="w-full h-full min-h-[700px] rounded-xl border border-slate-800"
+                        title="Daniyal Hayat PDF Iframe"
+                      />
+                    </object>
+                  ) : (
+                    <div className="p-8 text-center space-y-4 max-w-md bg-slate-900 rounded-2xl border border-slate-800">
+                      <div className="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 mx-auto">
+                        <FileText className="w-6 h-6" />
+                      </div>
+                      <h3 className="text-white font-bold">Embedded Viewer Blocked by Browser</h3>
+                      <p className="text-xs text-slate-400">Your browser security settings prevent displaying embedded PDFs inside iframes. Switch to &quot;Resume View&quot; or open the PDF directly.</p>
+                      <div className="flex gap-2 justify-center">
+                        <button onClick={() => setViewMode('document')} className="px-4 py-2 rounded-xl bg-cyan-500 text-slate-950 font-bold text-xs">Switch to Resume View</button>
+                        <a href={RESUME_PDF_PATH} download={RESUME_FILENAME} onClick={handleDownloadResume} className="px-4 py-2 rounded-xl bg-cyan-500 text-slate-950 font-bold text-xs">Download Resume</a>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* VIEW 3: ATS Plain-Text Reader */}
               {viewMode === 'ats' && (
-                <div 
-                  id="printable-resume-content"
-                  className="w-full h-full overflow-y-auto p-5 sm:p-8 md:p-12 space-y-6 sm:space-y-8 text-slate-800 dark:text-slate-200 font-sans print:p-0 print:text-black bg-white dark:bg-[#0c0d14]"
-                >
-                  {/* Header / Contact Info */}
-                  <div className="border-b border-slate-200 dark:border-slate-800 pb-6 space-y-3">
-                    <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2">
-                      <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white print:text-black">
-                        {DEVELOPER_NAME}
-                      </h1>
-                      <span className="text-sm font-mono text-cyan-700 dark:text-cyan-400 font-bold print:text-slate-800">
-                        {DEVELOPER_ROLE}
-                      </span>
-                    </div>
-                    <p className="text-sm text-slate-600 dark:text-slate-300 max-w-3xl leading-relaxed">
-                      Full-Stack Developer and Native Android Engineer specializing in modern web platforms (React, Next.js, TypeScript), native mobile solutions in Kotlin, and intelligent generative AI pipelines with Google AI Studio and Gemini models.
-                    </p>
-
-                    <div className="flex flex-wrap items-center gap-3 sm:gap-5 text-xs font-mono text-slate-600 dark:text-slate-400 pt-2">
-                      <button
-                        onClick={copyEmail}
-                        className="inline-flex items-center gap-1.5 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors cursor-pointer"
-                        title="Copy email"
-                      >
-                        <Mail className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />
-                        <span>{DEVELOPER_EMAIL}</span>
-                        {copiedEmail ? <Check className="w-3 h-3 text-emerald-500" /> : <Copy className="w-3 h-3 opacity-60" />}
-                      </button>
-
-                      <a
-                        href={GITHUB_PROFILE_URL}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors"
-                      >
-                        <Github className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />
-                        <span>github.com/{GITHUB_USERNAME}</span>
-                      </a>
-
-                      <a
-                        href={LIVE_PORTFOLIO_URL}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors"
-                      >
-                        <ExternalLink className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />
-                        <span>Live Portfolio</span>
-                      </a>
-                    </div>
+                <div className="w-full max-w-3xl bg-slate-950 border border-slate-800 rounded-xl p-6 sm:p-8 font-mono text-xs text-slate-300 space-y-6">
+                  <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+                    <span className="text-cyan-400 font-bold text-sm">ATS PLAIN TEXT PARSER VIEW</span>
+                    <button
+                      type="button"
+                      onClick={copyFullTextResume}
+                      className="px-3 py-1.5 rounded-lg bg-cyan-500 text-slate-950 font-bold text-xs flex items-center gap-1.5"
+                    >
+                      {copiedText ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+                      <span>{copiedText ? 'Copied' : 'Copy All Text'}</span>
+                    </button>
                   </div>
 
-                  {/* Technical Core Stack */}
-                  <div className="space-y-3">
-                    <h2 className="text-xs font-mono uppercase tracking-widest text-cyan-700 dark:text-cyan-400 font-bold flex items-center gap-2">
-                      <Code className="w-4 h-4" />
-                      <span>Technical Core Proficiencies</span>
-                    </h2>
-                    <div className="grid sm:grid-cols-2 gap-3 text-xs">
-                      {SKILL_GROUPS.map((group, idx) => (
-                        <div key={idx} className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/90 dark:border-slate-800">
-                          <span className="font-bold text-slate-900 dark:text-white block mb-1">
-                            {group.category}
-                          </span>
-                          <span className="text-slate-600 dark:text-slate-300">
-                            {group.skills.map(s => s.name).join(', ')}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
+                  <pre className="whitespace-pre-wrap leading-relaxed font-mono text-xs text-slate-300 bg-slate-900/50 p-4 rounded-lg border border-slate-800/80">
+{`${DEVELOPER_NAME}
+${DEVELOPER_ROLE}
+Email: ${DEVELOPER_EMAIL}
+GitHub: ${GITHUB_PROFILE_URL}
+Portfolio: ${LIVE_PORTFOLIO_URL}
 
-                  {/* Selected Production Projects */}
-                  <div className="space-y-3">
-                    <h2 className="text-xs font-mono uppercase tracking-widest text-cyan-700 dark:text-cyan-400 font-bold flex items-center gap-2">
-                      <Briefcase className="w-4 h-4" />
-                      <span>Selected Production Projects &amp; Open Source</span>
-                    </h2>
+============================================================
+EXECUTIVE SUMMARY
+============================================================
+Full-Stack Developer and Native Android Engineer specializing in modern web applications (React, Next.js, TypeScript), native mobile development in Kotlin, and intelligent generative AI pipelines with Google AI Studio and Gemini models. Committed to clean architecture, zero-bloat performance, accessible UX/UI craft, and resilient offline capabilities.
 
-                    <div className="space-y-3 sm:space-y-4">
-                      {PROJECTS.filter(p => p.featured || p.id.includes('darul') || p.id.includes('cortex')).slice(0, 5).map((p) => (
-                        <div key={p.id} className="p-4 rounded-xl border border-slate-200/90 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-900/40 space-y-2">
-                          <div className="flex flex-wrap items-center justify-between gap-2">
-                            <h3 className="font-bold text-slate-900 dark:text-white text-sm">
-                              {p.displayName}
-                            </h3>
-                            <span className="text-[10px] font-mono text-cyan-700 dark:text-cyan-400 font-semibold px-2 py-0.5 rounded-full bg-cyan-500/10 border border-cyan-500/20">
-                              {p.category}
-                            </span>
-                          </div>
-                          <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                            {p.description}
-                          </p>
-                          <div className="flex flex-wrap gap-1.5 pt-1">
-                            {p.technologies.map((t, idx) => (
-                              <span key={idx} className="text-[10px] font-mono px-2 py-0.5 rounded bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300">
-                                {t}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
+============================================================
+TECHNICAL CORE PROFICIENCIES
+============================================================
+• Languages & Runtimes: TypeScript, JavaScript (ES6+), Kotlin, Node.js, SQL, HTML5, CSS3
+• Frontend & UI Craft: React 19, Next.js, Tailwind CSS v4, Motion (Framer), Vite, Responsive Design
+• Mobile & Storage: Native Android SDK, Room/SQLite, Offline Caching, RESTful APIs, JSON Data Handling
+• AI Engineering & Cloud: Google AI Studio, Google Gemini SDK (@google/genai), Prompt Architecture, Multimodal Grounding, Vercel
+• Tooling & DevOps: Git, GitHub, Linux/Bash, Figma, Lighthouse Optimization, PWA Standards
 
-                  {/* Experience Milestones */}
-                  <div className="space-y-3">
-                    <h2 className="text-xs font-mono uppercase tracking-widest text-cyan-700 dark:text-cyan-400 font-bold flex items-center gap-2">
-                      <Layers className="w-4 h-4" />
-                      <span>Experience &amp; Engineering Milestones</span>
-                    </h2>
-                    <div className="space-y-3">
-                      <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/90 dark:border-slate-800 text-xs space-y-1">
-                        <div className="flex justify-between font-bold text-slate-900 dark:text-white">
-                          <span>Full-Stack Web &amp; Native Android Developer</span>
-                          <span className="font-mono text-cyan-700 dark:text-cyan-400 font-normal">2025 — Present</span>
-                        </div>
-                        <span className="text-slate-500 dark:text-slate-400 block">Independent Software Engineer &amp; Product Builder</span>
-                        <p className="text-slate-600 dark:text-slate-300 pt-1">
-                          Architecting production web platforms and native mobile apps with strict emphasis on performance, type safety, accessibility, and modern UI craft.
-                        </p>
-                      </div>
+============================================================
+SELECTED PRODUCTION PROJECTS & OPEN SOURCE
+============================================================
+• Official Darul Ifta Irshad us Saileen & Islamic AI (Web Platform & Android App)
+  Tech: JavaScript, Tailwind CSS, Kotlin, Android SDK, Gemini AI, REST APIs
+  Live: https://darulifta-bkfbzf6u.manus.space/
+  GitHub: https://github.com/DotDaniyal/Offical-Darul-ifta-Irshad-us-saileen-
 
-                      <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/90 dark:border-slate-800 text-xs space-y-1">
-                        <div className="flex justify-between font-bold text-slate-900 dark:text-white">
-                          <span>Mobile Application Developer</span>
-                          <span className="font-mono text-cyan-700 dark:text-cyan-400 font-normal">2024 — 2025</span>
-                        </div>
-                        <span className="text-slate-500 dark:text-slate-400 block">Native Android &amp; Algorithmic Systems Focus</span>
-                        <p className="text-slate-600 dark:text-slate-300 pt-1">
-                          Mastered Kotlin Android architecture, Room database, offline synchronization routines, and touch-optimized canvas engines.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+• CortexIQ AI Suite & AI Prompt Studio (Computational Intelligence)
+  Tech: TypeScript, React 19, Google Gemini SDK, Node.js, Express, Vite, Motion
+  Live: https://daniyal-hayat-portfolio.vercel.app/
+  GitHub: https://github.com/DotDaniyal/cortexiq-by-dnyl
 
-                  {/* Education & Foundations */}
-                  <div className="space-y-3">
-                    <h2 className="text-xs font-mono uppercase tracking-widest text-cyan-700 dark:text-cyan-400 font-bold flex items-center gap-2">
-                      <GraduationCap className="w-4 h-4" />
-                      <span>Education &amp; Foundations</span>
-                    </h2>
-                    <div className="space-y-2.5">
-                      {EDUCATION_DATA.map((edu) => (
-                        <div key={edu.id} className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/90 dark:border-slate-800 text-xs space-y-1">
-                          <div className="flex justify-between font-bold text-slate-900 dark:text-white">
-                            <span>{edu.program}</span>
-                            <span className="font-mono text-slate-500 dark:text-slate-400 font-normal">{edu.timeline}</span>
-                          </div>
-                          <span className="text-slate-500 dark:text-slate-400 block font-mono text-[11px]">{edu.institution}</span>
-                          <p className="text-slate-600 dark:text-slate-300">
-                            {edu.description}
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
+• Hamara Weather (Real-Time Meteorological Tracking)
+  Tech: JavaScript (ES6+), OpenWeather API, Modern Flex/Grid, Vercel
+  Live: https://hamara-weather.vercel.app/
+  GitHub: https://github.com/DotDaniyal/Hamara-Weather
 
+• Mystic Match (Algorithmic Mobile & Web Puzzle Game)
+  Tech: Kotlin, Android Canvas, 2D Matrix Algorithms, State Machines
+  Live: https://mystic-match-rho.vercel.app/
+  GitHub: https://github.com/DotDaniyal/mystic-match-by-dnyl
+
+• Faryal FC Digital Headquarters & DNYL Eyewear Showcase
+  Tech: React, TypeScript, Tailwind CSS, Motion, Responsive Design
+  Live: https://daniyal-hayat-portfolio.vercel.app/
+  GitHub: https://github.com/DotDaniyal
+
+============================================================
+EXPERIENCE & ENGINEERING MILESTONES
+============================================================
+• Full-Stack Web & Native Android Developer — Independent Software Engineer (2025 — Present)
+• Mobile Application Developer — Native Android & Algorithmic Systems Focus (2024 — 2025)
+• Frontend Developer — Modern Web Engineering & React Foundations (2023 — 2024)
+
+============================================================
+EDUCATION & CONTINUOUS SPECIALIZATIONS
+============================================================
+• Core Computer Science, Algorithms & Software Architecture — Applied Engineering Studies
+• Google AI Studio & Gemini API SDK Specialization — Applied Verification (Google Developers & DeepMind)`}
+                  </pre>
                 </div>
               )}
 
             </div>
 
             {/* Bottom Footer Bar */}
-            <div className="px-4 py-3 sm:px-6 sm:py-3.5 border-t border-slate-200/90 dark:border-slate-800 bg-slate-50 dark:bg-[#11131f] flex flex-col sm:flex-row items-center justify-between gap-3 shrink-0 print:hidden">
-              <div className="flex items-center gap-2 text-[11px] font-mono text-slate-500 dark:text-slate-400 text-center sm:text-left">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
-                <span>Original Vector PDF Asset: /resume/{RESUME_FILENAME}</span>
+            <div className="px-4 py-2.5 sm:px-6 sm:py-3 border-t border-slate-800 bg-[#0f121d] flex flex-col sm:flex-row items-center justify-between gap-3 shrink-0 print:hidden">
+              <div className="flex items-center gap-2 text-[11px] font-mono text-slate-400 text-center sm:text-left">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0" />
+                <span>Verified Asset: /resume/{RESUME_FILENAME}</span>
               </div>
 
-              <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
+              <div className="flex items-center gap-2.5 w-full sm:w-auto justify-end">
                 <button
                   type="button"
                   onClick={handlePrint}
-                  className="min-h-[40px] px-3.5 py-2 rounded-xl border border-slate-300 dark:border-slate-700 hover:border-slate-400 dark:hover:border-slate-600 text-slate-700 dark:text-slate-300 text-xs font-medium transition-all shadow-xs cursor-pointer inline-flex items-center gap-1.5"
+                  className="min-h-[38px] px-3.5 py-1.5 rounded-xl border border-slate-700 hover:border-slate-600 text-slate-300 text-xs font-medium transition-all shadow-xs cursor-pointer inline-flex items-center gap-1.5"
                   title="Print or Save via Browser Print"
                 >
                   <Printer className="w-3.5 h-3.5" />
-                  <span>Print</span>
+                  <span>Print Document</span>
                 </button>
 
+                {/* Primary Bottom CTA */}
                 <a
                   href={RESUME_PDF_PATH}
                   download={RESUME_FILENAME}
-                  onClick={() => soundManager.playClick()}
-                  className="min-h-[40px] px-5 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs sm:text-sm transition-all shadow-xs inline-flex items-center justify-center gap-2 active:scale-[0.98]"
+                  onClick={handleDownloadResume}
+                  className="min-h-[38px] px-5 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-sky-400 hover:from-cyan-400 hover:to-sky-300 text-slate-950 font-extrabold text-xs sm:text-sm shadow-md shadow-cyan-500/20 transition-all inline-flex items-center justify-center gap-2 active:scale-[0.98] cursor-pointer"
                   aria-label="Download Daniyal Hayat Resume PDF"
                 >
                   <Download className="w-4 h-4" />

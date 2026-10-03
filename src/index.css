@@ -63,7 +63,7 @@ button, input, select, textarea, [role="button"] {
 .animate-marquee {
   display: flex;
   width: max-content;
-  animation: marquee 28s linear infinite;
+  animation: marquee 75s linear infinite;
   will-change: transform;
   backface-visibility: hidden;
 }
@@ -71,7 +71,7 @@ button, input, select, textarea, [role="button"] {
 .animate-marquee-reverse {
   display: flex;
   width: max-content;
-  animation: marquee-reverse 30s linear infinite;
+  animation: marquee-reverse 65s linear infinite;
   will-change: transform;
   backface-visibility: hidden;
 }

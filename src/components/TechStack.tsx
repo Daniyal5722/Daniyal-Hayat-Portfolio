@@ -1,3 +1,5 @@
+import React from 'react';
+import { motion } from 'motion/react';
 import { MARQUEE_TECH_STACK } from '../data/portfolioData';
 import { 
   Code2, 
@@ -46,20 +48,33 @@ export function TechStack() {
   ];
 
   return (
-    <section className="py-12 overflow-hidden relative border-y dark:border-slate-800/80 border-slate-200/90 bg-slate-100/60 dark:bg-slate-950/40 backdrop-blur-sm select-none">
-      
-      {/* Side gradient blends */}
-      <div className="absolute left-0 top-0 bottom-0 w-12 sm:w-36 z-20 pointer-events-none bg-gradient-to-r from-slate-100/90 dark:from-[#090a0f] to-transparent" />
-      <div className="absolute right-0 top-0 bottom-0 w-12 sm:w-36 z-20 pointer-events-none bg-gradient-to-l from-slate-100/90 dark:from-[#090a0f] to-transparent" />
+    <section 
+      aria-label="Core Technologies & Skills Marquee"
+      className="py-10 sm:py-12 overflow-hidden relative border-y dark:border-slate-800/80 border-slate-200/90 bg-slate-100/60 dark:bg-slate-950/40 backdrop-blur-sm select-none"
+    >
+      {/* Side gradient blends for seamless entry/exit */}
+      <div className="absolute left-0 top-0 bottom-0 w-16 sm:w-40 z-20 pointer-events-none bg-gradient-to-r from-[#f4f5f8] dark:from-[#090a0f] to-transparent" />
+      <div className="absolute right-0 top-0 bottom-0 w-16 sm:w-40 z-20 pointer-events-none bg-gradient-to-l from-[#f4f5f8] dark:from-[#090a0f] to-transparent" />
 
-      {/* Row 1: High-impact editorial typographic marquee */}
-      <div className="overflow-hidden mb-4 sm:mb-5">
-        <div className="animate-marquee-reverse">
-          {[1, 2].map((trackKey) => (
+      {/* Row 1: High-impact editorial typographic marquee (Reverse direction) */}
+      <div className="overflow-hidden mb-4 sm:mb-5 flex">
+        <motion.div
+          animate={{ x: ['-50%', '0%'] }}
+          transition={{
+            x: {
+              repeat: Infinity,
+              repeatType: 'loop',
+              duration: 65,
+              ease: 'linear',
+            },
+          }}
+          className="flex items-center w-max shrink-0 will-change-transform"
+        >
+          {[1, 2, 3, 4].map((trackKey) => (
             <div key={trackKey} className="flex items-center gap-6 sm:gap-8 shrink-0 pr-6 sm:pr-8">
               {typographicPhrases.map((word, i) => (
                 <div key={i} className="flex items-center gap-6 sm:gap-8 shrink-0">
-                  <span className="text-lg sm:text-3xl md:text-4xl font-extrabold font-mono tracking-tighter text-slate-300/80 dark:text-slate-800/90 uppercase">
+                  <span className="text-lg sm:text-3xl md:text-4xl font-extrabold font-mono tracking-tighter text-slate-300/80 dark:text-slate-800/90 uppercase hover:text-cyan-500/50 transition-colors">
                     {word}
                   </span>
                   <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-cyan-500/40 shrink-0" />
@@ -67,21 +82,32 @@ export function TechStack() {
               ))}
             </div>
           ))}
-        </div>
+        </motion.div>
       </div>
 
-      {/* Row 2: Verified Technologies & Tooling */}
-      <div className="overflow-hidden">
-        <div className="animate-marquee py-1">
-          {[1, 2].map((trackKey) => (
+      {/* Row 2: Verified Technologies & Tooling (Forward direction) */}
+      <div className="overflow-hidden flex">
+        <motion.div
+          animate={{ x: ['0%', '-50%'] }}
+          transition={{
+            x: {
+              repeat: Infinity,
+              repeatType: 'loop',
+              duration: 75,
+              ease: 'linear',
+            },
+          }}
+          className="flex items-center w-max shrink-0 py-1 will-change-transform"
+        >
+          {[1, 2, 3, 4].map((trackKey) => (
             <div key={trackKey} className="flex items-center gap-4 shrink-0 pr-4">
               {MARQUEE_TECH_STACK.map((tech, idx) => (
                 <div
-                  key={`${tech.name}-${idx}`}
+                  key={`${tech.name}-${idx}-${trackKey}`}
                   data-cursor="pointer"
-                  className="flex items-center gap-2.5 px-4 py-2 rounded-xl border dark:border-slate-800 border-slate-200/90 bg-white dark:bg-slate-900/80 hover:border-cyan-500/60 dark:hover:border-cyan-500/60 transition-all duration-200 shadow-xs cursor-default shrink-0 group"
+                  className="flex items-center gap-2.5 px-4 py-2 rounded-xl border dark:border-slate-800 border-slate-200/90 bg-white dark:bg-slate-900/80 hover:border-cyan-500/60 dark:hover:border-cyan-500/60 hover:shadow-md hover:shadow-cyan-500/10 transition-all duration-200 shadow-xs cursor-default shrink-0 group"
                 >
-                  <div className="p-1 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 group-hover:scale-110 transition-transform">
+                  <div className="p-1 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 group-hover:scale-110 group-hover:text-cyan-400 transition-all">
                     {getIcon(tech.name)}
                   </div>
                   <span className="text-xs sm:text-sm font-semibold text-slate-800 dark:text-slate-200 group-hover:text-cyan-500 dark:group-hover:text-cyan-400 transition-colors">
@@ -94,9 +120,8 @@ export function TechStack() {
               ))}
             </div>
           ))}
-        </div>
+        </motion.div>
       </div>
-
     </section>
   );
 }
